@@ -7,6 +7,7 @@ use DB;
 use Carbon\Carbon;
 use PDF;
 use App\Models\User;
+
 class HomeController extends Controller
 {
     /**
@@ -24,24 +25,20 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    // main dashboard
-    public function index()
-    {
-        return view('dashboard.dashboard');
-    }
+
     // employee dashboard
     public function emDashboard()
     {
-        $dt        = Carbon::now();
-        $todayDate = $dt->toDayDateTimeString();
-        return view('dashboard.emdashboard',compact('todayDate'));
+        if (auth()->user()->role_name == 'Employee') {
+            $dt        = Carbon::now();
+            $todayDate = $dt->toDayDateTimeString();
+            return view('dashboard.emdashboard', compact('todayDate'));
+        } else
+            return redirect('/home');
     }
 
     public function generatePDF(Request $request)
     {
-        // $data = ['title' => 'Welcome to ItSolutionStuff.com'];
-        // $pdf = PDF::loadView('payroll.salaryview', $data);
-        // return $pdf->download('text.pdf');
         // selecting PDF view
         $pdf = PDF::loadView('payroll.salaryview');
         // download pdf file

@@ -69,10 +69,13 @@ active
             <div class="col-sm-6 col-md-3 col-lg-3 col-xl-2 col-12">
                 <div class="form-group form-focus select-focus">
                     <select class="select floating">
-                        <option> -- Select -- </option>
-                        <option>Casual Leave</option>
-                        <option>Medical Leave</option>
-                        <option>Loss of Pay</option>
+                        <option selected disabled>Select Leave Type</option>
+                        <option value="Casual Leave">Casual Leave</option>
+                        <option value="Earned Leave">Earned Leave</option>
+                        <option value="Maternity Leave">Maternity Leave</option>
+                        <option value="Paternity Leave">Paternity Leave</option>
+                        <option value="Medical Leave">Medical Leave</option>
+                        <option value="Leave without Pay">Leave Without Pay</option>
                     </select>
                     <label class="focus-label">Leave Type</label>
                 </div>
@@ -136,7 +139,7 @@ active
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a href="{{ url('employee/profile/'.$items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/images/'. $items->avatar) }}" alt="{{ $items->name }}"></a>
+                                        <a href="{{ url('employee/profile/'.$items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/employee_image/'. $items->avatar) }}" alt="{{ $items->name }}"></a>
                                         <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
                                     </h2>
                                 </td>
@@ -198,9 +201,12 @@ active
                             <label>Leave Type <span class="text-danger">*</span></label>
                             <select class="select" id="leaveType" name="leave_type">
                                 <option selected disabled>Select Leave Type</option>
-                                <option value="Casual Leave 12 Days">Casual Leave 12 Days</option>
+                                <option value="Casual Leave">Casual Leave</option>
+                                <option value="Earned Leave">Earned Leave</option>
+                                <option value="Maternity Leave">Maternity Leave</option>
+                                <option value="Paternity Leave">Paternity Leave</option>
                                 <option value="Medical Leave">Medical Leave</option>
-                                <option value="Loss of Pay">Loss of Pay</option>
+                                <option value="Leave without Pay">Leave Without Pay</option>
                             </select>
                         </div>
                         <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">

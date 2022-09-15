@@ -17,7 +17,10 @@ use App\Http\Controllers\AllowanceMaster;
 use App\Http\Controllers\DesignationMaster;
 use App\Http\Controllers\StateController;
 use App\Http\Controllers\BlockController;
-
+use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\PostController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,23 +33,29 @@ use App\Http\Controllers\BlockController;
 |
 */
 
+// Route::get('php-info', function () {
+//     return phpinfo();
+// });
+
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    // return 'Hii';
     Route::get('home', function () {
-        return view('home');
-    });
-    Route::get('home', function () {
-        return view('home');
-    });
+        $category = auth()->user()->role_name;
+        if ($category == 'Employee') {
+            return view('dashboard.emdashboard');
+        } elseif ($category == 'Admin') {
+            return view('dashboard.dashboard');
+        }
+    })->name('home');
 });
 
 Auth::routes();
 
 // ----------------------------- main dashboard ------------------------------//
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('em/dashboard', [App\Http\Controllers\HomeController::class, 'emDashboard'])->name('em/dashboard');
 
 // -----------------------------settings----------------------------------------//
@@ -67,105 +76,159 @@ Route::post('unlock', [App\Http\Controllers\LockScreen::class, 'unlock'])->name(
 
 // ------------------------------ register ---------------------------------//
 Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('register');
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('registerData');
 
 // ----------------------------- forget password ----------------------------//
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('forget-password');
-Route::post('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('forget-password');
+Route::post('forget-passwordd', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'postEmail'])->name('forget-passwordd');
 
 // ----------------------------- reset password -----------------------------//
 Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
 Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
 
-// ----------------------------- user profile ------------------------------//
-Route::get('profile_user', [App\Http\Controllers\UserManagementController::class, 'profile'])->middleware('auth')->name('profile_user');
-Route::post('profile/information/save', [App\Http\Controllers\UserManagementController::class, 'profileInformation'])->name('profile/information/save');
 
-// ----------------------------- user userManagement -----------------------//
-Route::get('userManagement', [App\Http\Controllers\UserManagementController::class, 'index'])->middleware('auth')->name('userManagement');
-Route::get('/getOfficeLists/{org_idd}', [UserManagementController::class, 'getOfficeLists']);
-Route::get('/getPosts/{org_idd}', [UserManagementController::class, 'getPost']);
-Route::get('/getDesignations/{po_id}', [UserManagementController::class, 'getDesignation']);
-Route::get('userManagement/add-user', [App\Http\Controllers\UserManagementController::class, 'addUserForm'])->middleware('auth')->name('userManagement/addUser');
 
-Route::post('user/add/save', [App\Http\Controllers\UserManagementController::class, 'addNewUserSave'])->name('user/add/save');
-Route::post('search/user/list', [App\Http\Controllers\UserManagementController::class, 'searchUser'])->name('search/user/list');
-Route::post('update', [App\Http\Controllers\UserManagementController::class, 'update'])->name('update');
-Route::post('user/delete', [App\Http\Controllers\UserManagementController::class, 'delete'])->middleware('auth')->name('user/delete');
-Route::get('activity/log', [App\Http\Controllers\UserManagementController::class, 'activityLog'])->middleware('auth')->name('activity/log');
-Route::get('activity/login/logout', [App\Http\Controllers\UserManagementController::class, 'activityLogInLogOut'])->middleware('auth')->name('activity/login/logout');
+Route::controller(UserManagementController::class)->group(function () {
 
-// ----------------------------- search user management ------------------------------//
-Route::post('search/user/list', [App\Http\Controllers\UserManagementController::class, 'searchUser'])->name('search/user/list');
+    // ----------------------------- user profile ------------------------------//
+    Route::get('profile_user', 'profile')->middleware('auth')->name('profile_user');
+    Route::post('profile/information/save', 'profileInformation')->name('profile/information/save');
 
-// ----------------------------- form change password ------------------------------//
-Route::get('change/password', [App\Http\Controllers\UserManagementController::class, 'changePasswordView'])->middleware('auth')->name('change/password');
-Route::post('change/password/db', [App\Http\Controllers\UserManagementController::class, 'changePasswordDB'])->name('change/password/db');
+    // ----------------------------- user userManagement -----------------------//
+    Route::get('userManagement', 'index')->middleware('auth')->name('userManagement');
+    Route::get('/getOfficeLists/{org_idd}', 'getOfficeLists');
+    Route::get('/getPosts/{org_idd}', 'getPost');
+    Route::get('/getDesignations/{po_id}', 'getDesignation');
+    Route::get('userManagement/add-user', 'addUserForm')->middleware('auth')->name('userManagement/addUser');
 
-// ----------------------------- form employee ------------------------------//
-Route::get('all/employee/view/edit/{employee_id}', [App\Http\Controllers\EmployeeController::class, 'viewRecord'])->middleware('auth');
-Route::post('all/employee/update', [App\Http\Controllers\EmployeeController::class, 'updateRecord'])->middleware('auth')->name('all/employee/update');
-Route::get('all/employee/delete/{employee_id}', [App\Http\Controllers\EmployeeController::class, 'deleteRecord'])->middleware('auth');
-Route::post('all/employee/search', [App\Http\Controllers\EmployeeController::class, 'employeeSearch'])->name('all/employee/search');
+    Route::post('userManagement/user-profile/save', 'saveProfileData')->middleware('auth');
+    Route::get('/officeLists/{org_idd}', 'officeList');
+    Route::post('user/add/save', 'addNewUserSave')->name('user/add/save');
+    Route::post('search/user/list', 'searchUser')->name('search/user/list');
+    Route::post('update', 'update')->name('update');
+    Route::post('user/delete', 'delete')->middleware('auth')->name('user/delete');
+    Route::get('activity/log', 'activityLog')->middleware('auth')->name('activity/log');
+    Route::get('activity/login/logout', 'activityLogInLogOut')->middleware('auth')->name('activity/login/logout');
 
-// ----------------------------- profile employee ------------------------------//
-Route::get('employee/profile/{rec_id}', [App\Http\Controllers\EmployeeController::class, 'profileEmployee'])->middleware('auth');
+    // ----------------------------- search user management ------------------------------//
+    Route::post('search/user/list', 'searchUser')->name('search/user/list');
+
+    // ----------------------------- form change password ------------------------------//
+    Route::get('change/password', 'changePasswordView')->middleware('auth')->name('change/password');
+    Route::post('change/password/db', 'changePasswordDB')->name('change/password/db');
+});
+
+
+Route::controller(EmployeeController::class)->group(function () {
+
+    // ----------------------------- form employee ------------------------------//
+    Route::get('all/employee/view/edit/{employee_id}', 'viewRecord')->middleware('auth');
+    Route::post('all/employee/update', 'updateRecord')->middleware('auth')->name('all/employee/update');
+    Route::get('all/employee/delete/{employee_id}', 'deleteRecord')->middleware('auth');
+    Route::post('all/employee/search', 'employeeSearch')->middleware('auth')->name('all/employee/search');
+
+    // ----------------------------- profile employee ------------------------------//
+    Route::get('employee/profile/{rec_id}', 'profileEmployee')->middleware('auth');
+});
 
 
 // ----------------------------- form holiday ------------------------------//
-Route::get('form/holidays/new', [App\Http\Controllers\HolidayController::class, 'holiday'])->middleware('auth')->name('form/holidays/new');
-Route::post('form/holidays/save', [App\Http\Controllers\HolidayController::class, 'saveRecord'])->middleware('auth')->name('form/holidays/save');
-Route::post('form/holidays/update', [App\Http\Controllers\HolidayController::class, 'updateRecord'])->middleware('auth')->name('form/holidays/update');
+
+
+Route::controller(HolidayController::class)->group(function () {
+    Route::get('form/holidays/new', 'holiday')->middleware('auth')->name('form/holidays/new');
+    Route::post('form/holidays/save', 'saveRecord')->middleware('auth')->name('form/holidays/save');
+    Route::post('form/holidays/update', 'updateRecord')->middleware('auth')->name('form/holidays/update');
+});
 
 // ----------------------------- form leaves ------------------------------//
-Route::get('form/leaves/new', [App\Http\Controllers\LeavesController::class, 'leaves'])->middleware('auth')->name('form/leaves/new');
-Route::get('form/leavesemployee/new', [App\Http\Controllers\LeavesController::class, 'leavesEmployee'])->middleware('auth')->name('form/leavesemployee/new');
-Route::post('form/leaves/save', [App\Http\Controllers\LeavesController::class, 'saveRecord'])->middleware('auth')->name('form/leaves/save');
-Route::post('form/leaves/edit', [App\Http\Controllers\LeavesController::class, 'editRecordLeave'])->middleware('auth')->name('form/leaves/edit');
-Route::post('form/leaves/edit/delete', [App\Http\Controllers\LeavesController::class, 'deleteLeave'])->middleware('auth')->name('form/leaves/edit/delete');
+
+
+Route::controller(LeavesController::class)->group(function () {
+    Route::get('form/leaves/new', 'leaves')->middleware('auth')->name('form/leaves/new');
+    Route::get('form/leavesemployee/new', 'leavesEmployee')->middleware('auth')->name('form/leavesemployee/new');
+    Route::post('form/leaves/save', 'saveRecord')->middleware('auth')->name('form/leaves/save');
+    Route::post('form/leaves/edit', 'editRecordLeave')->middleware('auth')->name('form/leaves/edit');
+    Route::post('form/leaves/edit/delete', 'deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
+});
 
 // ----------------------------- form attendance  ------------------------------//
-Route::get('form/leavesettings/page', [App\Http\Controllers\LeavesController::class, 'leaveSettings'])->middleware('auth')->name('form/leavesettings/page');
-Route::get('attendance/page', [App\Http\Controllers\LeavesController::class, 'attendanceIndex'])->middleware('auth')->name('attendance/page');
-Route::get('attendance/employee/page', [App\Http\Controllers\LeavesController::class, 'AttendanceEmployee'])->middleware('auth')->name('attendance/employee/page');
+
+Route::controller(LeavesController::class)->group(function () {
+    Route::get('form/leavesettings/page', 'leaveSettings')->middleware('auth')->name('form/leavesettings/page');
+    Route::get('attendance/page', 'attendanceIndex')->middleware('auth')->name('attendance/page');
+    Route::get('attendance/employee/page', 'AttendanceEmployee')->middleware('auth')->name('attendance/employee/page');
+});
 
 
 // ----------------------------- form payroll  ------------------------------//
-Route::get('form/salary/page', [App\Http\Controllers\PayrollController::class, 'salary'])->middleware('auth')->name('form/salary/page');
-Route::post('form/salary/save', [App\Http\Controllers\PayrollController::class, 'saveRecord'])->middleware('auth')->name('form/salary/save');
-Route::post('form/salary/update', [App\Http\Controllers\PayrollController::class, 'updateRecord'])->middleware('auth')->name('form/salary/update');
-Route::post('form/salary/delete', [App\Http\Controllers\PayrollController::class, 'deleteRecord'])->middleware('auth')->name('form/salary/delete');
-Route::get('form/salary/view/{rec_id}', [App\Http\Controllers\PayrollController::class, 'salaryView'])->middleware('auth');
-Route::get('form/payroll/items', [App\Http\Controllers\PayrollController::class, 'payrollItems'])->middleware('auth')->name('form/payroll/items');
+
+Route::controller(PayrollController::class)->group(function () {
+    Route::get('form/salary/page', 'salary')->middleware('auth')->name('form/salary/page');
+    Route::post('form/salary/save', 'saveRecord')->middleware('auth')->name('form/salary/save');
+    Route::post('form/salary/update', 'updateRecord')->middleware('auth')->name('form/salary/update');
+    Route::post('form/salary/delete', 'deleteRecord')->middleware('auth')->name('form/salary/delete');
+    Route::get('form/salary/view/{rec_id}', 'salaryView')->middleware('auth');
+    Route::get('form/payroll/items', 'payrollItems')->middleware('auth')->name('form/payroll/items');
+});
 
 // ----------------------------- reports  ------------------------------//
-Route::get('form/expense/reports/page', [App\Http\Controllers\ExpenseReportsController::class, 'index'])->middleware('auth')->name('form/expense/reports/page');
-Route::get('form/invoice/reports/page', [App\Http\Controllers\ExpenseReportsController::class, 'invoiceReports'])->middleware('auth')->name('form/invoice/reports/page');
-Route::get('form/daily/reports/page', [App\Http\Controllers\ExpenseReportsController::class, 'dailyReport'])->middleware('auth')->name('form/daily/reports/page');
-Route::get('form/leave/reports/page', [App\Http\Controllers\ExpenseReportsController::class, 'leaveReport'])->middleware('auth')->name('form/leave/reports/page');
+
+
+Route::controller(ExpenseReportsController::class)->group(function () {
+    Route::get('form/expense/reports/page', 'index')->middleware('auth')->name('form/expense/reports/page');
+    Route::get('form/invoice/reports/page', 'invoiceReports')->middleware('auth')->name('form/invoice/reports/page');
+    Route::get('form/daily/reports/page', 'dailyReport')->middleware('auth')->name('form/daily/reports/page');
+    Route::get('form/leave/reports/page', 'leaveReport')->middleware('auth')->name('form/leave/reports/page');
+});
+
 
 // -----------------------------Allowance master tables  ------------------------------//
-Route::get('masters/allowanceMaster', [App\Http\Controllers\AllowanceMaster::class, 'allowanceMasterFunc'])->middleware('auth')->name('masters/allowanceMaster');
-Route::post('masters/allowanceMaster/add', [App\Http\Controllers\AllowanceMaster::class, 'addAllowanceMaster'])->middleware('auth')->name('masters/allowanceMaster/add');
-Route::post('masters/allowanceMaster/update', [App\Http\Controllers\AllowanceMaster::class, 'updateAllowanceMaster'])->middleware('auth')->name('masters/allowanceMaster/update');
-Route::post('masters/allowanceMaster/delete', [App\Http\Controllers\AllowanceMaster::class, 'deleteAllowanceMaster'])->middleware('auth')->name('masters/allowanceMaster/delete');
+
+
+Route::controller(AllowanceMaster::class)->group(function () {
+    Route::get('masters/allowanceMaster', 'allowanceMasterFunc')->middleware('auth')->name('masters/allowanceMaster');
+    Route::post('masters/allowanceMaster/add', 'addAllowanceMaster')->middleware('auth')->name('masters/allowanceMaster/add');
+    Route::post('masters/allowanceMaster/update', 'updateAllowanceMaster')->middleware('auth')->name('masters/allowanceMaster/update');
+    Route::post('masters/allowanceMaster/delete', 'deleteAllowanceMaster')->middleware('auth')->name('masters/allowanceMaster/delete');
+});
 
 // -----------------------------Designation master tables  ------------------------------//
-Route::get('masters/designationMaster', [App\Http\Controllers\DesignationMaster::class, 'DesignationMasterFunc'])->middleware('auth')->name('masters/designationMaster');
-Route::post('masters/designationMaster/add', [App\Http\Controllers\DesignationMaster::class, 'addDesignationMaster'])->middleware('auth')->name('masters/designationMaster/add');
 
+
+Route::controller(DesignationMaster::class)->group(function () {
+    Route::get('masters/designationMaster', 'DesignationMasterFunc')->middleware('auth')->name('masters/designationMaster');
+    Route::post('masters/designationMaster/add', 'addDesignationMaster')->middleware('auth')->name('masters/designationMaster/add');
+    Route::post('masters/designationMaster/update', 'updateDesignationMaster')->middleware('auth')->name('masters/designationMaster/update');
+    Route::post('masters/designationMaster/delete', 'deleteDesignationMaster')->middleware('auth')->name('masters/designationMaster/delete');
+});
 
 // -----------------------------State master tables  ------------------------------//
-Route::get('masters/stateMaster', [App\Http\Controllers\StateController::class, 'stateMasterFunc'])->middleware('auth')->name('masters/stateMaster');
-Route::post('masters/stateMaster/add', [App\Http\Controllers\StateController::class, 'addStateMaster'])->middleware('auth')->name('masters/stateMaster/add');
+
+Route::controller(StateController::class)->group(function () {
+    Route::get('masters/stateMaster', 'stateMasterFunc')->middleware('auth')->name('masters/stateMaster');
+    Route::post('masters/stateMaster/add', 'addStateMaster')->middleware('auth')->name('masters/stateMaster/add');
+    Route::post('masters/stateMaster/update', 'updateStateMaster')->middleware('auth')->name('masters/stateMaster/update');
+    Route::post('masters/stateMaster/delete', 'deleteStateMaster')->middleware('auth')->name('masters/stateMaster/delete');
+});
 
 // -----------------------------Block master tables  ------------------------------//
-Route::get('masters/blockMaster', [App\Http\Controllers\BlockController::class, 'blockMasterFunc'])->middleware('auth')->name('masters/blockMaster');
-Route::get('/getDistrictLists/{st_id}', [BlockController::class, 'getDistrictList']);
-Route::post('masters/blockMaster/add', [App\Http\Controllers\BlockController::class, 'addBlockMaster'])->middleware('auth')->name('masters/blockMaster/add');
 
+Route::controller(BlockController::class)->group(function () {
+    Route::get('masters/blockMaster', 'blockMasterFunc')->middleware('auth')->name('masters/blockMaster');
+    Route::get('/searchDistrictLists/{st_idd}', 'searchDistrictList')->middleware('auth');
+    Route::get('/getDistrictLists/{st_idd}', 'getDistrictList')->middleware('auth');
+    Route::post('masters/blockMaster/add', 'addBlockMaster')->middleware('auth')->name('masters/blockMaster/add');
+    Route::get('/editDistrictLists/{st_idd}', 'editDistrictList')->middleware('auth');
+    Route::post('masters/blockMaster/update', 'updateBlockMaster')->middleware('auth')->name('masters/blockMaster/update');
+    Route::post('masters/blockMaster/delete', 'deleteBlockMaster')->middleware('auth')->name('masters/blockMaster/delete');
+});
 
 // -----------------------------Post master tables  ------------------------------//
-Route::get('masters/postMaster', [App\Http\Controllers\PostController::class, 'postMasterFunc'])->middleware('auth')->name('masters/postMaster');
-Route::post('masters/postMaster/add', [App\Http\Controllers\PostController::class, 'addPostMaster'])->middleware('auth')->name('masters/postMaster/add');
-Route::post('masters/postMaster/update', [App\Http\Controllers\PostController::class, 'updatePostMaster'])->middleware('auth')->name('masters/postMaster/update');
+
+Route::controller(PostController::class)->group(function () {
+    Route::get('/masters/postMaster', 'postMasterFunc')->middleware('auth')->name('masters/postMaster');
+    Route::post('/masters/postMaster/add', 'addPostMaster')->middleware('auth')->name('masters/postMaster/add');
+    Route::post('/masters/postMaster/update', 'updatePostMaster')->middleware('auth')->name('masters/postMaster/update');
+    Route::post('/masters/postMaster/delete', 'deletePostMaster')->middleware('auth')->name('masters/postMaster/delete');
+});

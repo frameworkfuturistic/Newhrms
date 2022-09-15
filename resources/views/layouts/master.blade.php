@@ -160,8 +160,9 @@
 								@if (Auth::user()->role_name=='Admin')
 								<li><a class="@yield('dashboard_active')" href="{{ route('home') }}">Admin Dashboard</a></li>
 								@endif
-
+								@if (Auth::user()->role_name=='Employee')
 								<li><a class="@yield('emp_dashboard_active')" href="{{ route('em/dashboard') }}">Employee Dashboard</a></li>
+								@endif
 							</ul>
 
 						</li>
@@ -190,21 +191,27 @@
 							<ul style="display: none;">
 								<li><a class="@yield('profile_active')" href="{{ route('profile_user') }}">My Profile</a></li>
 								<li><a class="@yield('add_user_active')" href="{{ route('userManagement/addUser') }}">Complete Profile</a></li>
-								<li><a class="@yield('holiday_active')" href="{{ route('form/holidays/new') }}">Holidays</a></li>
 								@if (Auth::user()->role_name=='Admin')
+								<li><a class="@yield('holiday_active')" href="{{ route('form/holidays/new') }}">Holidays</a></li>
+
 								<li><a class="@yield('leave_ad_active')" href="{{ route('form/leaves/new') }}">Leaves (Admin)
 										<span class="badge badge-pill bg-primary float-right">1</span></a>
 								</li>
 								@endif
+								@if (Auth::user()->role_name=='Employee')
 								<li><a class="@yield('leave_emp_active')" href="{{route('form/leavesemployee/new')}}">Leaves (Employee)</a></li>
+								@endif
 								@if (Auth::user()->role_name=='Admin')
 								<li><a class="@yield('leave_setting_active')" href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
 
 								<li><a class="@yield('att_ad')" href="{{ route('attendance/page') }}">Attendance (Admin)</a></li>
 								@endif
+								@if (Auth::user()->role_name=='Employee')
 								<li><a class="@yield('att_admin_active')" href="{{ route('attendance/employee/page') }}">Attendance (Employee)</a></li>
+								@endif
 							</ul>
 						</li>
+						@if (Auth::user()->role_name=='Admin')
 						<li class="menu-title"> <span>HR</span> </li>
 						<li class="submenu"> <a href="#" class="@yield('pay_noti')"><i class="la la-money"></i>
 								<span> Payroll </span> <span class="menu-arrow"></span></a>
@@ -214,6 +221,8 @@
 								<li><a class="@yield('pay_item_active')" href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
 							</ul>
 						</li>
+						@endif
+						@if (Auth::user()->role_name=='Admin')
 						<li class="submenu"> <a href="#" class="@yield('report_noti')"><i class="la la-pie-chart"></i>
 								<span> Reports </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
@@ -225,6 +234,7 @@
 								<li><a class="@yield('daily_active')" href="{{ route('form/daily/reports/page') }}"> Daily Report </a></li>
 							</ul>
 						</li>
+						@endif
 						@if (Auth::user()->role_name=='Admin')
 						<li class="submenu"> <a href="#" class="@yield('masters_noti')"><i class="la la-pie-chart"></i>
 								<span> Master Tables </span> <span class="menu-arrow"></span></a>

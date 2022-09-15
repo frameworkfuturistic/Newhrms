@@ -46,21 +46,14 @@ active
                                     <div class="col-md-5">
                                         <div class="profile-info-left">
                                             <h3 class="user-name m-t-0 mb-0">{{ Auth::user()->name }}</h3>
-                                            <h6 class="text-muted">{{ Auth::user()->department }}</h6>
-                                            <small class="text-muted">{{ Auth::user()->position }}</small>
+                                            <small class="text-muted">{{ $design_name[0]->design_name }}</small>
                                             <div class="staff-id">Employee ID : {{ Auth::user()->rec_id }}</div>
                                             <div class="small doj text-muted">Date of Join : {{ Auth::user()->join_date }}</div>
-                                            <div class="staff-msg"><a class="btn btn-custom" href="chat.html">Send Message</a></div>
+                                            <div class="staff-msg"><a class="btn btn-custom" href="#">Send Message</a></div>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <ul class="personal-info">
-                                            @if(!empty($information->phone_number))
-                                            <li>
-                                                <div class="title">Phone:</div>
-                                                <div class="text"><a href="">{{ Auth::user()->phone_number }}</a></div>
-                                            </li>
-                                            @endif
                                             <li>
                                                 <div class="title">Email:</div>
                                                 <div class="text"><a href="">{{ Auth::user()->email }}</a></div>
@@ -87,7 +80,7 @@ active
                                             <li>
                                                 @if(!empty($information->present_state))
                                                 <div class="title">State:</div>
-                                                <div class="text">{{ $information->present_state }}</div>
+                                                <div class="text">{{ $state_name[0]->state_name }}</div>
                                                 @else
                                                 <div class="title">State:</div>
                                                 <div class="text">N/A</div>
@@ -95,7 +88,7 @@ active
                                             </li>
                                             @else
                                             <li>
-                                                <div class="title">Phone:</div>
+                                                <div class="title">Email:</div>
                                                 <div class="text">N/A</div>
                                             </li>
                                             <li>
@@ -115,7 +108,7 @@ active
                                     </div>
                                 </div>
                             </div>
-                            <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
+                            <!-- <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div> -->
                         </div>
                     </div>
                 </div>
@@ -141,29 +134,45 @@ active
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Personal Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                <h3 class="card-title">
+                                    Personal Informations
+                                    <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a> -->
+                                </h3>
                                 <ul class="personal-info">
-
+                                    @if(!empty($information))
                                     <li>
+                                        @if(!empty($information->personal_contact))
                                         <div class="title">Personal Contact</div>
                                         <div class="text">{{ $information->personal_contact }}</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->personal_contact))
+                                        <div class="title">Alternative Contact</div>
+                                        <div class="text">{{ $information->alternative_contact }}</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->aadhar_no))
+                                        <div class="title">Aadhar Number</div>
+                                        <div class="text">{{ $information->aadhar_no }}</div>
+                                        @endif
+                                    </li>
+                                    @else
+                                    <li>
+                                        <div class="title">Personal Contact</div>
+                                        <div class="text">N/A</div>
                                     </li>
                                     <li>
                                         <div class="title">Alternative Contact</div>
-                                        <div class="text">{{ $information->alternative_contact }}</div>
-                                    </li>
-                                    <li>
-                                        <div class="title">Marital status</div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Employment of spouse</div>
+                                        <div class="title">Aadhar Number</div>
                                         <div class="text">N/A</div>
                                     </li>
-                                    <li>
-                                        <div class="title">No. of children</div>
-                                        <div class="text">N/A</div>
-                                    </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -171,37 +180,53 @@ active
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a></h3>
+                                <h3 class="card-title">Emergency Contact
+                                    <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a> -->
+                                </h3>
                                 <h5 class="section-title">Primary</h5>
                                 <ul class="personal-info">
+                                    @if(!empty($information))
                                     <li>
+                                        @if(!empty($information->emerg_con_per_name))
                                         <div class="title">Name</div>
                                         <div class="text">{{ $information->emerg_con_per_name }}</div>
+                                        @else
+                                        <div class="title">Name</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->emerg_con_per_rel))
+                                        <div class="title">Relationship</div>
+                                        <div class="text">{{ $information->emerg_con_per_rel }}</div>
+                                        @else
+                                        <div class="title">Relationship</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->emerg_con_per_add))
+                                        <div class="title">Address </div>
+                                        <div class="text">{{ $information->emerg_con_per_add }}</div>
+                                        @else
+                                        <div class="title">Address</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    @else
+                                    <li>
+                                        <div class="title">Name</div>
+                                        <div class="text">N/A</div>
                                     </li>
                                     <li>
                                         <div class="title">Relationship</div>
-                                        <div class="text">{{ $information->emerg_con_per_rel }}</div>
+                                        <div class="text">N/A</div>
                                     </li>
                                     <li>
                                         <div class="title">Address </div>
-                                        <div class="text">{{ $information->emerg_con_per_add }}</div>
-                                    </li>
-                                </ul>
-                                <hr>
-                                <h5 class="section-title">Secondary</h5>
-                                <ul class="personal-info">
-                                    <li>
-                                        <div class="title">Name</div>
                                         <div class="text">N/A</div>
                                     </li>
-                                    <li>
-                                        <div class="title">Relationship</div>
-                                        <div class="text">N/A</div>
-                                    </li>
-                                    <li>
-                                        <div class="title">Phone </div>
-                                        <div class="text">N/A</div>
-                                    </li>
+                                    @endif
                                 </ul>
                             </div>
                         </div>
@@ -236,7 +261,9 @@ active
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Family Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                <h3 class="card-title">Family Informations
+                                    <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a> -->
+                                </h3>
                                 <div class="table-responsive">
                                     <table class="table table-nowrap">
                                         <thead>
@@ -275,7 +302,9 @@ active
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Education Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#education_info"><i class="fa fa-pencil"></i></a></h3>
+                                <h3 class="card-title">Education Informations
+                                    <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#education_info"><i class="fa fa-pencil"></i></a> -->
+                                </h3>
                                 <div class="experience-box">
                                     <ul class="experience-list">
                                         <li>
@@ -310,7 +339,9 @@ active
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Experience <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a></h3>
+                                <h3 class="card-title">Experience
+                                    <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a> -->
+                                </h3>
                                 <div class="experience-box">
                                     <ul class="experience-list">
                                         <li>
@@ -578,12 +609,6 @@ active
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Country</label>
-                                    <input type="text" class="form-control" id="" name="present_country" value="{{ $information->present_country }}">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label>Pin Code</label>
                                     <input type="text" class="form-control" id="present_pin" name="present_pin" value="{{ $information->present_pin }}">
                                 </div>
@@ -591,7 +616,7 @@ active
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Phone Number</label>
-                                    <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $information->phone_number }}">
+                                    <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ $information->cug_no }}">
                                 </div>
                             </div>
 

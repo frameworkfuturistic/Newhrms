@@ -92,7 +92,7 @@ active
                                 <td class="id">{{ $user->rec_id }}</td>
                                 <td class="email">{{ $user->email }}</td>
                                 <td class="position">{{ $user->position }}</td>
-                                <td class="phone_number">{{ $user->phone_number }}</td>
+                                <td class="phone_number">{{ $user->cug_no }}</td>
                                 <td>{{ $user->join_date }}</td>
                                 <td>
                                     @if ($user->role_name=='Admin')

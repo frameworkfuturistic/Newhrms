@@ -14,17 +14,17 @@ class PayrollController extends Controller
     {
 
         $users = DB::table('users')
-                    ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
-                    ->select('users.*', 'staff_salaries.*')
-                    ->get(); 
+            ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
+            ->select('users.*', 'staff_salaries.*')
+            ->get();
         $userList = DB::table('users')->get();
         $permission_lists = DB::table('permission_lists')->get();
-        return view('payroll.employeesalary',compact('users','userList','permission_lists'));
+        return view('payroll.employeesalary', compact('users', 'userList', 'permission_lists'));
     }
 
     // save record
-     public function saveRecord(Request $request)
-     {
+    public function saveRecord(Request $request)
+    {
         $request->validate([
             'name'         => 'required|string|max:255',
             'salary'       => 'required|string|max:255',
@@ -61,34 +61,33 @@ class PayrollController extends Controller
             $salary->prof_tax          = $request->prof_tax;
             $salary->labour_welfare    = $request->labour_welfare;
             $salary->save();
-    
+
             DB::commit();
-            Toastr::success('Create new Salary successfully :)','Success');
+            Toastr::success('Create new Salary successfully :)', 'Success');
             return redirect()->back();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Add Salary fail :)','Error');
+            Toastr::error('Add Salary fail :)', 'Error');
             return redirect()->back();
         }
-     }
+    }
 
     // salary view detail
     public function salaryView($rec_id)
     {
         $users = DB::table('users')
-                ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
-                ->join('profile_information', 'users.rec_id', '=', 'profile_information.rec_id')
-                ->select('users.*', 'staff_salaries.*','profile_information.*')
-                ->where('staff_salaries.rec_id',$rec_id)
-                ->first();
-        return view('payroll.salaryview',compact('users'));
+            ->join('staff_salaries', 'users.rec_id', '=', 'staff_salaries.rec_id')
+            ->select('users.*', 'staff_salaries.*')
+            ->where('staff_salaries.rec_id', $rec_id)
+            ->first();
+        return view('payroll.salaryview', compact('users'));
     }
 
     // update record
     public function updateRecord(Request $request)
     {
         DB::beginTransaction();
-        try{
+        try {
             $update = [
 
                 'id'      => $request->id,
@@ -109,14 +108,13 @@ class PayrollController extends Controller
             ];
 
 
-            StaffSalary::where('id',$request->id)->update($update);
+            StaffSalary::where('id', $request->id)->update($update);
             DB::commit();
-            Toastr::success('Salary updated successfully :)','Success');
+            Toastr::success('Salary updated successfully :)', 'Success');
             return redirect()->back();
-
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Salary update fail :)','Error');
+            Toastr::error('Salary update fail :)', 'Error');
             return redirect()->back();
         }
     }
@@ -130,12 +128,11 @@ class PayrollController extends Controller
             StaffSalary::destroy($request->id);
 
             DB::commit();
-            Toastr::success('Salary deleted successfully :)','Success');
+            Toastr::success('Salary deleted successfully :)', 'Success');
             return redirect()->back();
-            
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Salary deleted fail :)','Error');
+            Toastr::error('Salary deleted fail :)', 'Error');
             return redirect()->back();
         }
     }

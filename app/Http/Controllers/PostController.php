@@ -7,7 +7,7 @@ use App\Models\MasterEmployeeType;
 use App\Models\MasterPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Toastr;
+use Brian2694\Toastr\Facades\Toastr;
 
 class PostController extends Controller
 {
@@ -37,7 +37,7 @@ class PostController extends Controller
             $post_master->save();
 
             DB::commit();
-            Toastr::success('Allowance is successfully added :)', 'Success');
+            Toastr::success('Post is successfully added :)', 'Success');
             return redirect()->route('masters/postMaster');
         } catch (\Exception $e) {
             DB::rollback();
@@ -69,6 +69,21 @@ class PostController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Post update fail :)', 'Error');
+            return redirect()->back();
+        }
+    }
+
+    //Delete Post
+
+    public function deletePostMaster(Request $req)
+    {
+        try {
+            MasterPost::destroy($req->post_id);
+            Toastr::success('Post deleted successfully :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Post deletion failed :)', 'Error');
             return redirect()->back();
         }
     }

@@ -12,6 +12,8 @@ active
 
 <!-- Page Wrapper -->
 <div class="page-wrapper">
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Content -->
     <div class="content container-fluid">
         <div class="row">
@@ -22,7 +24,6 @@ active
                     </div>
                     <div class="welcome-det">
                         <h3>Welcome, {{ Auth::user()->name }}</h3>
-                        <p>{{ $todayDate }}</p>
                     </div>
                 </div>
             </div>

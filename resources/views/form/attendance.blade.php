@@ -118,8 +118,8 @@ active
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
-                                        <a href="profile.html">John Doe</a>
+                                        <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.png') }}"></a>
+                                        <a href="profile.html">Ajay Singh</a>
                                     </h2>
                                 </td>
                                 <td><i class="fa fa-check text-success"></i></td>
@@ -177,8 +177,8 @@ active
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
-                                        <a href="profile.html">Richard Miles</a>
+                                        <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.png') }}"></a>
+                                        <a href="profile.html">Rohit Kumar</a>
                                     </h2>
                                 </td>
                                 <td><i class="fa fa-check text-success"></i></td>

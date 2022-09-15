@@ -11,6 +11,8 @@ active
 @section('content')
 
 <div class="page-wrapper">
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
@@ -22,7 +24,7 @@ active
                             <img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
                         </div>
                         <div class="welcome-det">
-                            <h3>Welcome, {{ Auth::user()->name }}</h3>
+                            <h3>Welcome, Admin {{ Auth::user()->name }}</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ul>

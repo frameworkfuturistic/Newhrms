@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('department_email')->unique()->nullable();
             $table->string('join_date')->nullable();
-            $table->string('phone_number')->nullable();
             $table->string('org_id')->nullable();
             $table->string('office_id')->nullable();
             $table->string('emp_type_id')->nullable();
@@ -45,11 +44,9 @@ class CreateUsersTable extends Migration
             $table->string('present_city')->nullable();
             $table->string('present_state')->nullable();
             $table->string('present_pin')->nullable();
-            $table->string('present_country')->nullable();
             $table->string('permanent_city')->nullable();
             $table->string('permanent_state')->nullable();
             $table->string('permanent_pin')->nullable();
-            $table->string('permanent_country')->nullable();
             $table->string('personal_contact')->nullable();
             $table->string('alternative_contact')->nullable();
             $table->string('emergency_contact')->nullable();
@@ -67,10 +64,20 @@ class CreateUsersTable extends Migration
             $table->string('pro_qua_degree')->nullable();
             $table->string('pro_qua_subject')->nullable();
             $table->string('pro_qua_duration')->nullable();
-            $table->string('pro_qua_city')->nullable();
             $table->string('pro_qua_year')->nullable();
             $table->string('pro_qua_ind_certi')->nullable();
             $table->string('tech_skill')->nullable();
+            $table->string('skill_duration')->nullable();
+            $table->string('organ_name')->nullable();
+
+            $table->string('job_profile')->nullable();
+            $table->string('organ_type')->nullable();
+            $table->string('supp_doc_upload')->nullable();
+            $table->string('eff_from_date')->nullable();
+            $table->string('eff_to_date')->nullable();
+            $table->string('fam_relation')->nullable();
+            $table->string('full_name')->nullable();
+
             $table->string('position')->nullable();
             $table->string('department')->nullable();
             $table->timestamp('email_verified_at')->nullable();

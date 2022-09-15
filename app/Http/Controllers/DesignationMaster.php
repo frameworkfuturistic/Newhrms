@@ -14,13 +14,6 @@ class DesignationMaster extends Controller
         $designation_data = DB::table('master_designations')->select('designation_id', 'designation_name', 'designation_code')->get();
         $post = DB::table('master_posts')->select('post_id', 'post_title')->get();
 
-
-        //select i.post_title, m.designation_name, m.designation_code from master_posts i left join master_designation m on m.post_id = i.post_id;
-
-        // DB::table('master_posts')->select('i.post_title, m.designation_name, m.designation_code')
-
-        //＄users = DB::table('master_posts')->select()->leftJoin('posts', 'users.id', '=', 'posts.user_id')->get();
-
         return view('masters.designation-master', ['designation_datas' => $designation_data, 'posts' => $post]);
     }
 
@@ -47,6 +40,48 @@ class DesignationMaster extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Something is wrong :)', 'Error');
+            return redirect()->back();
+        }
+    }
+
+    //Update Designation 
+
+    public function updateDesignationMaster(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $designation_name  = $request->designation_name;
+            $designation_code  = $request->designation_code;
+            $post_id  = $request->post_id;
+
+            $update = [
+                'designation_name' => $designation_name,
+                'designation_code' => $designation_code,
+                'post_id' => $post_id
+            ];
+
+            MasterDesignation::where('designation_id', $request->designation_id)->update($update);
+            DB::commit();
+            Toastr::success('Designation updated successfully :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Designation update fail :)', 'Error');
+            return redirect()->back();
+        }
+    }
+
+    //Delete Designation
+
+    public function deleteDesignationMaster(Request $req)
+    {
+        try {
+            MasterDesignation::destroy($req->designation_id);
+            Toastr::success('Designation deleted successfully :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Designation deletion failed :)', 'Error');
             return redirect()->back();
         }
     }

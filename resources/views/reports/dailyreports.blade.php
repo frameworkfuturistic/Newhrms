@@ -28,9 +28,6 @@ active
                         <li class="breadcrumb-item active">Daily Report</li>
                     </ul>
                 </div>
-                <div class="col-auto">
-                    <a href="#" class="btn btn-primary">PDF</a>
-                </div>
             </div>
         </div>
         <!-- /Page Header -->
@@ -128,63 +125,11 @@ active
                                 <td>
                                     <h2 class="table-avatar">
                                         <a href="profile.html" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}"></a>
-                                        <a href="profile.html">John Doe <span>#0001</span></a>
+                                        <a href="profile.html">Rakesh Prakash <span>#0001</span></a>
                                     </h2>
                                 </td>
-                                <td>20 Dec 2020</td>
+                                <td>20 Dec 2022</td>
                                 <td>Design</td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-info btn-sm">Week off</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
-                                        <a href="profile.html">Richard Miles <span>#0002</span></a>
-                                    </h2>
-                                </td>
-                                <td>20 Dec 2020</td>
-                                <td>Web Developer</td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-danger btn-sm">Absent</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-10.jpg') }}"></a>
-                                        <a href="profile.html">John Smith <span>#003</span></a>
-                                    </h2>
-                                </td>
-                                <td>20 Dec 2020</td>
-                                <td>Android Developer</td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-info btn-sm">Week off</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-05.jpg') }}"></a>
-                                        <a href="profile.html">Mike Litorus <span>#004</span></a>
-                                    </h2>
-                                </td>
-                                <td>20 Dec 2020</td>
-                                <td>IOS Developer</td>
-                                <td class="text-center">
-                                    <button class="btn btn-outline-info btn-sm">Week off</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-11.jpg') }}"></a>
-                                        <a href="profile.html">Wilmer Deluna <span>#005</span></a>
-                                    </h2>
-                                </td>
-                                <td>20 Dec 2020</td>
-                                <td>Team Leader</td>
                                 <td class="text-center">
                                     <button class="btn btn-outline-info btn-sm">Week off</button>
                                 </td>

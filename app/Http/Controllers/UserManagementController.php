@@ -11,16 +11,19 @@ use App\Models\Form;
 use App\Models\ProfileInformation;
 use App\Rules\MatchOldPassword;
 use Carbon\Carbon;
-use Session;
-use Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailService;
 use App\Models\Master_organisation;
 use App\Models\MasterDesignation;
+use App\Models\MasterEmployeeType;
 use App\Models\MasterOfficeList;
 use App\Models\MasterPost;
+use App\Models\MasterStates;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class UserManagementController extends Controller
 {
@@ -88,7 +91,218 @@ class UserManagementController extends Controller
     //add user
     public function addUserForm()
     {
-        return view('usermanagement.add_user');
+        $state['data'] = MasterStates::orderby("state_id", "asc")->select('state_id', 'state_name')->get();
+        return view('usermanagement.add_user', compact('state'));
+    }
+
+    public function saveProfileData(Request $request)
+    {
+        // dd($request->all());
+
+        $request->validate([
+            'aadhar_no' => 'required|unique:users',
+            'aadhar_card' => 'required',
+            'pan_no' => 'required',
+            'pan_card' => 'required',
+            'dl' => 'nullable',
+            'passport' => 'nullable',
+            'voter_id' => 'nullable',
+            'uan' => 'nullable',
+            'present_state' => 'required',
+            'present_city' => 'required',
+            'present_pin' => 'required',
+            'permanent_state' => 'required',
+            'permanent_city' => 'required',
+            'permanent_pin' => 'required',
+            'personal_contact' => 'required',
+            'alternative_contact' => 'required',
+            'emergency_contact' => 'required',
+            'emerg_con_per_name' => 'required',
+            'emerg_con_per_rel' => 'required',
+            'emerg_con_per_add' => 'required',
+            'edu_qua_course_name' => 'required',
+            'edu_qua_stream' => 'required',
+            'edu_qua_board' => 'required',
+            'edu_qua_passing_year' => 'required',
+            'edu_qua_percentage' => 'required',
+            'edu_qua_certi_upload' => 'required',
+            'pro_qua_university_name' => 'required',
+            'pro_qua_degree' => 'required',
+            'pro_qua_subject' => 'required',
+            'pro_qua_duration' => 'required',
+            'pro_qua_ind_certi' => 'required',
+            'pro_qua_year' => 'required',
+            'skill_name' => 'required',
+            'skill_duration' => 'required',
+            'skill_certi' => 'required',
+            'organ_name' => 'required',
+            'job_profile' => 'required',
+            'organ_type' => 'required',
+            'supp_doc_upload' => 'required',
+            'eff_from_date' => 'required',
+            'eff_to_date' => 'required',
+            'fam_relation' => 'required',
+            'full_name' => 'required'
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $id           = $request->user_id;
+
+            $aadhar_no = $request->aadhar_no;
+            $aadhar_card_image = $request->aadhar_no . '.' . $request->aadhar_card->extension();
+            $request->aadhar_card->move(public_path('assets/User_aadhar_card'), $aadhar_card_image);
+
+            $pan_no = $request->pan_no;
+            $pan_card_image = $request->pan_no . '.' . $request->pan_card->extension();
+            $request->pan_card->move(public_path('assets/User_pan_card'), $pan_card_image);
+
+            if ($request->dl != null) {
+                $driving_licence_image = $id . '.' . $request->dl->extension();
+                $request->dl->move(public_path('assets/User_driving_licence'), $driving_licence_image);
+            }
+
+            if ($request->passport != null) {
+                $passport_image = $id . '.' . $request->passport->extension();
+                $request->passport->move(public_path('assets/User_passport'), $passport_image);
+            }
+
+            if ($request->voter_id != null) {
+                $voter_id_image = $id . '.' . $request->voter_id->extension();
+                $request->voter_id->move(public_path('assets/User_voter_id'), $voter_id_image);
+            }
+
+            if ($request->uan != null) {
+                $uan_image = $id . '.' . $request->uan->extension();
+                $request->uan->move(public_path('assets/User_uan'), $uan_image);
+            }
+
+            $present_state = $request->present_state;
+            $present_city = $request->present_city;
+            $present_pin = $request->present_pin;
+            $permanent_state = $request->permanent_state;
+            $permanent_city = $request->permanent_city;
+            $permanent_pin = $request->permanent_pin;
+            $personal_contact = $request->personal_contact;
+            $alternative_contact = $request->alternative_contact;
+            $emergency_contact = $request->emergency_contact;
+            $emerg_con_per_name = $request->emerg_con_per_name;
+            $emerg_con_per_rel = $request->emerg_con_per_rel;
+            $emerg_con_per_add = $request->emerg_con_per_add;
+            $edu_qua_course_name = $request->edu_qua_course_name;
+            $edu_qua_stream = $request->edu_qua_stream;
+            $edu_qua_board = $request->edu_qua_board;
+            $edu_qua_passing_year = $request->edu_qua_passing_year;
+            $edu_qua_percentage = $request->edu_qua_percentage;
+
+            $edu_qua_certi_image = $id . '.' . $request->edu_qua_certi_upload->extension();
+            $request->edu_qua_certi_upload->move(public_path('assets/User_edu_qua_certi'), $edu_qua_certi_image);
+
+            $pro_qua_university_name = $request->pro_qua_university_name;
+            $pro_qua_degree = $request->pro_qua_degree;
+            $pro_qua_subject = $request->pro_qua_subject;
+            $pro_qua_duration = $request->pro_qua_duration;
+
+            $pro_qua_ind_certi_image = $id . '.' . $request->pro_qua_ind_certi->extension();
+            $request->pro_qua_ind_certi->move(public_path('assets/User_pro_qua_ind'), $pro_qua_ind_certi_image);
+
+            $pro_qua_year = $request->pro_qua_year;
+            $skill_name = $request->skill_name;
+            $skill_duration = $request->skill_duration;
+
+            $skill_certi_image = $id . '.' . $request->skill_certi->extension();
+            $request->skill_certi->move(public_path('assets/User_skill_certi'), $skill_certi_image);
+
+            $organ_name = $request->organ_name;
+
+            $job_profile_image = $id . '.' . $request->job_profile->extension();
+            $request->job_profile->move(public_path('assets/User_job_profile'), $job_profile_image);
+
+            $organ_type = $request->organ_type;
+
+            $supp_doc_image = $id . '.' . $request->supp_doc_upload->extension();
+            $request->supp_doc_upload->move(public_path('assets/User_supp_doc'), $supp_doc_image);
+
+            $eff_from_date = $request->eff_from_date;
+            $eff_to_date = $request->eff_to_date;
+            $fam_relation = $request->fam_relation;
+            $full_name = $request->full_name;
+
+            if ($request->dl != null) {
+                $update_dl = ['driving_licence' => $driving_licence_image];
+                User::where('id', $id)->update($update_dl);
+            } elseif ($request->passport != null) {
+                $update_pass = ['passport' => $passport_image];
+                User::where('id', $id)->update($update_pass);
+            } elseif ($request->voter_id != null) {
+                $update_voter_card = ['voter_card' => $voter_id_image];
+                User::where('id', $id)->update($update_voter_card);
+            } elseif ($request->uan != null) {
+                $update_uan = ['uan_no' => $uan_image];
+                User::where('id', $id)->update($update_uan);
+            }
+
+            $update = [
+                'aadhar_no' => $aadhar_no,
+                'aadhar_card' => $aadhar_card_image,
+                'pan_no' => $pan_no,
+                'pan_card' => $pan_card_image,
+                'present_state' => $present_state,
+                'present_city' => $present_city,
+                'present_pin' => $present_pin,
+                'permanent_state' => $permanent_state,
+                'permanent_city' => $permanent_city,
+                'permanent_pin' => $permanent_pin,
+                'personal_contact' => $personal_contact,
+                'alternative_contact' => $alternative_contact,
+                'emergency_contact' => $emergency_contact,
+                'emerg_con_per_name' => $emerg_con_per_name,
+                'emerg_con_per_rel' => $emerg_con_per_rel,
+                'emerg_con_per_add' => $emerg_con_per_add,
+                'edu_qua_course_name' => $edu_qua_course_name,
+                'edu_qua_stream' => $edu_qua_stream,
+                'edu_qua_board' => $edu_qua_board,
+                'edu_qua_passing_year' => $edu_qua_passing_year,
+                'edu_qua_percentage' => $edu_qua_percentage,
+                'edu_qua_certi_upload' => $edu_qua_certi_image,
+                'pro_qua_university_name' => $pro_qua_university_name,
+                'pro_qua_degree' => $pro_qua_degree,
+                'pro_qua_subject' => $pro_qua_subject,
+                'pro_qua_duration' => $pro_qua_duration,
+                'pro_qua_ind_certi' => $pro_qua_ind_certi_image,
+                'pro_qua_year' => $pro_qua_year,
+                'tech_skill' => $skill_name,
+                'skill_duration' => $skill_duration,
+                'organ_name' => $organ_name,
+                'job_profile' => $job_profile_image,
+                'organ_type' => $organ_type,
+                'supp_doc_upload' => $supp_doc_image,
+                'eff_from_date' => $eff_from_date,
+                'eff_to_date' => $eff_to_date,
+                'fam_relation' => $fam_relation,
+                'full_name' => $full_name
+
+            ];
+
+            User::where('id', $id)->update($update);
+            DB::commit();
+            return back()->with(Toastr::success('Profile Information Saved successfully :)', 'Success'));
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Add Profile Information fail :)', 'Error');
+            return redirect()->back();
+        }
+    }
+
+    // Fetch office list through Ajax for add-user page
+    public function officeList($org_idd = 0)
+    {
+        $orgData['data'] = MasterOfficeList::orderby("office_id", "asc")
+            ->select('office_id', 'office_name')
+            ->where('org_id', $org_idd)
+            ->get();
+
+        return response()->json($orgData);
     }
 
     // search user
@@ -181,18 +395,25 @@ class UserManagementController extends Controller
 
         $user = DB::table('users')->get();
         $employees = DB::table('users')->where('id', $profile)->first();
+        $design_name = DB::select("SELECT m.designation_name as design_name
+        FROM users u 
+        LEFT JOIN master_designations m ON m.designation_id = u.designation
+        WHERE rec_id = 'KHM_0000000003' ");
+        $state_name = DB::select("SELECT s.state_name FROM users u 
+        LEFT JOIN master_states s ON s.state_id = u.present_state
+        WHERE rec_id = 'KHM_0000000003' ");
 
         if (empty($employees)) {
             $information = DB::table('users')->where('id', $profile)->first();
-            return view('usermanagement.profile_user', compact('information', 'user'));
+            return view('usermanagement.profile_user', compact('information', 'user', 'design_name', 'state_name'));
         } else {
             $id = $employees->id;
             if ($id == $profile) {
                 $information = DB::table('users')->where('id', $profile)->first();
-                return view('usermanagement.profile_user', compact('information', 'user'));
+                return view('usermanagement.profile_user', compact('information', 'user', 'design_name', 'state_name'));
             } else {
                 $information = User::all();
-                return view('usermanagement.profile_user', compact('information', 'user'));
+                return view('usermanagement.profile_user', compact('information', 'user', 'design_name', 'state_name'));
             }
         }
     }
@@ -293,8 +514,8 @@ class UserManagementController extends Controller
             $user->position     = $request->position;
             $user->avatar       = $image;
             $user->designation       = $request->designation;
-            $random = str_shuffle('abcdefghjklmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ234567890!$%^&!$%^&');
-            $password = substr($random, 0, 10);
+            $user->cug_no       = $request->cug_no;
+            $password = Str::random(6);
             $user->password     = Hash::make($password);
             $user->save();
             DB::commit();
@@ -388,11 +609,10 @@ class UserManagementController extends Controller
         $user = Auth::User();
         Session::put('user', $user);
         $user = Session::get('user');
+        $deleted = User::select('email', 'cug_no')->where('id', $request->id)->first();
         DB::beginTransaction();
         try {
-            $fullName     = $user->name;
             $email        = $user->email;
-            $phone_number = $user->phone_number;
             $status       = $user->status;
             $role_name    = $user->role_name;
 
@@ -401,18 +621,18 @@ class UserManagementController extends Controller
 
             $activityLog = [
 
-                'user_name'    => $fullName,
-                'email'        => $email,
-                'phone_number' => $phone_number,
+                'user_name'    => $email,
+                'email'        => $deleted->email,
                 'status'       => $status,
                 'role_name'    => $role_name,
+                'phone_number' => $deleted->cug_no,
                 'modify_user'  => 'Delete',
                 'date_time'    => $todayDate,
             ];
 
             DB::table('user_activity_logs')->insert($activityLog);
 
-            if ($request->avatar == 'photo_defaults.jpg') {
+            if ($request->avatar != null) {
                 User::destroy($request->id);
             } else {
                 User::destroy($request->id);

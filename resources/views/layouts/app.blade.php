@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
     <script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
     <script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
+
+    @yield('links')
+
 </head>
 
 <body class="account-page error-page">

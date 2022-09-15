@@ -14,7 +14,7 @@
                     <p class="account-subtitle">Access to our dashboard</p>
 
                     <!-- Account Form -->
-                    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('registerData') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label>Username</label>

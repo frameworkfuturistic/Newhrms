@@ -11,7 +11,7 @@ class StateController extends Controller
 {
     public function stateMasterFunc()
     {
-        $state_data = DB::table('master_states')->select('state_id', 'state_name', 'state_code', 'org_id')->get();
+        $state_data = DB::table('master_states')->select('state_id', 'state_name', 'state_code')->get();
         return view('masters.state-master', ['state_datas' => $state_data]);
     }
 
@@ -40,10 +40,44 @@ class StateController extends Controller
             return redirect()->back();
         }
     }
+
+    //Update State 
+
+    public function updateStateMaster(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $state_name  = $request->state_name;
+            $state_code  = $request->state_code;
+
+            $update = [
+                'state_name' => $state_name,
+                'state_code' => $state_code
+            ];
+
+            MasterStates::where('state_id', $request->state_id)->update($update);
+            DB::commit();
+            Toastr::success('State updated successfully :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('State update fail :)', 'Error');
+            return redirect()->back();
+        }
+    }
+
+    //Delete State
+
+    public function deleteStateMaster(Request $req)
+    {
+        try {
+            MasterStates::destroy($req->state_id);
+            Toastr::success('State deleted successfully :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('State deletion failed :)', 'Error');
+            return redirect()->back();
+        }
+    }
 }
-
-
-
-// $post = DB::table('master_posts')->select('post_id', 'post_title')->get();
-
-// $allDatas = $designation_data->merge($post);

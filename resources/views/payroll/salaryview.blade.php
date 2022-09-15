@@ -33,12 +33,12 @@
                                 <div class="row">
                                     <div class="col-sm-6 m-b-20">
                                         @if(!empty($users->avatar))
-                                        <img src="{{ URL::to('/assets/images/'. $users->avatar) }}" class="inv-logo" alt="{{ $users->name }}">
+                                        <img src="{{ URL::to('/assets/employee_image/'. $users->avatar) }}" class="inv-logo" alt="{{ $users->name }}">
                                         @endif
                                         <ul class="list-unstyled mb-0">
                                             <li>{{ $users->name }}</li>
-                                            <li>{{ $users->address }}</li>
-                                            <li>{{ $users->country }}</li>
+                                            <li>{{ $users->present_city }}</li>
+                                            <li>{{ $users->present_country }}</li>
                                         </ul>
                                     </div>
                                     <div class="col-sm-6 m-b-20">
@@ -76,19 +76,19 @@
                                                     $Total_Earnings   = $a + $b + $c + $e;
                                                     ?>
                                                     <tr>
-                                                        <td><strong>Basic Salary</strong> <span class="float-right">${{ $users->basic }}</span></td>
+                                                        <td><strong>Basic Salary</strong> <span class="float-right">₹{{ $users->basic }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>House Rent Allowance (H.R.A.)</strong> <span class="float-right">${{ $users->hra }}</span></td>
+                                                        <td><strong>House Rent Allowance (H.R.A.)</strong> <span class="float-right">₹{{ $users->hra }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Conveyance</strong> <span class="float-right">${{ $users->conveyance }}</span></td>
+                                                        <td><strong>Conveyance</strong> <span class="float-right">₹{{ $users->conveyance }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Other Allowance</strong> <span class="float-right">${{ $users->allowance }}</span></td>
+                                                        <td><strong>Other Allowance</strong> <span class="float-right">₹{{ $users->allowance }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Total Earnings</strong> <span class="float-right"><strong>$ <?php echo $Total_Earnings ?></strong></span></td>
+                                                        <td><strong>Total Earnings</strong> <span class="float-right"><strong>₹ <?php echo $Total_Earnings ?></strong></span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
@@ -107,26 +107,26 @@
                                                     $Total_Deductions   = $a + $b + $c + $e;
                                                     ?>
                                                     <tr>
-                                                        <td><strong>Tax Deducted at Source (T.D.S.)</strong> <span class="float-right">${{ $users->tds }}</span></td>
+                                                        <td><strong>Tax Deducted at Source (T.D.S.)</strong> <span class="float-right">₹{{ $users->tds }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Provident Fund</strong> <span class="float-right">${{ $users->prof_tax }}</span></td>
+                                                        <td><strong>Provident Fund</strong> <span class="float-right">₹{{ $users->prof_tax }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>ESI</strong> <span class="float-right">${{ $users->esi }}</span></td>
+                                                        <td><strong>ESI</strong> <span class="float-right">₹{{ $users->esi }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Loan</strong> <span class="float-right">${{ $users->labour_welfare }}</span></td>
+                                                        <td><strong>Loan</strong> <span class="float-right">₹{{ $users->labour_welfare }}</span></td>
                                                     </tr>
                                                     <tr>
-                                                        <td><strong>Total Deductions</strong> <span class="float-right"><strong>$<?php echo $Total_Deductions; ?></strong></span></td>
+                                                        <td><strong>Total Deductions</strong> <span class="float-right"><strong>₹<?php echo $Total_Deductions; ?></strong></span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
-                                        <p><strong>Net Salary: ${{ $users->salary }}</strong> (Fifty nine thousand six hundred and ninety eight only.)</p>
+                                        <p><strong>Net Salary: ₹{{ $users->salary }}</strong> (Twenty thousand only.)</p>
                                     </div>
                                 </div>
                             </div>

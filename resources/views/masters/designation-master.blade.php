@@ -12,6 +12,8 @@ active
 @section('content')
 <!-- Page Wrapper -->
 <div class="page-wrapper">
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
@@ -37,6 +39,7 @@ active
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
+                                <th>Designation No.</th>
                                 <th>Designation Name</th>
                                 <th>Designation Code</th>
                                 <th class="text-right">Action</th>
@@ -45,14 +48,15 @@ active
                         <tbody>
                             @foreach ($designation_datas as $design_datas )
                             <tr>
-                                <td class="email">{{ $design_datas->designation_name }}</td>
-                                <td class="position">{{ $design_datas->designation_code }}</td>
+                                <td class="designation_id">{{ $design_datas->designation_id }}</td>
+                                <td class="designation_name">{{ $design_datas->designation_name }}</td>
+                                <td class="designation_code">{{ $design_datas->designation_code }}</td>
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item designationUpdate" data-toggle="modal" data-id="'.$design_datas->designation_id.'" data-target="#edit_designation"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item designationDelete" href="#" data-toggle="modal" ata-id="'.$design_datas->designation_id.'" data-target="#delete_designation"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a class="dropdown-item designationDelete" href="#" data-toggle="modal" data-target="#delete_designation"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -102,7 +106,7 @@ active
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label>Post<span class="required">*</span></label>
-                                    <select class="select form-control" name="post_name" id="">
+                                    <select class="select form-control @error('post_name') is-invalid @enderror" name="post_name" id="">
                                         <option selected disabled> --Select --</option>
                                         @foreach ($posts as $post )
                                         <option value="{{ $post->post_id }}">{{ $post->post_title }}</option>
@@ -122,7 +126,107 @@ active
         </div>
     </div>
     <!-- /Add Designation Modal -->
+
+    <!-- Edit Designation Modal -->
+    <div id="edit_designation" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Designation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <br>
+                <div class="modal-body">
+                    <form action="{{ route('masters/designationMaster/update') }}" method="POST">
+                        @csrf
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <input type="hidden" name="designation_id" id="designation_id" value="">
+                                <div class="form-group">
+                                    <label>Designation Name<span class="required">*</span></label>
+                                    <input class="form-control" type="text" name="designation_name" id="designation_name_edit" value="" />
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Designation Code<span class="required">*</span></label>
+                                <input class="form-control" type="text" name="designation_code" id="designation_code_edit" value="" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Post<span class="required">*</span></label>
+                                    <select class="select form-control" name="post_id" id="post_id_edit">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach ($posts as $post )
+                                        <option value="{{ $post->post_id }}">{{ $post->post_title }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Edit Designation Modal -->
+
+    <!-- Delete Designation Modal -->
+    <div class="modal custom-modal fade" id="delete_designation" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Delete Designation</h3>
+                        <p>Are you sure want to delete?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="{{ route('masters/designationMaster/delete') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="designation_id" class="designation_id" value="">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Delete Designation Modal -->
+    </div>
+    <!-- /Delete Designation Modal -->
 </div>
 <!-- /Page Wrapper -->
+@section('script')
+{{-- update js --}}
+<script>
+    $(document).on('click', '.designationUpdate', function() {
+        var _this = $(this).parents('tr');
+        $('#designation_id').val(_this.find('.designation_id').text());
+        $('#designation_name_edit').val(_this.find('.designation_name').text());
+        $('#designation_code_edit').val(_this.find('.designation_code').text());
+    });
+</script>
+{{-- delete model --}}
+<script>
+    $(document).on('click', '.designationDelete', function() {
+        var _this = $(this).parents('tr');
+        $('.designation_id').val(_this.find('.designation_id').text());
+    });
+</script>
+@endsection
 
 @endsection

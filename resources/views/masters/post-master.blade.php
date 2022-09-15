@@ -13,6 +13,8 @@ active
 @section('content')
 <!-- Page Wrapper -->
 <div class="page-wrapper">
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
@@ -141,9 +143,8 @@ active
                     <form action="{{ route('masters/postMaster/update') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <input type="text" name="post_id" id="post_id" value="">
-
                             <div class="col-sm-6">
+                                <input type="hidden" name="post_id" id="post_id" value="">
                                 <div class="form-group">
                                     <label>Post Name<span class="required">*</span></label>
                                     <input class="form-control" type="text" name="post_title" id="post_title_edit" value="" />
@@ -178,7 +179,34 @@ active
         </div>
     </div>
     <!-- /Edit Post Modal -->
-
+    <!-- Delete Allowance Modal -->
+    <div class="modal custom-modal fade" id="delete_post" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Delete Post</h3>
+                        <p>Are you sure want to delete?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="{{ route('masters/postMaster/delete') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="post_id" class="post_id" value="">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Delete Allowance Modal -->
 
 
 </div>
@@ -191,7 +219,14 @@ active
         $('#post_id').val(_this.find('.post_id').text());
         $('#post_title_edit').val(_this.find('.post_title').text());
         $('#org_id_edit').val(_this.find('.org_id').select());
-        $('#emp_type_id_edit').val(_this.find('.emp_type_id').select()); 
+        $('#emp_type_id_edit').val(_this.find('.emp_type_id').select());
+    });
+</script>
+{{-- delete model --}}
+<script>
+    $(document).on('click', '.postDelete', function() {
+        var _this = $(this).parents('tr');
+        $('.post_id').val(_this.find('.post_id').text());
     });
 </script>
 @endsection

@@ -13,6 +13,8 @@ active
 @section('content')
 <!-- Page Wrapper -->
 <div class="page-wrapper">
+    {{-- message --}}
+    {!! Toastr::message() !!}
     <!-- Page Content -->
     <div class="content container-fluid">
         <!-- Page Header -->
@@ -38,7 +40,7 @@ active
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
-                                <th>Allowance ID</th>
+                                <th>Allowance No.</th>
                                 <th>Allowance Name</th>
                                 <th>Allowance Desc</th>
                                 <th class="text-right">Action</th>
@@ -55,7 +57,7 @@ active
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item allowanceUpdate" data-toggle="modal" data-id="'.$allow_data->allowance_id.'" data-target="#edit_allowance"><i class=" fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item allowanceDelete" data-toggle="modal" data-id="'.$allow_data->allowance_id.'" data-target="#delete_allowance"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            <a class="dropdown-item allowanceDelete" href="#" data-toggle="modal" data-target="#delete_allowance"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -123,7 +125,7 @@ active
                 </div>
                 <br>
                 <div class="modal-body">
-                    <form action="{{ route('masters/allowanceMaster/update') }}" method="POST">
+                    <form action="{{ route('masters/allowanceMaster/update') }}" method="POST"> 
                         @csrf
                         <div class="row">
                             <div class="col-sm-6">
@@ -154,24 +156,24 @@ active
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
-                    <form action="{{ route('masters/allowanceMaster/delete') }}" method="POST">
-                        @csrf
-                        <div class="form-header">
-                            <h3>Delete Allowance</h3>
-                            <p>Are you sure want to delete?</p>
-                        </div>
-                        <input type="hidden" name="allowance_id" id="allowance_id" value="">
-                        <div class="modal-btn delete-action">
+                    <div class="form-header">
+                        <h3>Delete Allowance</h3>
+                        <p>Are you sure want to delete?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="{{ route('masters/allowanceMaster/delete') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="allowance_id" class="allowance_id" value="">
                             <div class="row">
                                 <div class="col-6">
-                                    <button type="submit" class="btn btn-primary submit-btn">Delete</a>
+                                    <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</a>
                                 </div>
                                 <div class="col-6">
                                     <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -189,10 +191,12 @@ active
         $('#allowance_name_edit').val(_this.find('.allowance_name').text());
         $('#allowance_desc_edit').val(_this.find('.allowance_desc').text());
     });
-
+</script>
+{{-- delete model --}}
+<script>
     $(document).on('click', '.allowanceDelete', function() {
         var _this = $(this).parents('tr');
-        $('#allowance_id').val(_this.find('.allowance_id').text());
+        $('.allowance_id').val(_this.find('.allowance_id').text());
     });
 </script>
 @endsection

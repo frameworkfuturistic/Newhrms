@@ -37,8 +37,8 @@ active
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Full Name</th>
-                                <th>Email Address</th>
+                                <th>User_ID</th>
+                                <th>Deleted User</th>
                                 <th>Phone Number</th>
                                 <th>Status</th>
                                 <th>Role Name</th>

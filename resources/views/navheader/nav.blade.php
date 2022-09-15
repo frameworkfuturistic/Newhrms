@@ -37,7 +37,7 @@
                                             <img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
                                         </span>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">John Doe</span> added new task <span class="noti-title">Patient appointment booking</span></p>
+                                        <p class="noti-details"><span class="noti-title">Rakesh Kumar</span> added new task <span class="noti-title">Patient appointment booking</span></p>
                                         <p class="noti-time"><span class="notification-time">4 mins ago</span></p>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                             <img alt="" src="{{ URL::to('assets/img/profiles/avatar-03.jpg') }}">
                                         </span>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Tarah Shropshire</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
+                                        <p class="noti-details"><span class="noti-title">Tara Singh</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
                                         <p class="noti-time"><span class="notification-time">6 mins ago</span></p>
                                     </div>
                                 </div>
@@ -61,7 +61,7 @@
                                             <img alt="" src="{{ URL::to('assets/img/profiles/avatar-06.jpg') }}">
                                         </span>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Misty Tison</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
+                                        <p class="noti-details"><span class="noti-title">Misty Devgan</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
                                         <p class="noti-time"><span class="notification-time">8 mins ago</span></p>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                                             <img alt="" src="{{ URL::to('assets/img/profiles/avatar-17.jpg') }}">
                                         </span>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Rolland Webber</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
+                                        <p class="noti-details"><span class="noti-title">Rohit Prakash</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
                                         <p class="noti-time"><span class="notification-time">12 mins ago</span></p>
                                     </div>
                                 </div>
@@ -85,7 +85,7 @@
                                             <img alt="" src="{{ URL::to('assets/img/profiles/avatar-13.jpg') }}">
                                         </span>
                                     <div class="media-body">
-                                        <p class="noti-details"><span class="noti-title">Bernardo Galaviz</span> added new task <span class="noti-title">Private chat module</span></p>
+                                        <p class="noti-details"><span class="noti-title">Binny Kaur</span> added new task <span class="noti-title">Private chat module</span></p>
                                         <p class="noti-time"><span class="notification-time">2 days ago</span></p>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                     <div class="list-left"> <span class="avatar">
                                                 <img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}">
                                             </span> </div>
-                                    <div class="list-body"> <span class="message-author">Richard Miles </span> <span class="message-time">12:28 AM</span>
+                                    <div class="list-body"> <span class="message-author">Rakesh Kumar</span> <span class="message-time">12:28 AM</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
                                 </div>
                             </a>
@@ -121,7 +121,7 @@
                                     <div class="list-left"> <span class="avatar">
                                                 <img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
                                             </span> </div>
-                                    <div class="list-body"> <span class="message-author">John Doe</span> <span class="message-time">6 Mar</span>
+                                    <div class="list-body"> <span class="message-author">Kumkum Rana</span> <span class="message-time">6 Mar</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
                                 </div>
                             </a>
@@ -132,7 +132,7 @@
                                     <div class="list-left"> <span class="avatar">
                                                 <img alt="" src="{{ URL::to('assets/img/profiles/avatar-03.jpg') }}">
                                             </span> </div>
-                                    <div class="list-body"> <span class="message-author"> Tarah Shropshire </span> <span class="message-time">5 Mar</span>
+                                    <div class="list-body"> <span class="message-author"> Tara Kumari</span> <span class="message-time">5 Mar</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
                                 </div>
                             </a>
@@ -143,7 +143,7 @@
                                     <div class="list-left"> <span class="avatar">
                                                 <img alt="" src="{{ URL::to('assets/img/profiles/avatar-05.jpg') }}">
                                             </span> </div>
-                                    <div class="list-body"> <span class="message-author">Mike Litorus</span> <span class="message-time">3 Mar</span>
+                                    <div class="list-body"> <span class="message-author">Mikky Singh</span> <span class="message-time">3 Mar</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
                                 </div>
                             </a>
@@ -154,7 +154,7 @@
                                     <div class="list-left"> <span class="avatar">
                                                 <img alt="" src="{{ URL::to('assets/img/profiles/avatar-08.jpg') }}">
                                             </span> </div>
-                                    <div class="list-body"> <span class="message-author"> Catherine Manseau </span> <span class="message-time">27 Feb</span>
+                                    <div class="list-body"> <span class="message-author"> Chinki Kumari </span> <span class="message-time">27 Feb</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
                                 </div>
                             </a>

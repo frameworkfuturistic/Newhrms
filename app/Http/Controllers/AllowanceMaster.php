@@ -71,11 +71,11 @@ class AllowanceMaster extends Controller
     public function deleteAllowanceMaster(Request $req)
     {
         try {
-
-            DB::delete('DELETE FROM master_allowances WHERE allowance_id = ?', [$req->allowance_id]);
-            Toastr::success('Allowance updated successfully :)', 'Success');
+            MasterAllowance::destroy($req->allowance_id);
+            Toastr::success('Allowance deleted successfully :)', 'Success');
             return redirect()->back();
         } catch (\Exception $e) {
+            DB::rollback();
             Toastr::error('Allowance deletion failed :)', 'Error');
             return redirect()->back();
         }

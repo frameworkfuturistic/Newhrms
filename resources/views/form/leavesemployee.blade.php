@@ -105,35 +105,6 @@ active
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Casual Leave</td>
-                                <td>10 Jan 2019</td>
-                                <td>10 Jan 2019</td>
-                                <td>First Half</td>
-                                <td>Going to Hospital</td>
-                                <td class="text-center">
-                                    <div class="action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            <i class="fa fa-dot-circle-o text-danger"></i> Declined
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar avatar-xs"><img src="{{URL::to('assets/img/profiles/avatar-09.jpg')}}" alt=""></a>
-                                        <a href="#">Rishav Sharma</a>
-                                    </h2>
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -158,22 +129,25 @@ active
                         <div class="form-group">
                             <label>Leave Type <span class="text-danger">*</span></label>
                             <select class="select">
-                                <option>Select Leave Type</option>
-                                <option>Casual Leave</option>
-                                <option>Medical Leave</option>
-                                <option>Loss of Pay</option>
+                                <option selected disabled>Select Leave Type</option>
+                                <option value="Casual Leave">Casual Leave</option>
+                                <option value="Earned Leave">Earned Leave</option>
+                                <option value="Maternity Leave">Maternity Leave</option>
+                                <option value="Paternity Leave">Paternity Leave</option>
+                                <option value="Medical Leave">Medical Leave</option>
+                                <option value="Leave without Pay">Leave Without Pay</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>From <span class="text-danger">*</span></label>
                             <div class="cal-icon">
-                                <input class="form-control datetimepicker" type="text">
+                                <input class="form-control datetimepicker" id="from_date" type="text">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>To <span class="text-danger">*</span></label>
                             <div class="cal-icon">
-                                <input class="form-control datetimepicker" type="text">
+                                <input class="form-control datetimepicker" id="to_date" type="text">
                             </div>
                         </div>
                         <div class="form-group">
@@ -213,8 +187,13 @@ active
                         <div class="form-group">
                             <label>Leave Type <span class="text-danger">*</span></label>
                             <select class="select">
-                                <option>Select Leave Type</option>
-                                <option>Casual Leave 12 Days</option>
+                                <option selected disabled>Select Leave Type</option>
+                                <option value="Casual Leave">Casual Leave</option>
+                                <option value="Earned Leave">Earned Leave</option>
+                                <option value="Maternity Leave">Maternity Leave</option>
+                                <option value="Paternity Leave">Paternity Leave</option>
+                                <option value="Medical Leave">Medical Leave</option>
+                                <option value="Leave without Pay">Leave Without Pay</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -278,4 +257,22 @@ active
 
 </div>
 <!-- /Page Wrapper -->
+
+<script>
+    var from_date = document.getElementById('from_date');
+    var to_date = element.getAttribute('to_date');
+    //define two date object variables with dates inside it
+    date1 = new Date(from_date);
+    date2 = new Date(to_date);
+
+    //calculate time difference
+    var time_difference = date2.getTime() - date1.getTime();
+
+    //calculate days difference by dividing total milliseconds in a day
+    var days_difference = time_difference / (1000 * 60 * 60 * 24);
+
+    document.write("Number of days between dates <br>" +
+        date1 + " and <br>" + date2 + " are: <br>" +
+        days_difference + " days");
+</script>
 @endsection
