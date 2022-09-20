@@ -118,6 +118,12 @@ class LeavesController extends Controller
         return view('form.attendance');
     }
 
+    // show attendance form
+    public function showAttendance()
+    {
+        return view('form.take_attendance');
+    }
+
     // attendance employee
     public function AttendanceEmployee()
     {
@@ -129,5 +135,4 @@ class LeavesController extends Controller
     {
         return view('form.leavesemployee');
     }
-
 }

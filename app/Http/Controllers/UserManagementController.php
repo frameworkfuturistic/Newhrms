@@ -49,6 +49,75 @@ class UserManagementController extends Controller
         }
     }
 
+    // search user
+    public function searchUser(Request $request)
+    {
+        if (Auth::user()->role_name == 'Admin') {
+            $users      = DB::table('users')->get();
+            $result     = DB::table('users')->get();
+            $role_name  = DB::table('role_type_users')->get();
+            $position   = DB::table('position_types')->get();
+            $department = DB::table('departments')->get();
+            $status_user = DB::table('user_types')->get();
+            $employee_types = DB::table('master_employee_types')->get();
+            $designation = DB::table('master_designations')->get();
+            $post = DB::table('master_posts')->get();
+            $role_type = DB::table('role_type_users')->get();
+            $attendance_type = DB::table('master_attendance_types')->get();
+            $organisation['data'] = Master_organisation::orderby("org_id", "asc")->select('org_id', 'org_level')->get();
+            $post['pd'] = MasterPost::orderby("org_id", "asc")->select('org_id', 'post_title')->get();
+            $designation['de'] = MasterDesignation::orderby("designation_id", "asc")->select('designation_id', 'designation_code', 'post_id')->get();
+
+            // search by name
+            if ($request->name) {
+                $result = User::where('name', 'LIKE', '%' . $request->name . '%')->get();
+            }
+
+            // search by role name
+            if ($request->role_name) {
+                $result = User::where('role_name', 'LIKE', '%' . $request->role_name . '%')->get();
+            }
+
+            // search by status
+            if ($request->status) {
+                $result = User::where('status', 'LIKE', '%' . $request->status . '%')->get();
+            }
+
+            // search by name and role name
+            if ($request->name && $request->role_name) {
+                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
+                    ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
+                    ->get();
+            }
+
+            // search by role name and status
+            if ($request->role_name && $request->status) {
+                $result = User::where('role_name', 'LIKE', '%' . $request->role_name . '%')
+                    ->where('status', 'LIKE', '%' . $request->status . '%')
+                    ->get();
+            }
+
+            // search by name and status
+            if ($request->name && $request->status) {
+                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
+                    ->where('status', 'LIKE', '%' . $request->status . '%')
+                    ->get();
+            }
+
+            // search by name and role name and status
+            if ($request->name && $request->role_name && $request->status) {
+                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
+                    ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
+                    ->where('status', 'LIKE', '%' . $request->status . '%')
+                    ->get();
+            }
+
+            return view('usermanagement.user_control', compact('users', 'role_name', 'position', 'department', 'status_user', 'result', 'employee_types', 'designation', 'post', 'role_type', 'attendance_type', 'organisation'));
+        } else {
+            return redirect()->route('home');
+        }
+    }
+
     // Fetch office list through Ajax
     public function getOfficeLists($org_idd = 0)
     {
@@ -305,72 +374,7 @@ class UserManagementController extends Controller
         return response()->json($orgData);
     }
 
-    // search user
-    public function searchUser(Request $request)
-    {
-        if (Auth::user()->role_name == 'Admin') {
-            $users      = DB::table('users')->get();
-            $result     = DB::table('users')->get();
-            $role_name  = DB::table('role_type_users')->get();
-            $position   = DB::table('position_types')->get();
-            $department = DB::table('departments')->get();
-            $status_user = DB::table('user_types')->get();
-            $employee_types = DB::table('master_employee_types')->get();
-            $designation = DB::table('master_designations')->get();
-            $post = DB::table('master_posts')->get();
-            $role_type = DB::table('role_type_users')->get();
-            $attendance_type = DB::table('master_attendance_types')->get();
-            $organisation['data'] = Master_organisation::orderby("org_id", "asc")->select('org_id', 'org_level')->get();
 
-            // search by name
-            if ($request->name) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')->get();
-            }
-
-            // search by role name
-            if ($request->role_name) {
-                $result = User::where('role_name', 'LIKE', '%' . $request->role_name . '%')->get();
-            }
-
-            // search by status
-            if ($request->status) {
-                $result = User::where('status', 'LIKE', '%' . $request->status . '%')->get();
-            }
-
-            // search by name and role name
-            if ($request->name && $request->role_name) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
-                    ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
-                    ->get();
-            }
-
-            // search by role name and status
-            if ($request->role_name && $request->status) {
-                $result = User::where('role_name', 'LIKE', '%' . $request->role_name . '%')
-                    ->where('status', 'LIKE', '%' . $request->status . '%')
-                    ->get();
-            }
-
-            // search by name and status
-            if ($request->name && $request->status) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
-                    ->where('status', 'LIKE', '%' . $request->status . '%')
-                    ->get();
-            }
-
-            // search by name and role name and status
-            if ($request->name && $request->role_name && $request->status) {
-                $result = User::where('name', 'LIKE', '%' . $request->name . '%')
-                    ->where('role_name', 'LIKE', '%' . $request->role_name . '%')
-                    ->where('status', 'LIKE', '%' . $request->status . '%')
-                    ->get();
-            }
-
-            return view('usermanagement.user_control', compact('users', 'role_name', 'position', 'department', 'status_user', 'result', 'employee_types', 'designation', 'post', 'role_type', 'attendance_type', 'organisation'));
-        } else {
-            return redirect()->route('home');
-        }
-    }
 
     // use activity log
     public function activityLog()
@@ -386,6 +390,7 @@ class UserManagementController extends Controller
     }
 
     // profile user
+
     public function profile()
     {
         $user = Auth::User();
@@ -398,10 +403,10 @@ class UserManagementController extends Controller
         $design_name = DB::select("SELECT m.designation_name as design_name
         FROM users u 
         LEFT JOIN master_designations m ON m.designation_id = u.designation
-        WHERE rec_id = 'KHM_0000000003' ");
+        WHERE u.id = $profile ");
         $state_name = DB::select("SELECT s.state_name FROM users u 
         LEFT JOIN master_states s ON s.state_id = u.present_state
-        WHERE rec_id = 'KHM_0000000003' ");
+        WHERE u.id = $profile ");
 
         if (empty($employees)) {
             $information = DB::table('users')->where('id', $profile)->first();

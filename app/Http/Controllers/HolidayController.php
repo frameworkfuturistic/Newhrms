@@ -13,6 +13,7 @@ class HolidayController extends Controller
     public function holiday()
     {
         $holiday = Holiday::all();
+        // dd($holiday);
         return view('form.holidays', compact('holiday'));
     }
     // save record
@@ -20,7 +21,8 @@ class HolidayController extends Controller
     {
         $request->validate([
             'nameHoliday' => 'required|string|max:255',
-            'holidayDate' => 'required|string|max:255',
+            'holidayDate' => 'required|date',
+            'holidayTo'   => 'nullable|date',
         ]);
 
         DB::beginTransaction();
@@ -29,6 +31,12 @@ class HolidayController extends Controller
             $holiday->name_holiday = $request->nameHoliday;
             $date = date_create("$request->holidayDate");
             $holiday->date_holiday  = date_format($date, 'Y-m-d');
+
+            if ($request->holidayTo != NULL) {
+                $dateTo = date_create("$request->holidayTo");
+                $holiday->to_holiday  = date_format($dateTo, 'Y-m-d');
+            }
+
             $holiday->save();
 
             DB::commit();

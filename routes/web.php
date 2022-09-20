@@ -158,6 +158,7 @@ Route::controller(LeavesController::class)->group(function () {
     Route::get('form/leavesettings/page', 'leaveSettings')->middleware('auth')->name('form/leavesettings/page');
     Route::get('attendance/page', 'attendanceIndex')->middleware('auth')->name('attendance/page');
     Route::get('attendance/employee/page', 'AttendanceEmployee')->middleware('auth')->name('attendance/employee/page');
+    Route::get('take-attendance', 'showAttendance')->middleware('auth');
 });
 
 

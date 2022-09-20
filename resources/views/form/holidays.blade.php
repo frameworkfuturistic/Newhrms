@@ -47,6 +47,7 @@ active
                                 <th>No</th>
                                 <th>Title </th>
                                 <th>Holiday Date</th>
+                                <th>Till Date</th>
                                 <th>Day</th>
                                 <th class="text-right">Action</th>
                             </tr>
@@ -58,6 +59,11 @@ active
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $items->name_holiday }}</td>
                                 <td>{{date('d F, Y',strtotime($items->date_holiday)) }}</td>
+                                @if(!empty($items->to_holiday))
+                                <td>{{date('d F, Y',strtotime($items->to_holiday)) }}</td>
+                                @else
+                                <td>N/A</td>
+                                @endif
                                 <td>{{date('l',strtotime($items->date_holiday)) }}</td>
                                 <td></td>
                             </tr>
@@ -109,9 +115,19 @@ active
                             <input class="form-control" type="text" id="nameHoliday" name="nameHoliday">
                         </div>
                         <div class="form-group">
-                            <label>Holiday Date <span class="text-danger">*</span></label>
+                            <label>Holiday From <span class="text-danger">*</span></label>
                             <div class="cal-icon">
-                                <input class="form-control datetimepicker" type="text" id="holidayDate" name="holidayDate">
+                                <input class="form-control datetimepicker" type="text" id="holidayDate" name="holidayDate" placeholder="DD-MM-YYYY">
+                            </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">(Press if more than 1 day)</label>
+                            </div>
+                        </div>
+                        <div class="form-group holiday-to">
+                            <label>Holiday To</label>
+                            <div class="cal-icon">
+                                <input class="form-control datetimepicker" type="text" id="holidayTo" name="holidayTo" placeholder="DD-MM-YYYY">
                             </div>
                         </div>
                         <div class="submit-section">
@@ -198,6 +214,20 @@ active
         $('#holidayDate_edit').val(_this.find('.holidayDate').text());
     });
 </script>
+
+<script>
+    jQuery($ => {
+
+        $(".holiday-to").hide();
+
+        $("#customSwitch1").on("input", function() {
+            $(".holiday-to").toggle();
+        });
+
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 @endsection
 
 @endsection

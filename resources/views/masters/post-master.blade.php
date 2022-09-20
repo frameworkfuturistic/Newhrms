@@ -40,6 +40,7 @@ active
                     <table class="table table-striped custom-table datatable">
                         <thead>
                             <tr>
+                                <th hidden>ID</th>
                                 <th>Post Title</th>
                                 <th class="text-right">Action</th>
                             </tr>
@@ -47,6 +48,7 @@ active
                         <tbody>
                             @foreach ($post_data as $post_dt )
                             <tr>
+                                <td hidden class="post_id">{{ $post_dt->post_id }}</td>
                                 <td class="post_title">{{ $post_dt->post_title }}</td>
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
@@ -144,7 +146,7 @@ active
                         @csrf
                         <div class="row">
                             <div class="col-sm-6">
-                                <input type="hidden" name="post_id" id="post_id" value="">
+                                <input type="hidden" name="post_id" id="post_idd" value="">
                                 <div class="form-group">
                                     <label>Post Name<span class="required">*</span></label>
                                     <input class="form-control" type="text" name="post_title" id="post_title_edit" value="" />
@@ -216,7 +218,7 @@ active
 <script>
     $(document).on('click', '.postUpdate', function() {
         var _this = $(this).parents('tr');
-        $('#post_id').val(_this.find('.post_id').text());
+        $('#post_idd').val(_this.find('.post_id').text());
         $('#post_title_edit').val(_this.find('.post_title').text());
         $('#org_id_edit').val(_this.find('.org_id').select());
         $('#emp_type_id_edit').val(_this.find('.emp_type_id').select());

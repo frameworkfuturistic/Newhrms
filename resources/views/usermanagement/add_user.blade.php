@@ -89,12 +89,14 @@ active
                                                     <label>Aadhar No.<span class="required">*</span></label>
                                                     <input class="form-control @error('aadhar_no') is-invalid @enderror" type="text" id="" name="aadhar_no" value="{{ old('aadhar_no') }}" placeholder="Enter Aadhar Number" pattern="[0-9]+" minlength="12" maxlength="12">
                                                 </div>
+                                                <div class="alert-danger">@error('aadhar_no'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Aadhar Card<span class="required">*</span></label>
                                                     <input class="form-control @error('aadhar_card') is-invalid @enderror" type="file" id="" name="aadhar_card" value="{{ old('aadhar_card') }}">
                                                 </div>
+                                                <div class="alert-danger">@error('aadhar_card'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -103,12 +105,14 @@ active
                                                     <label>PAN No.<span class="required">*</span></label>
                                                     <input class="form-control @error('pan_no') is-invalid @enderror" type="text" id="" name="pan_no" value="{{ old('pan_no') }}" placeholder="Enter PAN Number" pattern="[A-Z0-9]+" minlength="10" maxlength="10">
                                                 </div>
+                                                <div class="alert-danger">@error('pan_no'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>PAN Card<span class="required">*</span></label>
                                                     <input class="form-control @error('pan_card') is-invalid @enderror" type="file" id="" name="pan_card">
                                                 </div>
+                                                <div class="alert-danger">@error('pan_card'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -145,14 +149,17 @@ active
                                                     <option value="{{ $st->state_id }}">{{ $st->state_name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <div class="alert-danger">@error('present_state'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>City<span class="required">*</span></label>
                                                 <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" required pattern="[A-Za-z]+" />
+                                                <div class="alert-danger">@error('present_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>PIN Code<span class="required">*</span></label>
                                                 <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" required pattern="[0-9]+" minlength="6" maxlength="6" />
+                                                <div class="alert-danger">@error('present_pin'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br>
@@ -166,14 +173,17 @@ active
                                                     <option value="{{ $st->state_id }}">{{ $st->state_name }}</option>
                                                     @endforeach
                                                 </select>
+                                                <div class="alert-danger">@error('permanent_state'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>City<span class="required">*</span></label>
                                                 <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="" name="permanent_city" value="{{ old('permanent_city') }}" placeholder="Enter City" required pattern="[A-Za-z]+" />
+                                                <div class="alert-danger">@error('permanent_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>PIN Code<span class="required">*</span></label>
                                                 <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="" name="permanent_pin" value="{{ old('permanent_pin') }}" placeholder="Enter Pin" required pattern="[0-9]+" minlength="6" maxlength="6" />
+                                                <div class="alert-danger">@error('permanent_pin'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -181,14 +191,17 @@ active
                                             <div class="col-sm-4">
                                                 <div>Personal Contact Number<span class="required">*</span></div>
                                                 <input class="form-control" type="text" id="" name="personal_contact" placeholder="Enter Personal Contact Number">
+                                                <div class="alert-danger">@error('personal_contact'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div>Alternative Contact Number<span class="required">*</span></div>
                                                 <input class="form-control" type="text" id="" name="alternative_contact" placeholder="Enter Alternative Contact Number">
+                                                <div class="alert-danger">@error('alternative_contact'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Number<span class="required">*</span></div>
                                                 <input class="form-control" type="text" id="" name="emergency_contact" placeholder="Enter Emergency Contact Number">
+                                                <div class="alert-danger">@error('emergency_contact'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -196,14 +209,17 @@ active
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Name<span class="required">*</span></div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_name" placeholder="Enter Emergency Contact Person Name">
+                                                <div class="alert-danger">@error('emerg_con_per_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Relation<span class="required">*</span></div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_rel" placeholder="Enter Emergency Contact Person Relation">
+                                                <div class="alert-danger">@error('emerg_con_per_rel'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Address<span class="required">*</span></div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_add" placeholder="Enter Emergency Contact Person Address">
+                                                <div class="alert-danger">@error('emerg_con_per_add'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                     </div>
@@ -214,14 +230,17 @@ active
                                             <div class="col-sm-4">
                                                 <label>Course Name<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="edu_qua_course_name" placeholder="Enter Course Name">
+                                                <div class="alert-danger">@error('edu_qua_course_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Stream<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="stream" name="edu_qua_stream" placeholder="Enter Stream">
+                                                <div class="alert-danger">@error('edu_qua_stream'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Board<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="edu_qua_board" placeholder="Enter Board Name">
+                                                <div class="alert-danger">@error('edu_qua_board'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -229,14 +248,17 @@ active
                                             <div class="col-sm-4">
                                                 <label>Passing Year<span class="required">*</span></label>
                                                 <input class="form-control" type="number" id="" name="edu_qua_passing_year" placeholder="YYYY" min="1940" max="2060">
+                                                <div class="alert-danger">@error('edu_qua_passing_year'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Percentage/ GPA<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="edu_qua_percentage" placeholder="Enter Percentage/ GPA">
+                                                <div class="alert-danger">@error('edu_qua_percentage'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Certificate Upload<span class="required">*</span></label>
                                                 <input class="form-control" type="file" id="" name="edu_qua_certi_upload" placeholder="Enter Percentage/ GPA">
+                                                <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -245,14 +267,17 @@ active
                                             <div class="col-sm-4">
                                                 <label>Institution/ University Name<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_university_name" placeholder="Enter University Name">
+                                                <div class="alert-danger">@error('pro_qua_university_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Degree/ Diploma<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_degree" placeholder="Enter degree/ Diploma">
+                                                <div class="alert-danger">@error('pro_qua_degree'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Subject/ Courses<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_subject" placeholder="Enter Subject/ Courses">
+                                                <div class="alert-danger">@error('pro_qua_subject'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -261,14 +286,17 @@ active
                                             <div class="col-sm-4">
                                                 <label>Duration<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_duration" placeholder="Enter Course Duration">
+                                                <div class="alert-danger">@error('pro_qua_duration'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Industry Certification<span class="required">*</span></label>
                                                 <input class="form-control" type="file" id="" name="pro_qua_ind_certi" />
+                                                <div class="alert-danger">@error('pro_qua_ind_certi'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Year Of Passing<span class="required">*</span></label>
                                                 <input class="form-control" type="number" id="" name="pro_qua_year" placeholder="YYYY" min="1940" max="2060">
+                                                <div class="alert-danger">@error('pro_qua_year'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -278,14 +306,17 @@ active
                                             <div class="col-sm-4">
                                                 <label>Skill Name<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="skill_name" placeholder="Enter Skills Name" />
+                                                <div class="alert-danger">@error('skill_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Duration<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="skill_duration" placeholder="Enter Duration" />
+                                                <div class="alert-danger">@error('skill_duration'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Certificate<span class="required">*</span></label>
                                                 <input class="form-control" type="file" id="" name="skill_certi" />
+                                                <div class="alert-danger">@error('skill_certi'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -295,10 +326,12 @@ active
                                             <div class="col-sm-4">
                                                 <label>Organisation Name<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="organ_name" placeholder="Enter Organisation Name" />
+                                                <div class="alert-danger">@error('organ_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Job Profile<span class="required">*</span></label>
                                                 <input class="form-control" type="file" id="" name="job_profile" />
+                                                <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Organisation Type<span class="required">*</span></label>
@@ -306,8 +339,8 @@ active
                                                     <option selected disabled> --Select --</option>
                                                     <option value="Government">Government</option>
                                                     <option value="private">Private</option>
-
                                                 </select>
+                                                <div class="alert-danger">@error('organ_type'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -315,14 +348,17 @@ active
                                             <div class="col-sm-4">
                                                 <label>Supporting Document Upload<span class="required">*</span></label>
                                                 <input class="form-control" type="file" id="" name="supp_doc_upload" />
+                                                <div class="alert-danger">@error('supp_doc_upload'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Effective From Date<span class="required">*</span></label>
                                                 <input class="form-control" type="date" id="" name="eff_from_date" />
+                                                <div class="alert-danger">@error('eff_from_date'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Effective To Date<span class="required">*</span></label>
                                                 <input class="form-control" type="date" id="" name="eff_to_date" />
+                                                <div class="alert-danger">@error('eff_to_date'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
@@ -334,10 +370,12 @@ active
                                             <div class="col-sm-4">
                                                 <label>Relation<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="fam_relation" placeholder="Enter relation">
+                                                <div class="alert-danger">@error('fam_relation'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Full Name<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="full_name" placeholder="Enter Full Name">
+                                                <div class="alert-danger">@error('full_name'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />

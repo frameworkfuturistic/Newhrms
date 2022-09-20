@@ -204,7 +204,8 @@
 								@if (Auth::user()->role_name=='Admin')
 								<li><a class="@yield('leave_setting_active')" href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
 
-								<li><a class="@yield('att_ad')" href="{{ route('attendance/page') }}">Attendance (Admin)</a></li>
+								<li><a class="@yield('take_att')" href="/take-attendance">Attendance (Admin)</a></li>
+								<li><a class="@yield('att_ad')" href="{{ route('attendance/page') }}">Attendance Chart</a></li>
 								@endif
 								@if (Auth::user()->role_name=='Employee')
 								<li><a class="@yield('att_admin_active')" href="{{ route('attendance/employee/page') }}">Attendance (Employee)</a></li>

@@ -144,12 +144,18 @@ active
                                         @if(!empty($information->personal_contact))
                                         <div class="title">Personal Contact</div>
                                         <div class="text">{{ $information->personal_contact }}</div>
+                                        @else
+                                        <div class="title">Personal Contact</div>
+                                        <div class="text">N/A</div>
                                         @endif
                                     </li>
                                     <li>
                                         @if(!empty($information->personal_contact))
                                         <div class="title">Alternative Contact</div>
                                         <div class="text">{{ $information->alternative_contact }}</div>
+                                        @else
+                                        <div class="title">Alternative Contact</div>
+                                        <div class="text">N/A</div>
                                         @endif
                                     </li>
 
@@ -157,6 +163,9 @@ active
                                         @if(!empty($information->aadhar_no))
                                         <div class="title">Aadhar Number</div>
                                         <div class="text">{{ $information->aadhar_no }}</div>
+                                        @else
+                                        <div class="title">Aadhar Number</div>
+                                        <div class="text">N/A</div>
                                         @endif
                                     </li>
                                     @else
@@ -184,6 +193,7 @@ active
                                     <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a> -->
                                 </h3>
                                 <h5 class="section-title">Primary</h5>
+                                <hr>
                                 <ul class="personal-info">
                                     @if(!empty($information))
                                     <li>
@@ -251,8 +261,13 @@ active
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
+                                        @if(!empty($information->pan_no))
                                         <div class="title">PAN No</div>
                                         <div class="text">{{ $information->pan_no }}</div>
+                                        @else
+                                        <div class="title">PAN No</div>
+                                        <div class="text">N/A</div>
+                                        @endif
                                     </li>
                                 </ul>
                             </div>
@@ -272,7 +287,6 @@ active
                                                 <th>Relationship</th>
                                                 <th>Date of Birth</th>
                                                 <th>Phone</th>
-                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -281,15 +295,6 @@ active
                                                 <td>N/A</td>
                                                 <td>N/A</td>
                                                 <td>N/A</td>
-                                                <td class="text-right">
-                                                    <div class="dropdown dropdown-action">
-                                                        <a aria-expanded="false" data-toggle="dropdown" class="action-icon dropdown-toggle" href="#"><i class="material-icons">more_vert</i></a>
-                                                        <div class="dropdown-menu dropdown-menu-right">
-                                                            <a href="#" class="dropdown-item"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                                            <a href="#" class="dropdown-item"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
-                                                        </div>
-                                                    </div>
-                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
