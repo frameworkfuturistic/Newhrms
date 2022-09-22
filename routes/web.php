@@ -33,9 +33,9 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::get('php-info', function () {
-//     return phpinfo();
-// });
+Route::get('php-info', function () {
+    return phpinfo();
+});
 
 Route::get('/', function () {
     return view('auth.login');
@@ -68,7 +68,7 @@ Route::post('roles/permissions/delete', [App\Http\Controllers\SettingController:
 // -----------------------------login----------------------------------------//
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'authenticate']);
-Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
+Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 
 // ----------------------------- lock screen --------------------------------//
 Route::get('lock_screen', [App\Http\Controllers\LockScreen::class, 'lockScreen'])->middleware('auth')->name('lock_screen');
@@ -157,8 +157,10 @@ Route::controller(LeavesController::class)->group(function () {
 Route::controller(LeavesController::class)->group(function () {
     Route::get('form/leavesettings/page', 'leaveSettings')->middleware('auth')->name('form/leavesettings/page');
     Route::get('attendance/page', 'attendanceIndex')->middleware('auth')->name('attendance/page');
+    Route::get('/search-attendance-data', 'attendanceRecordSearch')->middleware('auth');
     Route::get('attendance/employee/page', 'AttendanceEmployee')->middleware('auth')->name('attendance/employee/page');
     Route::get('take-attendance', 'showAttendance')->middleware('auth');
+    Route::post('/insert-attendance-detail', 'insertAttendDetail')->middleware('auth');
 });
 
 

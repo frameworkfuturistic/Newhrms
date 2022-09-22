@@ -398,6 +398,8 @@ active
             </div>
         </div>
         <!-- /Page Header -->
+        {{-- message --}}
+        {!! Toastr::message() !!}
 
         <div class="row">
             <div class="col-lg-12">
@@ -497,12 +499,13 @@ active
 
     @php
     use Carbon\Carbon;
-    $today_date = Carbon::today()->format('d-m-y');
+    $today_date = Carbon::today()->format('y-m-d H:i:s');
+    $todayTime = Carbon::now()->format('H:i:m');
     @endphp
 
     <!-- Attendance Modal -->
     <div class="modal custom-modal fade" id="attendance_info" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered " role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Attendance Info</h5>
@@ -512,50 +515,42 @@ active
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-1">
+                        </div>
+                        <div class="col-md-10">
                             <div class="card punch-status">
                                 <div class="card-body">
-                                    <h5 class="card-title">Timesheet <small class="text-muted">{{ $today_date }}</small></h5>
-                                    <div class="punch-det">
-                                        <h6>Punch In at</h6>
-                                        <p>Wed, 11th Mar 2019 10.00 AM</p>
-                                    </div>
-                                    <div class="punch-info">
-                                        <div class="punch-hours">
-                                            <span id="clock">123</span>
-                                        </div>
-                                    </div>
-                                    <div class="punch-det">
-                                        <h6>Punch Out at</h6>
-                                        <p>Wed, 20th Feb 2019 9.00 PM</p>
-                                    </div>
-                                    <div class="statistics">
-                                        <div class="row">
-                                            <div class="col-md-6 col-6 text-center">
-                                                <button type="submit" style="min-width: 160px;" class="btn btn-primary submit-btn">Save</button>
+                                    <form action="/insert-attendance-detail" method="post">
+                                        @csrf
+                                        <h5 class="card-title">Timesheet <small class="text-muted">{{ date('d F, Y',strtotime($today_date)) }}</small></h5>
+                                        <div class="punch-det">
+                                            <div class="form-group">
+                                                <label>Status <span class="text-danger">*</span></label>
+                                                <select class="select" id="" name="status">
+                                                    <option selected disabled>Select Status</option>
+                                                    <option value="1">Time In</option>
+                                                    <option value="0">Time Out</option>
+                                                </select>
+                                                <div class="alert-danger">@error('status'){{ $message }}@enderror</div>
                                             </div>
-                                            <div class="col-md-6 col-6 text-center">
-                                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                        </div>
+                                        <div class="punch-info">
+                                            <div class="punch-hours">
+                                                <span id="clock">123</span>
+                                            </div>
+                                        </div>
+                                        <div class="statistics">
+                                            <div class="row">
+                                                <div class="col-md-6 col-6 text-center">
+                                                    <button type="submit" style="min-width: 150px;" class="btn btn-primary submit-btn">Save</button>
+                                                </div>
+                                                <div class="col-md-6 col-6 text-center">
+                                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card recent-activity">
-                                <div class="card-body">
-                                    <h5 class="card-title">Employees</h5>
-                                    <ul class="res-activity-list">
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                10.00 AM.
-                                            </p>
-                                        </li>
-                                    </ul>
+                                    </form>
                                 </div>
                             </div>
                         </div>

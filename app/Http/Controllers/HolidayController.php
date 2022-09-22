@@ -13,7 +13,7 @@ class HolidayController extends Controller
     public function holiday()
     {
         $holiday = Holiday::all();
-        // dd($holiday);
+        
         return view('form.holidays', compact('holiday'));
     }
     // save record

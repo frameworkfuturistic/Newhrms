@@ -126,7 +126,7 @@
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
 						<a class="dropdown-item" href="{{ route('change/password') }}">Settings</a>
-						<a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+						<a class="dropdown-item" href="/logout">Logout</a>
 					</div>
 				</li>
 			</ul>
@@ -218,8 +218,7 @@
 								<span> Payroll </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li><a class="@yield('emp_sal_active')" href="{{ route('form/salary/page') }}"> Employee Salary </a></li>
-								<li><a href="{{ url('form/salary/view') }}"> Payslip </a></li>
-								<li><a class="@yield('pay_item_active')" href="{{ route('form/payroll/items') }}"> Payroll Items </a></li>
+								<!-- <li><a class="@yield('pay_item_active')" href="{{ route('form/payroll/items') }}"> Payroll Items </a></li> -->
 							</ul>
 						</li>
 						@endif
@@ -228,8 +227,8 @@
 								<span> Reports </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								@if (Auth::user()->role_name=='Admin')
-								<li><a class="@yield('ex_active')" href="{{ route('form/expense/reports/page') }}"> Expense Report </a></li>
-								<li><a class="@yield('invoice_active')" href="{{ route('form/invoice/reports/page') }}"> Invoice Report </a></li>
+								<!-- <li><a class="@yield('ex_active')" href="{{ route('form/expense/reports/page') }}"> Expense Report </a></li> -->
+								<!-- <li><a class="@yield('invoice_active')" href="{{ route('form/invoice/reports/page') }}"> Invoice Report </a></li> -->
 								@endif
 								<li><a class="@yield('leave_active')" href="{{ route('form/leave/reports/page') }}"> Leave Report </a></li>
 								<li><a class="@yield('daily_active')" href="{{ route('form/daily/reports/page') }}"> Daily Report </a></li>
