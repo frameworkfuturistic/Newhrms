@@ -21,6 +21,8 @@ class CreateLeavesAdminsTable extends Migration
             $table->string('to_date')->nullable();
             $table->string('day')->nullable();
             $table->string('leave_reason')->nullable();
+            $table->string('status')->default('New');
+            $table->string('reporting_authority')->nullable();
             $table->timestamps();
         });
     }

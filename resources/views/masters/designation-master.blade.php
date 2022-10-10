@@ -36,19 +36,21 @@ active
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
+                    <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
-                                <th>Designation No.</th>
+                                <th hidden></th>
+                                <th>S No.</th>
                                 <th>Designation Name</th>
                                 <th>Designation Code</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($designation_datas as $design_datas )
+                            @foreach ($designation_datas as $key=>$design_datas )
                             <tr>
-                                <td class="designation_id">{{ $design_datas->designation_id }}</td>
+                                <td hidden class="designation_id">{{ $design_datas->designation_id }}</td>
+                                <td>{{ ++$key }}</td>
                                 <td class="designation_name">{{ $design_datas->designation_name }}</td>
                                 <td class="designation_code">{{ $design_datas->designation_code }}</td>
                                 <td class="text-right">
@@ -72,7 +74,7 @@ active
 
     <!-- Add Designation Modal -->
     <div id="add_designation" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add New Designation</h5>
@@ -84,8 +86,8 @@ active
                     <form action="{{ route('masters/designationMaster/add') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Designation Name<span class="required">*</span></label>
                                     <input class="form-control @error('designation_name') is-invalid @enderror" type="text" id="" name="designation_name" value="{{ old('designation_name') }}" placeholder="Enter Designation Name">
@@ -93,8 +95,8 @@ active
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Designation Code<span class="required">*</span></label>
                                     <input class="form-control @error('designation_code') is-invalid @enderror" type="text" id="" name="designation_code" value="{{ old('designation_code') }}" placeholder="Enter Designation Code">
@@ -102,8 +104,8 @@ active
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Post<span class="required">*</span></label>
                                     <select class="select form-control @error('post_name') is-invalid @enderror" name="post_name" id="">
@@ -115,8 +117,6 @@ active
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                         </div>
@@ -129,7 +129,7 @@ active
 
     <!-- Edit Designation Modal -->
     <div id="edit_designation" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Designation</h5>
@@ -142,21 +142,32 @@ active
                     <form action="{{ route('masters/designationMaster/update') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
-                                <input type="hidden" name="designation_id" id="designation_id" value="">
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
-                                    <label>Designation Name<span class="required">*</span></label>
-                                    <input class="form-control" type="text" name="designation_name" id="designation_name_edit" value="" />
+                                    <input type="hidden" name="designation_id" id="designation_id" value="">
+                                    <div class="form-group">
+                                        <label>Designation Name<span class="required">*</span></label>
+                                        <input class="form-control" type="text" name="designation_name" id="designation_name_edit" value="" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Designation Code<span class="required">*</span></label>
-                                <input class="form-control" type="text" name="designation_code" id="designation_code_edit" value="" />
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>Designation Code<span class="required">*</span></label>
+                                    <input class="form-control" type="text" name="designation_code" id="designation_code_edit" value="" />
+                                </div>
                             </div>
                         </div>
-                        <br />
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1">
+                            </div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Post<span class="required">*</span></label>
                                     <select class="select form-control" name="post_id" id="post_id_edit">
@@ -168,7 +179,6 @@ active
                                 </div>
                             </div>
                         </div>
-                        <br />
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Update</button>
                         </div>
@@ -210,6 +220,10 @@ active
     <!-- /Delete Designation Modal -->
 </div>
 <!-- /Page Wrapper -->
+
+@endsection
+
+
 @section('script')
 {{-- update js --}}
 <script>
@@ -227,6 +241,4 @@ active
         $('.designation_id').val(_this.find('.designation_id').text());
     });
 </script>
-@endsection
-
 @endsection

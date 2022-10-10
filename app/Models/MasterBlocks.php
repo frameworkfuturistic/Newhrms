@@ -9,4 +9,8 @@ class MasterBlocks extends Model
 {
     protected $primaryKey = 'block_id';
     use HasFactory;
+    
+    protected $fillable = [
+        'block_name',
+    ];
 }

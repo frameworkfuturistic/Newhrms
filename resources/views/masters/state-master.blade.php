@@ -10,7 +10,6 @@ active
 
 
 @section('content')
-
 <!-- Page Wrapper -->
 <div class="page-wrapper">
     {{-- message --}}
@@ -37,9 +36,10 @@ active
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
+                    <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
+                                <th hidden></th>
                                 <th>State No.</th>
                                 <th>State Name</th>
                                 <th>State Code</th>
@@ -47,9 +47,10 @@ active
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($state_datas as $state_data )
+                            @foreach ($state_datas as $key=>$state_data )
                             <tr>
-                                <td class="state_id">{{ $state_data->state_id }}</td>
+                                <td hidden class="state_id">{{ $state_data->state_id }}</td>
+                                <td>{{ ++$key }}</td>
                                 <td class="state_name">{{ $state_data->state_name }}</td>
                                 <td class="state_code">{{ $state_data->state_code }}</td>
                                 <td class="text-right">
@@ -73,7 +74,7 @@ active
 
     <!-- Add state Modal -->
     <div id="add_state" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add New State</h5>
@@ -85,8 +86,8 @@ active
                     <form action="{{ route('masters/stateMaster/add') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>State Name<span class="required">*</span></label>
                                     <input class="form-control @error('state_name') is-invalid @enderror" type="text" id="" name="state_name" value="{{ old('state_name') }}" placeholder="Enter State Name">
@@ -94,8 +95,8 @@ active
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>State Code<span class="required">*</span></label>
                                     <input class="form-control @error('state_code') is-invalid @enderror" type="text" id="" name="state_code" value="{{ old('state_code') }}" placeholder="Enter State Code">
@@ -114,7 +115,7 @@ active
 
     <!-- Edit state Modal -->
     <div id="edit_state" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit State</h5>
@@ -127,16 +128,22 @@ active
                     <form action="{{ route('masters/stateMaster/update') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <input type="hidden" name="state_id" id="state_id" value="">
                                 <div class="form-group">
                                     <label>State Name<span class="required">*</span></label>
                                     <input class="form-control" type="text" name="state_name" id="state_name_edit" value="" />
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>State Code<span class="required">*</span></label>
-                                <input class="form-control" type="text" name="state_code" id="state_code_edit" value="" />
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>State Code<span class="required">*</span></label>
+                                    <input class="form-control" type="text" name="state_code" id="state_code_edit" value="" />
+                                </div>
                             </div>
                         </div>
                         <br>
@@ -180,9 +187,11 @@ active
     <!-- /Delete Allowance Modal -->
 
 </div>
+@endsection
 <!-- /Page Wrapper -->
 @section('script')
 {{-- update js --}}
+
 <script>
     $(document).on('click', '.stateUpdate', function() {
         var _this = $(this).parents('tr');
@@ -198,6 +207,4 @@ active
         $('.state_id').val(_this.find('.state_id').text());
     });
 </script>
-@endsection
-
 @endsection

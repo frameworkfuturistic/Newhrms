@@ -41,12 +41,12 @@
                     <div class="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
                         <img src="images/passwordLogo.png" class="h-5 w-5 text-gray-400" />
                         <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter Password" />
-                        @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
                     </div>
+                    @error('password')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                    @enderror
                     <button type="submit" class="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
                     <div class="flex justify-between mt-4">
                         <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"><a class="text-muted" href="{{ route('forget-password') }}">

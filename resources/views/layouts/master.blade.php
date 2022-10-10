@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="{{ URL::to('assets/css/line-awesome.min.css') }}">
 	<!-- Datatable CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/dataTables.bootstrap4.min.css') }}">
+	<link rel="stylesheet" href="{{ URL::to('assets/css/jquery.dataTables.min.css') }}">
 	<!-- Select2 CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/select2.min.css') }}">
 	<!-- Datetimepicker CSS -->
@@ -28,12 +29,15 @@
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
 
+
+
 	@yield('css_cdn')
 
 	{{-- message toastr --}}
 	<link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
 	<script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
 	<script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
+	<meta name="csrf-token" content="{{ csrf_token() }}" />
 </head>
 
 <body>
@@ -166,21 +170,21 @@
 							</ul>
 
 						</li>
-						@if (Auth::user()->role_name=='Admin')
+						@can('isAdmin')
 						<li class="menu-title"> <span>Authentication</span> </li>
 						<li class="submenu">
 							<a href="#" class="@yield('emp_noti')">
-								<i class="la la-user-secret"></i> <span> User Controller</span> <span class="menu-arrow"></span>
+								<i class="la la-user-secret"></i> <span>Employee Control</span> <span class="menu-arrow"></span>
 							</a>
 							<ul style="display: none;">
-								<li><a class="@yield('all_user_active')" href="{{ route('userManagement') }}">All User</a></li>
+								<li><a class="@yield('all_user_active')" href="{{ route('userManagement') }}">All Employee</a></li>
 								<li><a class="@yield('log_active')" href="{{ route('activity/log') }}">Activity Log</a></li>
-								<li><a class="@yield('act_active')" href="{{ route('activity/login/logout') }}">Activity User</a></li>
+								<li><a class="@yield('act_active')" href="{{ route('activity/login/logout') }}">Employee Activity</a></li>
 							</ul>
 						</li>
-						@endif
+						@endcan
 						<li class="menu-title">
-							<span>Employees</span>
+							<span>Employees Section</span>
 						</li>
 						<li class="submenu">
 							<a href="#" class="@yield('editemp_noti_dot')">
@@ -191,28 +195,37 @@
 							<ul style="display: none;">
 								<li><a class="@yield('profile_active')" href="{{ route('profile_user') }}">My Profile</a></li>
 								<li><a class="@yield('add_user_active')" href="{{ route('userManagement/addUser') }}">Complete Profile</a></li>
-								@if (Auth::user()->role_name=='Admin')
+								@can('isAdmin')
 								<li><a class="@yield('holiday_active')" href="{{ route('form/holidays/new') }}">Holidays</a></li>
-
-								<li><a class="@yield('leave_ad_active')" href="{{ route('form/leaves/new') }}">Leaves (Admin)
-										<span class="badge badge-pill bg-primary float-right">1</span></a>
-								</li>
-								@endif
-								@if (Auth::user()->role_name=='Employee')
-								<li><a class="@yield('leave_emp_active')" href="{{route('form/leavesemployee/new')}}">Leaves (Employee)</a></li>
-								@endif
-								@if (Auth::user()->role_name=='Admin')
-								<li><a class="@yield('leave_setting_active')" href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li>
-
-								<li><a class="@yield('take_att')" href="/take-attendance">Attendance (Admin)</a></li>
-								<li><a class="@yield('att_ad')" href="{{ route('attendance/page') }}">Attendance Chart</a></li>
-								@endif
+								@endcan
+								<li><a class="@yield('take_att')" href="/take-attendance">Attendance</a></li>
+								@can('isAdmin')
+								<li><a class="@yield('att_ad')" href="{{ route('attendance/page') }}">Attendance (Admin)</a></li>
+								@endcan
 								@if (Auth::user()->role_name=='Employee')
 								<li><a class="@yield('att_admin_active')" href="{{ route('attendance/employee/page') }}">Attendance (Employee)</a></li>
 								@endif
 							</ul>
 						</li>
-						@if (Auth::user()->role_name=='Admin')
+						<li class="submenu">
+							<a href="#" class="@yield('editle_noti_dot')">
+								<i class="fa fa-calendar-minus-o fa-2x" style="font-size: 18px;" aria-hidden="true"></i>
+								<span> Leave</span>
+								<span class="menu-arrow"></span>
+							</a>
+							<ul style="display: none;">
+								@can('isAdmin')
+								<li><a class="@yield('leave_ad_active')" href="{{ route('form/leaves/new') }}">Leaves authority
+										<span class="badge badge-pill bg-primary float-right">1</span></a>
+								</li>
+								@endcan
+								<li><a class="@yield('leave_emp_active')" href="{{route('form/leavesemployee/new')}}">Apply Leaves</a></li>
+								@can('isAdmin')
+								<!-- <li><a class="@yield('leave_setting_active')" href="{{ route('form/leavesettings/page') }}">Leave Settings</a></li> -->
+								@endcan
+							</ul>
+						</li>
+						@can('isAdmin')
 						<li class="menu-title"> <span>HR</span> </li>
 						<li class="submenu"> <a href="#" class="@yield('pay_noti')"><i class="la la-money"></i>
 								<span> Payroll </span> <span class="menu-arrow"></span></a>
@@ -221,21 +234,17 @@
 								<!-- <li><a class="@yield('pay_item_active')" href="{{ route('form/payroll/items') }}"> Payroll Items </a></li> -->
 							</ul>
 						</li>
-						@endif
-						@if (Auth::user()->role_name=='Admin')
+
 						<li class="submenu"> <a href="#" class="@yield('report_noti')"><i class="la la-pie-chart"></i>
 								<span> Reports </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
-								@if (Auth::user()->role_name=='Admin')
 								<!-- <li><a class="@yield('ex_active')" href="{{ route('form/expense/reports/page') }}"> Expense Report </a></li> -->
 								<!-- <li><a class="@yield('invoice_active')" href="{{ route('form/invoice/reports/page') }}"> Invoice Report </a></li> -->
-								@endif
+
 								<li><a class="@yield('leave_active')" href="{{ route('form/leave/reports/page') }}"> Leave Report </a></li>
 								<li><a class="@yield('daily_active')" href="{{ route('form/daily/reports/page') }}"> Daily Report </a></li>
 							</ul>
 						</li>
-						@endif
-						@if (Auth::user()->role_name=='Admin')
 						<li class="submenu"> <a href="#" class="@yield('masters_noti')"><i class="la la-pie-chart"></i>
 								<span> Master Tables </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
@@ -246,7 +255,7 @@
 								<li><a class="@yield('post_active')" href="{{ route('masters/postMaster') }}"> Post Master </a></li>
 							</ul>
 						</li>
-						@endif
+						@endcan
 					</ul>
 				</div>
 			</div>
@@ -261,31 +270,37 @@
 	</div>
 	<!-- /Main Wrapper -->
 
-	<!-- jQuery -->
-	<script src="{{ URL::to('assets/js/jquery-3.5.1.min.js') }}"></script>
-	<!-- Bootstrap Core JS -->
-	<script src="{{ URL::to('assets/js/popper.min.js') }}"></script>
-	<script src="{{ URL::to('assets/js/bootstrap.min.js') }}"></script>
-	<!-- Chart JS -->
-	<script src="{{ URL::to('assets/plugins/morris/morris.min.js') }}"></script>
-	<script src="{{ URL::to('assets/plugins/raphael/raphael.min.js') }}"></script>
-	<script src="{{ URL::to('assets/js/chart.js') }}"></script>
-	<!-- Slimscroll JS -->
-	<script src="{{ URL::to('assets/js/jquery.slimscroll.min.js') }}"></script>
-	<!-- Select2 JS -->
-	<script src="{{ URL::to('assets/js/select2.min.js') }}"></script>
-	<!-- Datetimepicker JS -->
-	<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
-	<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
-	<!-- Datatable JS -->
-	<script src="{{ URL::to('assets/js/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ URL::to('assets/js/dataTables.bootstrap4.min.js') }}"></script>
-	<!-- Multiselect JS -->
-	<script src="{{ URL::to('assets/js/multiselect.min.js') }}"></script>
-	<!-- Custom JS -->
-	<script src="{{ URL::to('assets/js/app.js') }}"></script>
 
-	@yield('script')
 </body>
+<!-- jQuery -->
+<script src="{{ URL::to('assets/js/jquery-3.5.1.min.js') }}"></script>
+<!-- Bootstrap Core JS -->
+<script src="{{ URL::to('assets/js/popper.min.js') }}"></script>
+<script src="{{ URL::to('assets/js/bootstrap.min.js') }}"></script>
+<!-- Chart JS -->
+<script src="{{ URL::to('assets/plugins/morris/morris.min.js') }}"></script>
+<script src="{{ URL::to('assets/plugins/raphael/raphael.min.js') }}"></script>
+<script src="{{ URL::to('assets/js/chart.js') }}"></script>
+<!-- Slimscroll JS -->
+<script src="{{ URL::to('assets/js/jquery.slimscroll.min.js') }}"></script>
+<!-- Select2 JS -->
+<script src="{{ URL::to('assets/js/select2.min.js') }}"></script>
+<!-- Datetimepicker JS -->
+<script src="{{ URL::to('assets/js/moment.min.js') }}"></script>
+<script src="{{ URL::to('assets/js/bootstrap-datetimepicker.min.js') }}"></script>
+<!-- Datatable JS -->
+<script src="{{ URL::to('assets/js/jquery.dataTables.min.js') }}"></script>
+<!-- <script src="{{ URL::to('assets/js/dataTables.bootstrap4.min.js') }}"></script> -->
+<!-- Multiselect JS -->
+<script src="{{ URL::to('assets/js/multiselect.min.js') }}"></script>
+<!-- Custom JS -->
+<script src="{{ URL::to('assets/js/app.js') }}"></script>
+@yield('script')
+
+<script>
+	$(document).ready(function() {
+		$('#datatable').DataTable();
+	});
+</script>
 
 </html>

@@ -95,8 +95,9 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::post('profile/information/save', 'profileInformation')->name('profile/information/save');
 
     // ----------------------------- user userManagement -----------------------//
-    Route::get('userManagement', 'index')->middleware('auth')->name('userManagement');
+    Route::get('userManagement', 'index')->middleware('can:isAdmin')->name('userManagement');
     Route::get('/getOfficeLists/{org_idd}', 'getOfficeLists');
+    Route::get('/getUserDesigns/{ur_id}', 'getDesignationName');
     Route::get('/getPosts/{org_idd}', 'getPost');
     Route::get('/getDesignations/{po_id}', 'getDesignation');
     Route::get('userManagement/add-user', 'addUserForm')->middleware('auth')->name('userManagement/addUser');
@@ -107,8 +108,8 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::post('search/user/list', 'searchUser')->name('search/user/list');
     Route::post('update', 'update')->name('update');
     Route::post('user/delete', 'delete')->middleware('auth')->name('user/delete');
-    Route::get('activity/log', 'activityLog')->middleware('auth')->name('activity/log');
-    Route::get('activity/login/logout', 'activityLogInLogOut')->middleware('auth')->name('activity/login/logout');
+    Route::get('activity/log', 'activityLog')->middleware('can:isAdmin')->name('activity/log');
+    Route::get('activity/login/logout', 'activityLogInLogOut')->middleware('can:isAdmin')->name('activity/login/logout');
 
     // ----------------------------- search user management ------------------------------//
     Route::post('search/user/list', 'searchUser')->name('search/user/list');
@@ -136,27 +137,30 @@ Route::controller(EmployeeController::class)->group(function () {
 
 
 Route::controller(HolidayController::class)->group(function () {
-    Route::get('form/holidays/new', 'holiday')->middleware('auth')->name('form/holidays/new');
+    Route::get('form/holidays/new', 'holiday')->middleware('can:isAdmin')->name('form/holidays/new');
     Route::post('form/holidays/save', 'saveRecord')->middleware('auth')->name('form/holidays/save');
     Route::post('form/holidays/update', 'updateRecord')->middleware('auth')->name('form/holidays/update');
+    Route::post('form/holidays/delete', 'deleteRecord')->middleware('auth');
 });
 
 // ----------------------------- form leaves ------------------------------//
 
 
 Route::controller(LeavesController::class)->group(function () {
-    Route::get('form/leaves/new', 'leaves')->middleware('auth')->name('form/leaves/new');
+    Route::get('form/leaves/new', 'leaves')->middleware('can:isAdmin')->name('form/leaves/new');
     Route::get('form/leavesemployee/new', 'leavesEmployee')->middleware('auth')->name('form/leavesemployee/new');
     Route::post('form/leaves/save', 'saveRecord')->middleware('auth')->name('form/leaves/save');
     Route::post('form/leaves/edit', 'editRecordLeave')->middleware('auth')->name('form/leaves/edit');
     Route::post('form/leaves/edit/delete', 'deleteLeave')->middleware('auth')->name('form/leaves/edit/delete');
+    Route::post('form/leaves/apply-leave', 'saveRecord')->middleware('auth');
+    Route::post('form/leaves/status', 'updateStatus')->middleware('auth');
 });
 
 // ----------------------------- form attendance  ------------------------------//
 
 Route::controller(LeavesController::class)->group(function () {
-    Route::get('form/leavesettings/page', 'leaveSettings')->middleware('auth')->name('form/leavesettings/page');
-    Route::get('attendance/page', 'attendanceIndex')->middleware('auth')->name('attendance/page');
+    Route::get('form/leavesettings/page', 'leaveSettings')->middleware('can:isAdmin')->name('form/leavesettings/page');
+    Route::get('attendance/page', 'attendanceIndex')->middleware('can:isAdmin')->name('attendance/page');
     Route::get('/search-attendance-data', 'attendanceRecordSearch')->middleware('auth');
     Route::get('attendance/employee/page', 'AttendanceEmployee')->middleware('auth')->name('attendance/employee/page');
     Route::get('take-attendance', 'showAttendance')->middleware('auth');
@@ -167,22 +171,22 @@ Route::controller(LeavesController::class)->group(function () {
 // ----------------------------- form payroll  ------------------------------//
 
 Route::controller(PayrollController::class)->group(function () {
-    Route::get('form/salary/page', 'salary')->middleware('auth')->name('form/salary/page');
+    Route::get('form/salary/page', 'salary')->middleware('can:isAdmin')->name('form/salary/page');
     Route::post('form/salary/save', 'saveRecord')->middleware('auth')->name('form/salary/save');
     Route::post('form/salary/update', 'updateRecord')->middleware('auth')->name('form/salary/update');
     Route::post('form/salary/delete', 'deleteRecord')->middleware('auth')->name('form/salary/delete');
     Route::get('form/salary/view/{rec_id}', 'salaryView')->middleware('auth');
-    Route::get('form/payroll/items', 'payrollItems')->middleware('auth')->name('form/payroll/items');
+    Route::get('form/payroll/items', 'payrollItems')->middleware('can:isAdmin')->name('form/payroll/items');
 });
 
 // ----------------------------- reports  ------------------------------//
 
 
 Route::controller(ExpenseReportsController::class)->group(function () {
-    Route::get('form/expense/reports/page', 'index')->middleware('auth')->name('form/expense/reports/page');
-    Route::get('form/invoice/reports/page', 'invoiceReports')->middleware('auth')->name('form/invoice/reports/page');
-    Route::get('form/daily/reports/page', 'dailyReport')->middleware('auth')->name('form/daily/reports/page');
-    Route::get('form/leave/reports/page', 'leaveReport')->middleware('auth')->name('form/leave/reports/page');
+    Route::get('form/expense/reports/page', 'index')->middleware('can:isAdmin')->name('form/expense/reports/page');
+    Route::get('form/invoice/reports/page', 'invoiceReports')->middleware('can:isAdmin')->name('form/invoice/reports/page');
+    Route::get('form/daily/reports/page', 'dailyReport')->middleware('can:isAdmin')->name('form/daily/reports/page');
+    Route::get('form/leave/reports/page', 'leaveReport')->middleware('can:isAdmin')->name('form/leave/reports/page');
 });
 
 
@@ -190,48 +194,48 @@ Route::controller(ExpenseReportsController::class)->group(function () {
 
 
 Route::controller(AllowanceMaster::class)->group(function () {
-    Route::get('masters/allowanceMaster', 'allowanceMasterFunc')->middleware('auth')->name('masters/allowanceMaster');
-    Route::post('masters/allowanceMaster/add', 'addAllowanceMaster')->middleware('auth')->name('masters/allowanceMaster/add');
-    Route::post('masters/allowanceMaster/update', 'updateAllowanceMaster')->middleware('auth')->name('masters/allowanceMaster/update');
-    Route::post('masters/allowanceMaster/delete', 'deleteAllowanceMaster')->middleware('auth')->name('masters/allowanceMaster/delete');
+    Route::get('masters/allowanceMaster', 'allowanceMasterFunc')->middleware('can:isAdmin')->name('masters/allowanceMaster');
+    Route::post('masters/allowanceMaster/add', 'addAllowanceMaster')->middleware('can:isAdmin')->name('masters/allowanceMaster/add');
+    Route::post('masters/allowanceMaster/update', 'updateAllowanceMaster')->middleware('can:isAdmin')->name('masters/allowanceMaster/update');
+    Route::post('masters/allowanceMaster/delete', 'deleteAllowanceMaster')->middleware('can:isAdmin')->name('masters/allowanceMaster/delete');
 });
 
 // -----------------------------Designation master tables  ------------------------------//
 
 
 Route::controller(DesignationMaster::class)->group(function () {
-    Route::get('masters/designationMaster', 'DesignationMasterFunc')->middleware('auth')->name('masters/designationMaster');
-    Route::post('masters/designationMaster/add', 'addDesignationMaster')->middleware('auth')->name('masters/designationMaster/add');
-    Route::post('masters/designationMaster/update', 'updateDesignationMaster')->middleware('auth')->name('masters/designationMaster/update');
-    Route::post('masters/designationMaster/delete', 'deleteDesignationMaster')->middleware('auth')->name('masters/designationMaster/delete');
+    Route::get('masters/designationMaster', 'DesignationMasterFunc')->middleware('can:isAdmin')->name('masters/designationMaster');
+    Route::post('masters/designationMaster/add', 'addDesignationMaster')->middleware('can:isAdmin')->name('masters/designationMaster/add');
+    Route::post('masters/designationMaster/update', 'updateDesignationMaster')->middleware('can:isAdmin')->name('masters/designationMaster/update');
+    Route::post('masters/designationMaster/delete', 'deleteDesignationMaster')->middleware('can:isAdmin')->name('masters/designationMaster/delete');
 });
 
 // -----------------------------State master tables  ------------------------------//
 
 Route::controller(StateController::class)->group(function () {
-    Route::get('masters/stateMaster', 'stateMasterFunc')->middleware('auth')->name('masters/stateMaster');
-    Route::post('masters/stateMaster/add', 'addStateMaster')->middleware('auth')->name('masters/stateMaster/add');
-    Route::post('masters/stateMaster/update', 'updateStateMaster')->middleware('auth')->name('masters/stateMaster/update');
-    Route::post('masters/stateMaster/delete', 'deleteStateMaster')->middleware('auth')->name('masters/stateMaster/delete');
+    Route::get('masters/stateMaster', 'stateMasterFunc')->middleware('can:isAdmin')->name('masters/stateMaster');
+    Route::post('masters/stateMaster/add', 'addStateMaster')->middleware('can:isAdmin')->name('masters/stateMaster/add');
+    Route::post('masters/stateMaster/update', 'updateStateMaster')->middleware('can:isAdmin')->name('masters/stateMaster/update');
+    Route::post('masters/stateMaster/delete', 'deleteStateMaster')->middleware('can:isAdmin')->name('masters/stateMaster/delete');
 });
 
 // -----------------------------Block master tables  ------------------------------//
 
 Route::controller(BlockController::class)->group(function () {
-    Route::get('masters/blockMaster', 'blockMasterFunc')->middleware('auth')->name('masters/blockMaster');
-    Route::get('/searchDistrictLists/{st_idd}', 'searchDistrictList')->middleware('auth');
-    Route::get('/getDistrictLists/{st_idd}', 'getDistrictList')->middleware('auth');
-    Route::post('masters/blockMaster/add', 'addBlockMaster')->middleware('auth')->name('masters/blockMaster/add');
-    Route::get('/editDistrictLists/{st_idd}', 'editDistrictList')->middleware('auth');
-    Route::post('masters/blockMaster/update', 'updateBlockMaster')->middleware('auth')->name('masters/blockMaster/update');
-    Route::post('masters/blockMaster/delete', 'deleteBlockMaster')->middleware('auth')->name('masters/blockMaster/delete');
+    Route::get('masters/blockMaster', 'blockMasterFunc')->middleware('can:isAdmin')->name('masters/blockMaster');
+    Route::get('/searchDistrictLists/{st_idd}', 'searchDistrictList')->middleware('can:isAdmin');
+    Route::get('/getDistrictLists/{st_idd}', 'getDistrictList')->middleware('can:isAdmin');
+    Route::post('masters/blockMaster/add', 'addBlockMaster')->middleware('can:isAdmin')->name('masters/blockMaster/add');
+    Route::get('/editDistrictLists/{st_idd}', 'editDistrictList')->middleware('can:isAdmin');
+    Route::post('masters/blockMaster/update', 'updateBlockMaster')->middleware('can:isAdmin')->name('masters/blockMaster/update');
+    Route::post('masters/blockMaster/delete', 'deleteBlockMaster')->middleware('can:isAdmin')->name('masters/blockMaster/delete');
 });
 
 // -----------------------------Post master tables  ------------------------------//
 
 Route::controller(PostController::class)->group(function () {
-    Route::get('/masters/postMaster', 'postMasterFunc')->middleware('auth')->name('masters/postMaster');
-    Route::post('/masters/postMaster/add', 'addPostMaster')->middleware('auth')->name('masters/postMaster/add');
-    Route::post('/masters/postMaster/update', 'updatePostMaster')->middleware('auth')->name('masters/postMaster/update');
-    Route::post('/masters/postMaster/delete', 'deletePostMaster')->middleware('auth')->name('masters/postMaster/delete');
+    Route::get('/masters/postMaster', 'postMasterFunc')->middleware('can:isAdmin')->name('masters/postMaster');
+    Route::post('/masters/postMaster/add', 'addPostMaster')->middleware('can:isAdmin')->name('masters/postMaster/add');
+    Route::post('/masters/postMaster/update', 'updatePostMaster')->middleware('can:isAdmin')->name('masters/postMaster/update');
+    Route::post('/masters/postMaster/delete', 'deletePostMaster')->middleware('can:isAdmin')->name('masters/postMaster/delete');
 });

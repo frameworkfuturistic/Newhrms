@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('editemp_noti_dot')
+@section('editle_noti_dot')
 noti-dot
 @endsection
 
@@ -26,7 +26,7 @@ active
                     </ul>
                 </div>
                 <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Apply Leave</a>
                 </div>
             </div>
         </div>
@@ -119,7 +119,7 @@ active
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table mb-0 datatable">
+                    <table class="table table-striped custom-table mb-0" id="datatable">
                         <thead>
                             <tr>
                                 <th>Employee</th>
@@ -144,6 +144,7 @@ active
                                     </h2>
                                 </td>
                                 <td hidden class="id">{{ $items->id }}</td>
+                                <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
                                 <td class="leave_type">{{$items->leave_type}}</td>
                                 <td hidden class="from_date">{{ $items->from_date }}</td>
                                 <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
@@ -154,13 +155,20 @@ active
                                 <td class="text-center">
                                     <div class="dropdown action-label">
                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
+                                            @if( $items->status == 'New' )
                                             <i class="fa fa-dot-circle-o text-purple"></i> New
+                                            @elseif( $items->status == 'Pending' )
+                                            <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                            @elseif( $items->status == 'Approved' )
+                                            <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                            @elseif( $items->status == 'Pending' )
+                                            <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                            @endif
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-purple"></i> New</a>
-                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                            <a class="dropdown-item" href="#"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                            <a class="dropdown-item approveSubmit" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
+                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                         </div>
                                     </div>
                                 </td>
@@ -210,14 +218,19 @@ active
                             </select>
                         </div>
                         <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
+                        <input type="hidden" class="form-control" id="reporting_auth" name="reporting_auth" value="{{ Auth::user()->reporting_authority }}">
                         <div class="form-group">
                             <label>From <span class="text-danger">*</span></label>
                             <div class="cal-icon">
                                 <input type="text" class="form-control datetimepicker" id="from_date" name="from_date">
                             </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">(Press if more than 1 day)</label>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>To <span class="text-danger">*</span></label>
+                        <div class="form-group leave-to">
+                            <label>To</label>
                             <div class="cal-icon">
                                 <input type="text" class="form-control datetimepicker" id="to_date" name="to_date">
                             </div>
@@ -254,9 +267,12 @@ active
                             <label>Leave Type <span class="text-danger">*</span></label>
                             <select class="select" id="e_leave_type" name="leave_type">
                                 <option selected disabled>Select Leave Type</option>
-                                <option value="Casual Leave 12 Days">Casual Leave 12 Days</option>
+                                <option value="Casual Leave">Casual Leave</option>
+                                <option value="Earned Leave">Earned Leave</option>
+                                <option value="Maternity Leave">Maternity Leave</option>
+                                <option value="Paternity Leave">Paternity Leave</option>
                                 <option value="Medical Leave">Medical Leave</option>
-                                <option value="Loss of Pay">Loss of Pay</option>
+                                <option value="Leave without Pay">Leave Without Pay</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -266,14 +282,10 @@ active
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>To <span class="text-danger">*</span></label>
+                            <label>To</label>
                             <div class="cal-icon">
                                 <input type="text" class="form-control datetimepicker" id="e_to_date" name="to_date" value="">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Number of days <span class="text-danger">*</span></label>
-                            <input class="form-control" readonly type="text" id="e_number_of_days" name="number_of_days" value="">
                         </div>
                         <div class="form-group">
                             <label>Leave Reason <span class="text-danger">*</span></label>
@@ -299,14 +311,19 @@ active
                         <p>Are you sure want to approve for this leave?</p>
                     </div>
                     <div class="modal-btn delete-action">
-                        <div class="row">
-                            <div class="col-6">
-                                <a href="javascript:void(0);" class="btn btn-primary continue-btn">Approve</a>
+                        <form action="/form/leaves/status" id="approveSubmit" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="e_id" value="">
+                            <input type="hidden" name="status" class="status" value="Approved">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn">Approve</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Decline</a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -370,5 +387,26 @@ active
         $('.e_id').val(_this.find('.id').text());
     });
 </script>
+
+<!-- approve -->
+<script>
+    $(document).on('click', '.approveSubmit', function() {
+        var _this = $(this).parents('tr');
+        $('.e_id').val(_this.find('.id').text());
+    });
+
+
+    //toggle leave to date box
+    jQuery($ => {
+
+        $(".leave-to").hide();
+
+        $("#customSwitch1").on("input", function() {
+            $(".leave-to").toggle();
+        });
+
+    });
+</script>
+
 @endsection
 @endsection

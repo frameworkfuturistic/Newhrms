@@ -43,6 +43,8 @@ class UserManagementController extends Controller
             $post['pd'] = MasterPost::orderby("org_id", "asc")->select('org_id', 'post_title')->get();
             $designation['de'] = MasterDesignation::orderby("designation_id", "asc")->select('designation_id', 'designation_code', 'post_id')->get();
 
+
+
             return view('usermanagement.user_control', compact('result', 'role_name', 'position', 'department', 'status_user', 'organisation', 'employee_types', 'designation', 'post', 'attendance_type', 'role_type'));
         } else {
             return redirect()->route('home');
@@ -164,10 +166,21 @@ class UserManagementController extends Controller
         return view('usermanagement.add_user', compact('state'));
     }
 
+    // Fetch designation name through Ajax
+    public function getDesignationName($ur_id = 0)
+    {
+        // Fetch office name by organisation level
+        $design_name['dn'] = DB::table('users as u')
+            ->leftjoin('master_designations as md', 'md.designation_id', '=', 'u.designation')
+            ->select('md.designation_code')
+            ->where('u.id', $ur_id)
+            ->first();
+
+        return response()->json($design_name);
+    }
+
     public function saveProfileData(Request $request)
     {
-        // dd($request->all());
-
         $request->validate([
             'aadhar_no' => 'required|unique:users',
             'aadhar_card' => 'required',
@@ -500,7 +513,7 @@ class UserManagementController extends Controller
             $user->name = $request->first_name . ' ' . $request->last_name;
 
             $password = $request->first_name . $request->last_name;
-            $image = $user->name . $user->org_id . '.' . $request->image->extension();
+            $image = $request->cug_no . '.' . $request->image->extension();
             $request->image->move(public_path('assets/employee_image'), $image);
 
             $user->first_name = $request->first_name;
@@ -670,7 +683,7 @@ class UserManagementController extends Controller
 
         User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
         DB::commit();
-        Toastr::success('User change successfully :)', 'Success');
+        Toastr::success('Password changed successfully :)', 'Success');
         return redirect()->intended('home');
     }
 }

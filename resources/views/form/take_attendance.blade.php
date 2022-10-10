@@ -401,93 +401,97 @@ active
         {{-- message --}}
         {!! Toastr::message() !!}
 
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="elegant-calencar d-md-flex">
-                                <div class="wrap-header d-flex align-items-center">
-                                    <p id="reset">reset</p>
-                                    <div id="header" class="p-0">
-                                        <div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
-                                        <div class="head-info">
-                                            <div class="head-day"></div>
-                                            <div class="head-month"></div>
+        <div class="card leave-box" id="leave_sick">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="elegant-calencar d-md-flex">
+                                        <div class="wrap-header d-flex align-items-center">
+                                            <p id="reset">reset</p>
+                                            <div id="header" class="p-0">
+                                                <div class="pre-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-left"></i></div>
+                                                <div class="head-info">
+                                                    <div class="head-day"></div>
+                                                    <div class="head-month"></div>
+                                                </div>
+                                                <div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div>
+                                            </div>
                                         </div>
-                                        <div class="next-button d-flex align-items-center justify-content-center"><i class="fa fa-chevron-right"></i></div>
+                                        <div class="calendar-wrap">
+                                            <table id="calendar">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Sun</th>
+                                                        <th>Mon</th>
+                                                        <th>Tue</th>
+                                                        <th>Wed</th>
+                                                        <th>Thu</th>
+                                                        <th>Fri</th>
+                                                        <th>Sat</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="calendar-wrap">
-                                    <table id="calendar">
-                                        <thead>
-                                            <tr>
-                                                <th>Sun</th>
-                                                <th>Mon</th>
-                                                <th>Tue</th>
-                                                <th>Wed</th>
-                                                <th>Thu</th>
-                                                <th>Fri</th>
-                                                <th>Sat</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -505,7 +509,7 @@ active
 
     <!-- Attendance Modal -->
     <div class="modal custom-modal fade" id="attendance_info" role="dialog">
-        <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Attendance Info</h5>
@@ -514,45 +518,39 @@ active
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-1">
-                        </div>
-                        <div class="col-md-10">
-                            <div class="card punch-status">
-                                <div class="card-body">
-                                    <form action="/insert-attendance-detail" method="post">
-                                        @csrf
-                                        <h5 class="card-title">Timesheet <small class="text-muted">{{ date('d F, Y',strtotime($today_date)) }}</small></h5>
-                                        <div class="punch-det">
-                                            <div class="form-group">
-                                                <label>Status <span class="text-danger">*</span></label>
-                                                <select class="select" id="" name="status">
-                                                    <option selected disabled>Select Status</option>
-                                                    <option value="1">Time In</option>
-                                                    <option value="0">Time Out</option>
-                                                </select>
-                                                <div class="alert-danger">@error('status'){{ $message }}@enderror</div>
-                                            </div>
-                                        </div>
-                                        <div class="punch-info">
-                                            <div class="punch-hours">
-                                                <span id="clock">123</span>
-                                            </div>
-                                        </div>
-                                        <div class="statistics">
-                                            <div class="row">
-                                                <div class="col-md-6 col-6 text-center">
-                                                    <button type="submit" style="min-width: 150px;" class="btn btn-primary submit-btn">Save</button>
-                                                </div>
-                                                <div class="col-md-6 col-6 text-center">
-                                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                    <div class="card punch-status">
+                        <div class="card-body">
+                            <form action="/insert-attendance-detail" method="post">
+                                @csrf
+                                <h5 class="card-title">Timesheet <small class="text-muted">{{ date('d F, Y',strtotime($today_date)) }}</small></h5>
+                                <div class="punch-det">
+                                    <div class="form-group">
+                                        <label>Status <span class="text-danger">*</span></label>
+                                        <select class="select" id="" name="status">
+                                            <option selected disabled>Select Status</option>
+                                            <option value="1">Time In</option>
+                                            <option value="0">Time Out</option>
+                                        </select>
+                                        <div class="alert-danger">@error('status'){{ $message }}@enderror</div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="punch-info">
+                                    <div class="punch-hours">
+                                        <span id="clock">123</span>
+                                    </div>
+                                </div>
+                                <div class="statistics">
+                                    <div class="row">
+                                        <div class="col-md-6 col-6 text-center">
+                                            <button type="submit" style="min-width: 150px;" class="btn btn-primary submit-btn">Save</button>
+                                        </div>
+                                        <div class="col-md-6 col-6 text-center">
+                                            <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

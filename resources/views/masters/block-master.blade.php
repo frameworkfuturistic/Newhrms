@@ -67,19 +67,21 @@ active
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
+                    <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
-                                <th>Block No.</th>
+                                <th hidden></th>
+                                <th>S No.</th>
                                 <th>Block Name</th>
                                 <th>Block Code</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($block_datas as $block_data )
+                            @foreach ($block_datas as $key=>$block_data )
                             <tr>
-                                <td class="block_id">{{ $block_data->block_id }}</td>
+                                <td hidden class="block_id">{{ $block_data->block_id }}</td>
+                                <td>{{ ++$key }}</td>
                                 <td class="block_name">{{ $block_data->block_name }}</td>
                                 <td class="block_code">{{ $block_data->block_code }}</td>
                                 <td class="text-right">
@@ -103,7 +105,7 @@ active
 
     <!-- Add Block Modal -->
     <div id="add_more_block" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add New Block</h5>
@@ -115,7 +117,8 @@ active
                     <form action="{{ route('masters/blockMaster/add') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>State Name<span class="required">*</span></label>
                                     <select class="select form-control" name="state_id" id="state_id">
@@ -126,7 +129,10 @@ active
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>District Name<span class="required">*</span></label>
                                     <select class="select form-control" name="district_id" id="district_id">
@@ -136,13 +142,17 @@ active
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Block Name<span class="required">*</span></label>
                                     <input class="form-control @error('block_name') is-invalid @enderror" type="text" id="" name="block_name" value="{{ old('block_name') }}" placeholder="Enter Block Name">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Block Code<span class="required">*</span></label>
                                     <input class="form-control @error('block_code') is-invalid @enderror" type="text" id="" name="block_code" value="{{ old('block_code') }}" placeholder="Enter Block Code">
@@ -161,7 +171,7 @@ active
 
     <!-- Edit Block Modal -->
     <div id="edit_block" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Block</h5>
@@ -174,21 +184,29 @@ active
                     <form action="{{ route('masters/blockMaster/update') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <input type="hidden" name="block_id" id="block_id" value="">
                                 <div class="form-group">
                                     <label>Block Name<span class="required">*</span></label>
                                     <input class="form-control" type="text" name="block_name" id="block_name_edit" value="" />
+                                    <div class="alert-danger">@error('block_name'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Block Code<span class="required">*</span></label>
-                                <input class="form-control" type="text" name="block_code" id="block_code_edit" value="" />
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>Block Code<span class="required">*</span></label>
+                                    <input class="form-control" type="text" name="block_code" id="block_code_edit" value="" />
+                                    <div class="alert-danger">@error('block_code'){{ $message }}@enderror</div>
+                                </div>
                             </div>
                         </div>
-                        <br>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>State Name<span class="required">*</span></label>
                                     <select class="select form-control" name="state_id" id="state_id_edit">
@@ -197,18 +215,22 @@ active
                                         <option value="{{ $state_data->state_id }}">{{ $state_data->state_name }}</option>
                                         @endforeach
                                     </select>
+                                    <div class="alert-danger">@error('state_id'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>District Name<span class="required">*</span></label>
                                     <select class="select form-control" name="district_id" id="district_id_edit">
                                         <option selected disabled> --Select --</option>
                                     </select>
+                                    <div class="alert-danger">@error('district_id'){{ $message }}@enderror</div>
                                 </div>
                             </div>
                         </div>
-                        <br>
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Update</button>
                         </div>
@@ -249,6 +271,7 @@ active
 
 </div>
 <!-- /Page Wrapper -->
+@endsection
 
 @section('script')
 <!-- Script -->
@@ -398,9 +421,4 @@ active
         $('.block_id').val(_this.find('.block_id').text());
     });
 </script>
-
-
-
-@endsection
-
 @endsection

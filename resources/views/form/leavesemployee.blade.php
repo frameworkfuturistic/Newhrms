@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('editemp_noti_dot')
+@section('editle_noti_dot')
 noti-dot
 @endsection
 
@@ -25,7 +25,7 @@ active
                     </ul>
                 </div>
                 <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Add Leave</a>
+                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_leave"><i class="fa fa-plus"></i> Apply Leave</a>
                 </div>
             </div>
         </div>
@@ -59,52 +59,277 @@ active
         </div>
         <!-- /Leave Statistics -->
 
+        {{-- message --}}
+        {!! Toastr::message() !!}
+
+        @php
+        use Carbon\Carbon;
+        $today_date = Carbon::today()->format('Y-m-d');
+        @endphp
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table mb-0 datatable">
+                    <table class="table table-striped custom-table mb-0" id="datatable">
                         <thead>
                             <tr>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
                                 <th>Leave Type</th>
                                 <th>From</th>
                                 <th>To</th>
                                 <th>No of Days</th>
                                 <th>Reason</th>
                                 <th class="text-center">Status</th>
-                                <th>Approved by</th>
                                 <th class="text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Casual Leave</td>
-                                <td>8 Mar 2019</td>
-                                <td>9 Mar 2019</td>
-                                <td>2 days</td>
-                                <td>Going to Hospital</td>
-                                <td class="text-center">
-                                    <div class="action-label">
-                                        <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
-                                            <i class="fa fa-dot-circle-o text-purple"></i> New
-                                        </a>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a href="profile.html" class="avatar avatar-xs"><img src="{{URL::to('assets/img/profiles/avatar-09.jpg')}}" alt=""></a>
-                                        <a href="#">Rishav Sharma</a>
-                                    </h2>
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                            @if(!empty($leaves))
+                            @foreach ($leaves as $items )
+                            @if($items->to_date != null)
+                            @if($today_date < $items->from_date)
+                                <tr>
+                                    <td hidden class="id">{{ $items->id }}</td>
+                                    <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
+                                    <td class="leave_type">{{$items->leave_type}}</td>
+                                    <td hidden class="from_date">{{ $items->from_date }}</td>
+                                    <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                    <td hidden class="to_date">{{$items->to_date}}</td>
+                                    <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
+                                    <td class="day">{{$items->day}} Day</td>
+                                    <td class="leave_reason">{{$items->leave_reason}}</td>
+                                    <td class="text-center">
+                                        <div class="action-label">
+                                            <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                                @if( $items->status == 'New' )
+                                                <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                @elseif( $items->status == 'Pending' )
+                                                <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                                @elseif( $items->status == 'Approved' )
+                                                <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                                @elseif( $items->status == 'Pending' )
+                                                <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                                @endif
+                                            </a>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="dropdown dropdown-action">
+                                            <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item leaveUpdate" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @elseif(($today_date >= $items->from_date) && ($today_date < $items->to_date))
+                                    <tr>
+                                        <td hidden class="id">{{ $items->id }}</td>
+                                        <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
+                                        <td class="leave_type">{{$items->leave_type}}</td>
+                                        <td hidden class="from_date">{{ $items->from_date }}</td>
+                                        <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                        <td hidden class="to_date">{{$items->to_date}}</td>
+                                        <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
+                                        <td class="day">{{$items->day}} Day</td>
+                                        <td class="leave_reason">{{$items->leave_reason}}</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                                    @if( $items->status == 'New' )
+                                                    <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                    @elseif( $items->status == 'Pending' )
+                                                    <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                                    @elseif( $items->status == 'Approved' )
+                                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                                    @elseif( $items->status == 'Pending' )
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                                    @endif
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item leaveUpdate" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @elseif($today_date == $items->to_date)
+                                    <tr>
+                                        <td hidden class="id">{{ $items->id }}</td>
+                                        <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
+                                        <td class="leave_type">{{$items->leave_type}}</td>
+                                        <td hidden class="from_date">{{ $items->from_date }}</td>
+                                        <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                        <td hidden class="to_date">{{$items->to_date}}</td>
+                                        <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
+                                        <td class="day">{{$items->day}} Day</td>
+                                        <td class="leave_reason">{{$items->leave_reason}}</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                                    @if( $items->status == 'New' )
+                                                    <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                    @elseif( $items->status == 'Pending' )
+                                                    <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                                    @elseif( $items->status == 'Approved' )
+                                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                                    @elseif( $items->status == 'Pending' )
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                                    @endif
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="text-right">
+                                            <div class="dropdown dropdown-action">
+                                                <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                <div class="dropdown-menu dropdown-menu-right">
+                                                    <a class="dropdown-item leaveUpdate" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    @else
+                                    <tr class="holiday-completed">
+                                        <td hidden class="id">{{ $items->id }}</td>
+                                        <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
+                                        <td class="leave_type">{{$items->leave_type}}</td>
+                                        <td hidden class="from_date">{{ $items->from_date }}</td>
+                                        <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                        <td hidden class="to_date">{{$items->to_date}}</td>
+                                        <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
+                                        <td class="day">{{$items->day}} Day</td>
+                                        <td class="leave_reason">{{$items->leave_reason}}</td>
+                                        <td class="text-center">
+                                            <div class="action-label">
+                                                <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                                    @if( $items->status == 'New' )
+                                                    <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                    @elseif( $items->status == 'Pending' )
+                                                    <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                                    @elseif( $items->status == 'Approved' )
+                                                    <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                                    @elseif( $items->status == 'Pending' )
+                                                    <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                                    @endif
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td hidden></td>
+                                    </tr>
+                                    @endif
+                                    @endif
+
+                                    @if($items->to_date == null)
+                                    @if($today_date < $items->from_date)
+                                        <tr>
+                                            <td hidden class="id">{{ $items->id }}</td>
+                                            <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
+                                            <td class="leave_type">{{$items->leave_type}}</td>
+                                            <td hidden class="from_date">{{ $items->from_date }}</td>
+                                            <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                            <td hidden class="to_date">{{$items->to_date}}</td>
+                                            <td>N/A</td>
+                                            <td class="day">{{$items->day}} Day</td>
+                                            <td class="leave_reason">{{$items->leave_reason}}</td>
+                                            <td class="text-center">
+                                                <div class="action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                                        @if( $items->status == 'New' )
+                                                        <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                        @elseif( $items->status == 'Pending' )
+                                                        <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                                        @elseif( $items->status == 'Approved' )
+                                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                                        @elseif( $items->status == 'Pending' )
+                                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                                        @endif
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item leaveUpdate" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                        <a class="dropdown-item leaveDelete" href="#" data-toggle="modal" data-target="#delete_approve"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @elseif($today_date == $items->from_date)
+                                        <tr>
+                                            <td hidden class="id">{{ $items->id }}</td>
+                                            <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
+                                            <td class="leave_type">{{$items->leave_type}}</td>
+                                            <td hidden class="from_date">{{ $items->from_date }}</td>
+                                            <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                            <td hidden class="to_date">{{$items->to_date}}</td>
+                                            <td>N/A</td>
+                                            <td class="day">{{$items->day}} Day</td>
+                                            <td class="leave_reason">{{$items->leave_reason}}</td>
+                                            <td class="text-center">
+                                                <div class="action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                                        @if( $items->status == 'New' )
+                                                        <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                        @elseif( $items->status == 'Pending' )
+                                                        <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                                        @elseif( $items->status == 'Approved' )
+                                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                                        @elseif( $items->status == 'Pending' )
+                                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                                        @endif
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="text-right">
+                                                <div class="dropdown dropdown-action">
+                                                    <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item leaveUpdate" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#edit_leave"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @else
+                                        <tr class="holiday-completed">
+                                            <td hidden class="id">{{ $items->id }}</td>
+                                            <td hidden class="reporting_auth">{{ $items->reporting_authority }}</td>
+                                            <td class="leave_type">{{$items->leave_type}}</td>
+                                            <td hidden class="from_date">{{ $items->from_date }}</td>
+                                            <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
+                                            <td hidden class="to_date">{{$items->to_date}}</td>
+                                            <td>N/A</td>
+                                            <td class="day">{{$items->day}} Day</td>
+                                            <td class="leave_reason">{{$items->leave_reason}}</td>
+                                            <td class="text-center">
+                                                <div class="action-label">
+                                                    <a class="btn btn-white btn-sm btn-rounded" href="javascript:void(0);">
+                                                        @if( $items->status == 'New' )
+                                                        <i class="fa fa-dot-circle-o text-purple"></i> New
+                                                        @elseif( $items->status == 'Pending' )
+                                                        <i class="fa fa-dot-circle-o text-info"></i> Pending
+                                                        @elseif( $items->status == 'Approved' )
+                                                        <i class="fa fa-dot-circle-o text-success"></i> Approved
+                                                        @elseif( $items->status == 'Pending' )
+                                                        <i class="fa fa-dot-circle-o text-danger"></i> Declined
+                                                        @endif
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td hidden></td>
+                                        </tr>
+                                        @endif
+                                        @endif
+                                        @endforeach
+                                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -125,10 +350,11 @@ active
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/form/leaves/apply-leave" method="post">
+                        @csrf
                         <div class="form-group">
                             <label>Leave Type <span class="text-danger">*</span></label>
-                            <select class="select">
+                            <select class="select" name="leave_type">
                                 <option selected disabled>Select Leave Type</option>
                                 <option value="Casual Leave">Casual Leave</option>
                                 <option value="Earned Leave">Earned Leave</option>
@@ -138,29 +364,27 @@ active
                                 <option value="Leave without Pay">Leave Without Pay</option>
                             </select>
                         </div>
+                        <input type="hidden" class="form-control" id="rec_id" name="rec_id" value="{{ Auth::user()->rec_id }}">
+                        <input type="hidden" class="form-control" id="reporting_auth" name="reporting_auth" value="{{ Auth::user()->reporting_authority }}">
                         <div class="form-group">
                             <label>From <span class="text-danger">*</span></label>
                             <div class="cal-icon">
-                                <input class="form-control datetimepicker" id="from_date" type="text">
+                                <input class="form-control datetimepicker" name="from_date" id="from_date" type="text">
+                            </div>
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">(Press if more than 1 day)</label>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>To <span class="text-danger">*</span></label>
+                        <div class="form-group leave-to">
+                            <label>To</label>
                             <div class="cal-icon">
-                                <input class="form-control datetimepicker" id="to_date" type="text">
+                                <input class="form-control datetimepicker" name="to_date" id="to_date" type="text">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Number of days <span class="text-danger">*</span></label>
-                            <input class="form-control" readonly type="text">
-                        </div>
-                        <div class="form-group">
-                            <label>Remaining Leaves <span class="text-danger">*</span></label>
-                            <input class="form-control" readonly value="12" type="text">
                         </div>
                         <div class="form-group">
                             <label>Leave Reason <span class="text-danger">*</span></label>
-                            <textarea rows="4" class="form-control"></textarea>
+                            <textarea rows="4" class="form-control" name="leave_reason"></textarea>
                         </div>
                         <div class="submit-section">
                             <button class="btn btn-primary submit-btn">Submit</button>
@@ -183,10 +407,12 @@ active
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form action="/form/leaves/update" method="POST">
+                        @csrf
+                        <input type="hidden" id="e_id" name="id" value="">
                         <div class="form-group">
                             <label>Leave Type <span class="text-danger">*</span></label>
-                            <select class="select">
+                            <select class="select" id="e_leave_type" name="leave_type">
                                 <option selected disabled>Select Leave Type</option>
                                 <option value="Casual Leave">Casual Leave</option>
                                 <option value="Earned Leave">Earned Leave</option>
@@ -199,26 +425,18 @@ active
                         <div class="form-group">
                             <label>From <span class="text-danger">*</span></label>
                             <div class="cal-icon">
-                                <input class="form-control datetimepicker" value="01-01-2019" type="text">
+                                <input type="text" class="form-control datetimepicker" id="e_from_date" name="from_date" value="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>To <span class="text-danger">*</span></label>
+                            <label>To</label>
                             <div class="cal-icon">
-                                <input class="form-control datetimepicker" value="01-01-2019" type="text">
+                                <input type="text" class="form-control datetimepicker" id="e_to_date" name="to_date" value="">
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Number of days <span class="text-danger">*</span></label>
-                            <input class="form-control" readonly type="text" value="2">
-                        </div>
-                        <div class="form-group">
-                            <label>Remaining Leaves <span class="text-danger">*</span></label>
-                            <input class="form-control" readonly value="12" type="text">
                         </div>
                         <div class="form-group">
                             <label>Leave Reason <span class="text-danger">*</span></label>
-                            <textarea rows="4" class="form-control">Going to hospital</textarea>
+                            <textarea rows="4" class="form-control" id="e_leave_reason" name="leave_reason" value=""></textarea>
                         </div>
                         <div class="submit-section">
                             <button class="btn btn-primary submit-btn">Save</button>
@@ -240,14 +458,18 @@ active
                         <p>Are you sure want to Cancel this leave?</p>
                     </div>
                     <div class="modal-btn delete-action">
-                        <div class="row">
-                            <div class="col-6">
-                                <a href="javascript:void(0);" class="btn btn-primary continue-btn">Delete</a>
+                        <form action="{{ route('form/leaves/edit/delete') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="e_id" value="">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn submit-btn">Delete</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -274,5 +496,56 @@ active
     document.write("Number of days between dates <br>" +
         date1 + " and <br>" + date2 + " are: <br>" +
         days_difference + " days");
+</script>
+<script>
+    document.getElementById("year").innerHTML = new Date().getFullYear();
+</script>
+{{-- update js --}}
+<script>
+    $(document).on('click', '.leaveUpdate', function() {
+        var _this = $(this).parents('tr');
+        $('#e_id').val(_this.find('.id').text());
+        $('#e_number_of_days').val(_this.find('.day').text());
+
+        let dateObj = new Date();
+        // let month = String(dateObj.getMonth() + 1).padStart(2, '0');
+        // let day = String(dateObj.getDate()).padStart(2, '0');
+        // let year = dateObj.getFullYear();
+        // let output = day + '-' + month + '-' + year;
+        // let today_date = new Date(output);
+        let from_date_val = new Date(_this.find('.from_date').text());
+
+        if (dateObj >= from_date_val) {
+            $('#e_from_date').val(_this.find('.from_date').text());
+            document.getElementById('e_from_date').readOnly = true;
+        } else {
+            $('#e_from_date').val(_this.find('.from_date').text());
+        }
+        $('#e_to_date').val(_this.find('.to_date').text());
+        $('#e_leave_reason').val(_this.find('.leave_reason').text());
+
+        var leave_type = (_this.find(".leave_type").text());
+        var _option = '<option selected value="' + leave_type + '">' + _this.find('.leave_type').text() + '</option>'
+        $(_option).appendTo("#e_leave_type");
+    });
+</script>
+{{-- delete model --}}
+<script>
+    $(document).on('click', '.leaveDelete', function() {
+        var _this = $(this).parents('tr');
+        $('.e_id').val(_this.find('.id').text());
+    });
+
+
+    //toggle leave to date box
+    jQuery($ => {
+
+        $(".leave-to").hide();
+
+        $("#customSwitch1").on("input", function() {
+            $(".leave-to").toggle();
+        });
+
+    });
 </script>
 @endsection

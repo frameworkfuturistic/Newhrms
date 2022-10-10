@@ -63,13 +63,13 @@ active
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
+                    <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>User ID</th>
                                 <th>Email</th>
-                                <th>Position</th>
+                                <th>Post</th>
                                 <th>Phone</th>
                                 <th>Join Date</th>
                                 <th>Role</th>
@@ -173,67 +173,72 @@ active
                     <form action="{{ route('user/add/save') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>First Name<span class="required">*</span></label>
                                     <input class="form-control @error('first_name') is-invalid @enderror" type="text" id="" name="first_name" value="{{ old('first_name') }}" placeholder="Enter Your First Name" required />
                                     <div class="alert-danger">@error('first_name'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Last Name<span class="required">*</span></label>
                                     <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="" name="last_name" value="{{ old('last_name') }}" placeholder="Enter Your Last Name" required />
                                     <div class="alert-danger">@error('last_name'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Date Of Birth<span class="required">*</span></label>
-                                <input class="form-control" type="date" id="" name="dob" placeholder="Enter Your date of birth" required />
-                                <div class="alert-danger">@error('dob'){{ $message }}@enderror</div>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Profile Photo<span class="required">*</span></label>
-                                <input class="form-control" type="file" id="image" name="image" required />
-                                <div class="alert-danger">@error('image'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Date Of Birth<span class="required">*</span></label>
+                                    <input class="form-control" type="date" id="" name="dob" placeholder="Enter Your date of birth" required />
+                                    <div class="alert-danger">@error('dob'){{ $message }}@enderror</div>
+                                </div>
                             </div>
                         </div>
-                        <br>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <label>Personal Email<span class="required">*</span></label>
-                                <input class="form-control" type="email" id="" name="email" placeholder="Enter Your Personal Email" required />
-                                <div class="alert-danger">@error('email'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Profile Photo<span class="required">*</span></label>
+                                    <input class="form-control" type="file" id="image" name="image" required />
+                                    <div class="alert-danger">@error('image'){{ $message }}@enderror</div>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Department Email<span class="required">*</span></label>
-                                <input class="form-control" type="email" id="" name="department_email" placeholder="Enter Your Department Email" required />
-                                <div class="alert-danger">@error('department_email'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Personal Email<span class="required">*</span></label>
+                                    <input class="form-control" type="email" id="" name="email" placeholder="Enter Your Personal Email" required />
+                                    <div class="alert-danger">@error('email'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Department Email<span class="required">*</span></label>
+                                    <input class="form-control" type="email" id="" name="department_email" placeholder="Enter Your Department Email" required />
+                                    <div class="alert-danger">@error('department_email'){{ $message }}@enderror</div>
+                                </div>
                             </div>
                         </div>
-                        <br>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <label>Date Of Joining<span class="required">*</span></label>
-                                <input class="form-control" type="date" id="" name="join_date" placeholder="Enter Date Of Joining" required />
-                                <div class="alert-danger">@error('join_date'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Date Of Joining<span class="required">*</span></label>
+                                    <input class="form-control" type="date" id="" name="join_date" placeholder="Enter Date Of Joining" required />
+                                    <div class="alert-danger">@error('join_date'){{ $message }}@enderror</div>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Organization Level<span class="required">*</span></label>
-                                <select class="select form-control" name="organ_level" id="org_level">
-                                    <option selected disabled> --Select --</option>
-                                    @foreach ($organisation['data'] as $org )
-                                    <option value="{{ $org->org_id }}">{{ $org->org_level }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="alert-danger">@error('organ_level'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Organization Level<span class="required">*</span></label>
+                                    <select class="select form-control" name="organ_level" id="org_level">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach ($organisation['data'] as $org )
+                                        <option value="{{ $org->org_id }}">{{ $org->org_level }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="alert-danger">@error('organ_level'){{ $message }}@enderror</div>
+                                </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Office Name<span class="required">*</span></label>
                                     <select class="select form-control" name="office_name" id="office_name">
@@ -242,87 +247,103 @@ active
                                     <div class="alert-danger">@error('office_name'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Employee Type<span class="required">*</span></label>
-                                <select class="select form-control" name="emp_type" id="">
-                                    <option selected disabled> --Select --</option>
-                                    @foreach ($employee_types as $et )
-                                    <option value="{{ $et->emp_type_id }}">{{ $et->emp_type }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="alert-danger">@error('emp_type'){{ $message }}@enderror</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Employee Type<span class="required">*</span></label>
+                                    <select class="select form-control" name="emp_type" id="">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach ($employee_types as $et )
+                                        <option value="{{ $et->emp_type_id }}">{{ $et->emp_type }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="alert-danger">@error('emp_type'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Post<span class="required">*</span></label>
+                                    <select class="select form-control" name="position" id="positions">
+                                        <option selected disabled> --Select --</option>
+                                    </select>
+                                    <div class="alert-danger">@error('position'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Designation<span class="required">*</span></label>
+                                    <select class="select form-control" name="designation" id="designation">
+                                        <option selected disabled> --Select --</option>
+                                    </select>
+                                    <div class="alert-danger">@error('designation'){{ $message }}@enderror</div>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <label>Post<span class="required">*</span></label>
-                                <select class="select form-control" name="position" id="positions">
-                                    <option selected disabled> --Select --</option>
-                                </select>
-                                <div class="alert-danger">@error('position'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Pay Slab<span class="required">*</span></label>
+                                    <select class="select form-control" name="pay_slab" id="">
+                                        <option selected disabled> --Select --</option>
+                                        <option value="Slab 1">Slab 1</option>
+                                        <option value="Slab 2">Slab 2</option>
+                                        <option value="Slab 3">Slab 3</option>
+                                    </select>
+                                    <div class="alert-danger">@error('pay_slab'){{ $message }}@enderror</div>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Designation<span class="required">*</span></label>
-                                <select class="select form-control" name="designation" id="designation">
-                                    <option selected disabled> --Select --</option>
-                                </select>
-                                <div class="alert-danger">@error('designation'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Attendance Type<span class="required">*</span></label>
+                                    <select class="select form-control" name="attend_type" id="">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach ($attendance_type as $at )
+                                        <option value="{{ $at->attendance_type_id }}">{{ $at->attendance_type }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="alert-danger">@error('attend_type'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Reporting Authority<span class="required">*</span></label>
+                                    <select class="select form-control js-example-basic-single" name="report_auth" id="report_auth">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach($result as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="alert-danger">@error('report_auth'){{ $message }}@enderror</div>
+                                </div>
                             </div>
                         </div>
-                        <br>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <label>Pay Slab<span class="required">*</span></label>
-                                <select class="select form-control" name="pay_slab" id="">
-                                    <option selected disabled> --Select --</option>
-                                    <option value="Slab 1">Slab 1</option>
-                                    <option value="Slab 2">Slab 2</option>
-                                    <option value="Slab 3">Slab 3</option>
-                                </select>
-                                <div class="alert-danger">@error('pay_slab'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Reporting Authority's Designation</label>
+                                    <select class="select form-control" id="ra_designation">
+                                    </select>
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Attendance Type<span class="required">*</span></label>
-                                <select class="select form-control" name="attend_type" id="">
-                                    <option selected disabled> --Select --</option>
-                                    @foreach ($attendance_type as $at )
-                                    <option value="{{ $at->attendance_type_id }}">{{ $at->attendance_type }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="alert-danger">@error('attend_type'){{ $message }}@enderror</div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Reporting Authority<span class="required">*</span></label>
-                                <select class="select form-control js-example-basic-single" name="report_auth" id="">
-                                    <option selected disabled> --Select --</option>
-                                    @foreach($result as $user)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="alert-danger">@error('report_auth'){{ $message }}@enderror</div>
-                            </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>CUG Number<span class="required">*</span></label>
                                     <input class="form-control @error('cug_no') is-invalid @enderror" type="text" id="" name="cug_no" value="{{ old('cug_no') }}" placeholder="Enter CUG Number">
                                     <div class="alert-danger">@error('cug_no'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Role Type<span class="required">*</span></label>
-                                <select class="select form-control" name="role_name" id="">
-                                    <option selected disabled> --Select --</option>
-                                    @foreach ($role_type as $rt )
-                                    <option value="{{ $rt->role_type }}">{{ $rt->role_type }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="alert-danger">@error('role_name'){{ $message }}@enderror</div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Role Type<span class="required">*</span></label>
+                                    <select class="select form-control" name="role_name" id="">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach ($role_type as $rt )
+                                        <option value="{{ $rt->role_type }}">{{ $rt->role_type }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="alert-danger">@error('role_name'){{ $message }}@enderror</div>
+                                </div>
                             </div>
                         </div>
                         <div class="submit-section">
@@ -623,6 +644,54 @@ active
 
             }
         });
+    });
+
+    // On Reporting Authority Change
+    $('#report_auth').change(function() {
+        // State id
+        var ur_id = $(this).val();
+        var mUrl = "/getUserDesigns/" + ur_id;
+
+        $.ajax({
+            url: mUrl,
+            type: "GET",
+            cache: false,
+            contentType: "application/json;charset=utf-8",
+            datatype: "json",
+            success: function(result) {
+                if (result == false) {
+                    alert("Not Found");
+                } else {
+                    $select = $("#ra_designation");
+                    $select.find("option").remove();
+                    $select.append(
+                        $("<option>").html("-- Select --")
+                    );
+                    Object.keys(result).forEach(function(key) {
+                        $a = result[key].designation_code;
+                        $select.append(
+                            "<option selected disabled data-myid=" +
+                            $a +
+                            " value=" +
+                            $a +
+                            ">" +
+                            $a +
+                            "</option>"
+                        );
+                    });
+                }
+            },
+            error: function(xhr, status, errorThrown) {
+                //Here the status code can be retrieved like;
+                xhr.status;
+                alert(status);
+
+
+                //The message added to Response object in Controller can be retrieved as following.
+                xhr.responseText;
+            }
+        });
+
     });
 
     $(document).ready(function() {

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('editemp_noti_dot')
+@section('editle_noti_dot')
 noti-dot
 @endsection
 

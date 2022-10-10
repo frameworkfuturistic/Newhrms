@@ -18,6 +18,7 @@ class CreateHolidaysTable extends Migration
             $table->string('name_holiday')->nullable();
             $table->date('date_holiday')->nullable();
             $table->date('to_holiday')->nullable();
+            $table->string('no_of_days');
             $table->timestamps();
         });
     }

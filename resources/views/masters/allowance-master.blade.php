@@ -37,19 +37,21 @@ active
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
+                    <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
-                                <th>Allowance No.</th>
+                                <th hidden></th>
+                                <th>S No.</th>
                                 <th>Allowance Name</th>
                                 <th>Allowance Desc</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($allowance_datas as $allow_data )
+                            @foreach ($allowance_datas as $key=>$allow_data )
                             <tr>
-                                <td class="allowance_id">{{ $allow_data->allowance_id }}</td>
+                                <td hidden class="allowance_id">{{ $allow_data->allowance_id }}</td>
+                                <td>{{ ++$key }}</td>
                                 <td class="allowance_name">{{ $allow_data->allowance_name }}</td>
                                 <td class="allowance_desc">{{ $allow_data->allowance_desc }}</td>
                                 <td class="text-right">
@@ -73,7 +75,7 @@ active
 
     <!-- Add Allowance Modal -->
     <div id="add_more_allowance" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add New Allowance</h5>
@@ -85,8 +87,8 @@ active
                     <form action="{{ route('masters/allowanceMaster/add') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Allowance Name<span class="required">*</span></label>
                                     <input class="form-control @error('allowance_name') is-invalid @enderror" type="text" id="" name="allowance_name" value="{{ old('allowance_name') }}" placeholder="Enter Allowance Name">
@@ -94,15 +96,14 @@ active
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Allowance Description<span class="required">*</span></label>
                                     <input class="form-control @error('allowance_desc') is-invalid @enderror" type="text" id="" name="allowance_desc" value="{{ old('allowance_desc') }}" placeholder="Enter Allowance Description">
                                 </div>
                             </div>
                         </div>
-
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                         </div>
@@ -115,7 +116,7 @@ active
 
     <!-- Edit Allowance Modal -->
     <div id="edit_allowance" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Allowance</h5>
@@ -125,22 +126,27 @@ active
                 </div>
                 <br>
                 <div class="modal-body">
-                    <form action="{{ route('masters/allowanceMaster/update') }}" method="POST"> 
+                    <form action="{{ route('masters/allowanceMaster/update') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <input type="hidden" name="allowance_id" id="allowance_id" value="">
                                 <div class="form-group">
                                     <label>Allowance Name<span class="required">*</span></label>
                                     <input class="form-control" type="text" name="allowance_name" id="allowance_name_edit" value="" />
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Allowance Description<span class="required">*</span></label>
-                                <input class="form-control" type="text" name="allowance_desc" id="allowance_desc_edit" value="" />
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>Allowance Description<span class="required">*</span></label>
+                                    <input class="form-control" type="text" name="allowance_desc" id="allowance_desc_edit" value="" />
+                                </div>
                             </div>
                         </div>
-                        <br>
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Update</button>
                         </div>

@@ -16,9 +16,10 @@ class LeavesController extends Controller
     // leaves
     public function leaves()
     {
-        $leaves = DB::table('leaves_admins')
-            ->join('users', 'users.rec_id', '=', 'leaves_admins.rec_id')
-            ->select('leaves_admins.*', 'users.position', 'users.name', 'users.avatar')
+        $leaves = DB::table('leaves_admins as la')
+            ->leftjoin('users as u', 'la.rec_id', '=', 'u.rec_id')
+            ->select('u.name', 'u.rec_id', 'u.avatar', 'u.position', 'u.reporting_authority', 'la.id', 'la.leave_type', 'la.from_date', 'la.to_date', 'la.day', 'la.leave_reason', 'la.status')
+            ->where('la.reporting_authority', Auth()->user()->id)
             ->get();
 
         return view('form.leaves', compact('leaves'));
@@ -29,7 +30,7 @@ class LeavesController extends Controller
         $request->validate([
             'leave_type'   => 'required|string|max:255',
             'from_date'    => 'required|string|max:255',
-            'to_date'      => 'required|string|max:255',
+            'to_date'      => 'nullable|string|max:255',
             'leave_reason' => 'required|string|max:255',
         ]);
 
@@ -44,14 +45,25 @@ class LeavesController extends Controller
             $leaves = new LeavesAdmin;
             $leaves->rec_id        = $request->rec_id;
             $leaves->leave_type    = $request->leave_type;
-            $leaves->from_date     = $request->from_date;
-            $leaves->to_date       = $request->to_date;
-            $leaves->day           = $days;
+            $date = date_create("$request->from_date");
+            $leaves->from_date     = date_format($date, 'Y-m-d');
+
+            if ($request->to_date != NULL) {
+                $dateTo = date_create("$request->to_date");
+                $leaves->to_date  = date_format($dateTo, 'Y-m-d');
+            }
+
+            if ($request->to_date != NULL) {
+                $leaves->day = $days + 1;
+            } else
+                $leaves->day = 1;
+
             $leaves->leave_reason  = $request->leave_reason;
+            $leaves->reporting_authority  = $request->reporting_auth;
             $leaves->save();
 
             DB::commit();
-            Toastr::success('Create new Leaves successfully :)', 'Success');
+            Toastr::success('Request sent successfully :)', 'Success');
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
@@ -76,7 +88,7 @@ class LeavesController extends Controller
                 'leave_type'   => $request->leave_type,
                 'from_date'    => $request->from_date,
                 'to_date'      => $request->to_date,
-                'day'          => $days,
+                'day'          => $days + 1,
                 'leave_reason' => $request->leave_reason,
             ];
 
@@ -99,12 +111,12 @@ class LeavesController extends Controller
         try {
 
             LeavesAdmin::destroy($request->id);
-            Toastr::success('Leaves admin deleted successfully :)', 'Success');
+            Toastr::success('Leaves request deleted successfully :)', 'Success');
             return redirect()->back();
         } catch (\Exception $e) {
 
             DB::rollback();
-            Toastr::error('Leaves admin delete fail :)', 'Error');
+            Toastr::error('Request deletion failed :)', 'Error');
             return redirect()->back();
         }
     }
@@ -118,7 +130,18 @@ class LeavesController extends Controller
     // attendance admin
     public function attendanceIndex()
     {
-        return view('form.attendance');
+
+        // $attend_data = DB::table('attendance_records as ar')
+        //     ->join('users as u', 'u.id', '=', 'ar.user_id')
+        //     ->select('ar.user_id', 'u.avatar', 'u.name', 'ar.attend_date')
+        //     ->get();
+
+        $user_name = DB::table('users')->select('name', 'avatar', 'id')->get();
+
+        $days = Carbon::now()->month;
+        $no_of_days = Carbon::now()->month($days)->daysInMonth;
+
+        return view('form.attendance', compact('user_name', 'no_of_days'));
     }
 
     // show attendance form
@@ -133,10 +156,17 @@ class LeavesController extends Controller
         return view('form.attendanceemployee');
     }
 
-    // leaves Employee
+    // show Employee Leaves
     public function leavesEmployee()
     {
-        return view('form.leavesemployee');
+        $user_id = Auth()->user()->id;
+        $leaves = DB::table('leaves_admins as la')
+            ->join('users as u', 'u.rec_id', '=', 'la.rec_id')
+            ->select('la.*', 'u.position', 'u.reporting_authority', 'u.name', 'u.avatar', 'u.id')
+            ->where('u.id', $user_id)
+            ->get();
+
+        return view('form.leavesemployee', compact('leaves'));
     }
 
     // take attendance
@@ -151,7 +181,7 @@ class LeavesController extends Controller
         // check the status is time in or time out
         $checkCondition = $req->status;
         $accessData = AttendanceRecord::select('inserted_on_time_in', 'inserted_on_time_out')
-            ->where('date', $today_date)->where('user_id', Auth()->user()->id)->first();
+            ->where('attend_date', $today_date)->where('user_id', Auth()->user()->id)->first();
 
         // if today's record is not available 
         if ($accessData == null) {
@@ -161,12 +191,14 @@ class LeavesController extends Controller
                     $attend_record = new AttendanceRecord();
 
                     $todayTime = Carbon::now()->format('Y-m-d H:i:s');
+                    $todayTimeIn = Carbon::now()->format('Y-m-d H:i:s');
 
                     $attend_record->user_id = Auth()->user()->id;
-                    $attend_record->date = $today_date;
+                    $attend_record->attend_date = $today_date;
                     $attend_record->status = true;
                     $attend_record->inserted_by_time_in_id = Auth()->user()->id;
                     $attend_record->inserted_on_time_in = $todayTime;
+                    $attend_record->time_in = $todayTimeIn;
 
                     $attend_record->save();
 
@@ -198,12 +230,13 @@ class LeavesController extends Controller
                     try {
 
                         $todayTime = Carbon::now()->format('Y-m-d H:i:s');
+                        $todayTimeOut = Carbon::now()->format('Y-m-d H:i:s');
                         $id           = Auth()->user()->id;
-                        $time_out = $todayTime;
 
                         $update = [
                             'inserted_by_time_out_id' => $id,
                             'inserted_on_time_out' => $todayTime,
+                            'time_out' => $todayTimeOut,
                         ];
 
                         AttendanceRecord::where('user_id', $id)->update($update);
@@ -223,75 +256,28 @@ class LeavesController extends Controller
         }
     }
 
-    // attendance record search by month 
-    // public function attendanceRecordSearch(Request $request)
-    // {
-    //     $userList = DB::table('users')->get();
+    //Update status of leave that may be approved, pending or rejected.
 
-    //     // search by name
-    //     if ($request->emp_name) {
-    //         $users = DB::table('users as u')
-    //             ->join('attendance_records as ar', 'u.id', '=', 'ar.user_id')
-    //             ->select('u.*', 'ar.*')
-    //             ->where('name', 'LIKE', '%' . $request->emp_name . '%')
-    //             ->get();
-    //     }
+    public function updateStatus(Request $req)
+    {
+        DB::beginTransaction();
+        try {
 
-    //     // search by month
-    //     if ($request->month) {
-    //         $users = DB::table('users as u')
-    //             ->join('attendance_records as ar', 'u.id', '=', 'ar.user_id')
-    //             ->select('u.*', 'ar.*')
-    //             ->where('name', 'LIKE', '%' . $request->emp_name . '%')
-    //             ->get();
-    //     }
+            $id     = $req->id;
+            $status = $req->status;
 
-    //     // search by year
-    //     if ($request->year) {
-    //         $users = DB::table('users as u')
-    //             ->join('attendance_records as ar', 'u.id', '=', 'ar.user_id')
-    //             ->select('u.*', 'ar.*')
-    //             ->where('name', 'LIKE', '%' . $request->emp_name . '%')
-    //             ->get();
-    //     }
+            $update = [
+                'status' => $status
+            ];
 
-    //     // search by name and id
-    //     if ($request->employee_id && $request->name) {
-    //         $users = DB::table('users')
-    //             ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-    //             ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
-    //             ->where('employee_id', 'LIKE', '%' . $request->employee_id . '%')
-    //             ->where('users.name', 'LIKE', '%' . $request->name . '%')
-    //             ->get();
-    //     }
-    //     // search by position and id
-    //     if ($request->employee_id && $request->position) {
-    //         $users = DB::table('users')
-    //             ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-    //             ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
-    //             ->where('employee_id', 'LIKE', '%' . $request->employee_id . '%')
-    //             ->where('users.position', 'LIKE', '%' . $request->position . '%')
-    //             ->get();
-    //     }
-    //     // search by name and position
-    //     if ($request->name && $request->position) {
-    //         $users = DB::table('users')
-    //             ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-    //             ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
-    //             ->where('users.name', 'LIKE', '%' . $request->name . '%')
-    //             ->where('users.position', 'LIKE', '%' . $request->position . '%')
-    //             ->get();
-    //     }
-    //     // search by name and position and id
-    //     if ($request->employee_id && $request->name && $request->position) {
-    //         $users = DB::table('users')
-    //             ->join('employees', 'users.rec_id', '=', 'employees.employee_id')
-    //             ->select('users.*', 'employees.birth_date', 'employees.gender', 'employees.company')
-    //             ->where('employee_id', 'LIKE', '%' . $request->employee_id . '%')
-    //             ->where('users.name', 'LIKE', '%' . $request->name . '%')
-    //             ->where('users.position', 'LIKE', '%' . $request->position . '%')
-    //             ->get();
-    //     }
-    //     return view('form.allemployeecard', compact('users', 'userList', 'permission_lists'));
-    // }
+            LeavesAdmin::where('id', $id)->update($update);
+            DB::commit();
+            Toastr::success('Application' . $status . ' :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Something is wrong :)', 'Error');
+            return redirect()->back();
+        }
+    }
 }

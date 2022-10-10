@@ -161,6 +161,13 @@ class BlockController extends Controller
 
     public function updateBlockMaster(Request $request)
     {
+        $request->validate([
+            'block_name'   => 'required',
+            'block_code'   => 'required',
+            'state_id'     => 'required',
+            'district_id'  => 'required',
+        ]);
+
         DB::beginTransaction();
         try {
 

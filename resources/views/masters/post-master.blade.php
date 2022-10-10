@@ -37,18 +37,20 @@ active
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table datatable">
+                    <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
                                 <th hidden>ID</th>
+                                <th>S.No.</th>
                                 <th>Post Title</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($post_data as $post_dt )
+                            @foreach ($post_data as $key=>$post_dt )
                             <tr>
                                 <td hidden class="post_id">{{ $post_dt->post_id }}</td>
+                                <td>{{ ++$key }}</td>
                                 <td class="post_title">{{ $post_dt->post_title }}</td>
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
@@ -71,7 +73,7 @@ active
 
     <!-- Add Post Modal -->
     <div id="add_more_post" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Add New Post</h5>
@@ -83,8 +85,8 @@ active
                     <form action="{{ route('masters/postMaster/add') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Post Name<span class="required">*</span></label>
                                     <input class="form-control @error('post_title') is-invalid @enderror" type="text" id="" name="post_title" value="{{ old('post_title') }}" placeholder="Enter Post Name">
@@ -92,8 +94,8 @@ active
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Organisation Name<span class="required">*</span></label>
                                     <select class="select form-control" name="org_id" id="">
@@ -106,8 +108,8 @@ active
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-3"></div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="form-group">
                                     <label>Employee Type<span class="required">*</span></label>
                                     <select class="select form-control" name="emp_type_id" id="">
@@ -132,7 +134,7 @@ active
 
     <!-- Edit Post Modal -->
     <div id="edit_post" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit Post</h5>
@@ -145,33 +147,43 @@ active
                     <form action="{{ route('masters/postMaster/update') }}" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <input type="hidden" name="post_id" id="post_idd" value="">
                                 <div class="form-group">
                                     <label>Post Name<span class="required">*</span></label>
                                     <input class="form-control" type="text" name="post_title" id="post_title_edit" value="" />
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Organisation Name<span class="required">*</span></label>
-                                <select class="select form-control" name="org_id" id="org_id_edit">
-                                    <option selected disabled> --Select --</option>
-                                    @foreach ($org_data as $og_data )
-                                    <option value="{{ $og_data->org_id }}">{{ $og_data->org_level }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Employee Type<span class="required">*</span></label>
-                                <select class="select form-control" name="emp_type_id" id="emp_type_id_edit">
-                                    <option selected disabled> --Select --</option>
-                                    @foreach ($emp_type_data as $emp_data )
-                                    <option value="{{ $emp_data->emp_type_id }}">{{ $emp_data->emp_type }}</option>
-                                    @endforeach
-                                </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>Organisation Name<span class="required">*</span></label>
+                                    <select class="select form-control" name="org_id" id="org_id_edit">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach ($org_data as $og_data )
+                                        <option value="{{ $og_data->org_id }}">{{ $og_data->org_level }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <br>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
+                                <div class="form-group">
+                                    <label>Employee Type<span class="required">*</span></label>
+                                    <select class="select form-control" name="emp_type_id" id="emp_type_id_edit">
+                                        <option selected disabled> --Select --</option>
+                                        @foreach ($emp_type_data as $emp_data )
+                                        <option value="{{ $emp_data->emp_type_id }}">{{ $emp_data->emp_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Update</button>
                         </div>

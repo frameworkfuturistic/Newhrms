@@ -16,12 +16,14 @@ class CreateAttendanceRecordsTable extends Migration
         Schema::create('attendance_records', function (Blueprint $table) {
             $table->increments('attend_rec_id');
             $table->string('user_id');
-            $table->date('date');
+            $table->date('attend_date');
             $table->boolean('status');
             $table->string('inserted_by_time_in_id')->nullable();
             $table->string('inserted_by_time_out_id')->nullable();
             $table->string('updated_by_time_in_id')->nullable();
             $table->string('updated_by_time_out_id')->nullable();
+            $table->timestamp('time_in')->nullable();
+            $table->timestamp('time_out')->nullable();
             $table->timestamp('inserted_on_time_in')->nullable();
             $table->timestamp('inserted_on_time_out')->nullable();
             $table->timestamp('updated_on_time_in')->nullable();

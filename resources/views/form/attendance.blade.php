@@ -18,10 +18,10 @@ active
         <div class="page-header">
             <div class="row">
                 <div class="col-sm-12">
-                    <h3 class="page-title">Attendance Chart</h3>
+                    <h3 class="page-title">Attendance (Admin)</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Attendance Chart</li>
+                        <li class="breadcrumb-item active">Attendance (Admin)</li>
                     </ul>
                 </div>
             </div>
@@ -77,71 +77,42 @@ active
         </form>
         <!-- /Search Filter -->
 
-        <?php
 
-        use Carbon\Carbon;
-
-        $days = Carbon::now()->month(02)->daysInMonth;
-        ?>
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table table-nowrap mb-0">
+                    <table class="table table-striped custom-table table-nowrap mb-0" id="datatable">
                         <thead>
                             <tr>
                                 <th>Employee</th>
-                                <th>1</th>
+                                @for ($i = 1; $i <= $no_of_days; $i++) <th>{{ $i }}</th> @endfor
                             </tr>
                         </thead>
                         <tbody>
+                            @foreach($user_name as $ad)
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a class="avatar avatar-xs" href="profile.html"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}"></a>
-                                        <a href="profile.html">Amit Kumar</a>
+                                        <a class="avatar avatar-sm" href="#"><img alt="" src="/assets/employee_image/{{ $ad->avatar }}"></a>
+                                        <a href="#">{{ $ad->name }}</a>
                                     </h2>
                                 </td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td>
+                                @for ($i = 1; $i <= $no_of_days; $i++) <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
+                                    <!-- <td>
                                     <div class="half-day">
-                                        <span class="first-off"><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></span>
                                         <span class="first-off"><i class="fa fa-close text-danger"></i></span>
                                     </div>
                                 </td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><i class="fa fa-close text-danger"></i> </td>
-                                <td><i class="fa fa-close text-danger"></i> </td>
-                                <td><i class="fa fa-close text-danger"></i> </td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><i class="fa fa-close text-danger"></i> </td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
+                                <td><i class="fa fa-close text-danger"></i></td>
                                 <td>
                                     <div class="half-day">
                                         <span class="first-off"><i class="fa fa-close text-danger"></i></span>
                                         <span class="first-off"><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></span>
                                     </div>
-                                </td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><i class="fa fa-close text-danger"></i> </td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><i class="fa fa-close text-danger"></i> </td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
+                                </td> -->
+                                    @endfor
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -181,16 +152,12 @@ active
                                     </div>
                                     <div class="statistics">
                                         <div class="row">
+                                            <div class="col-md-3 col-3 text-center">
+                                            </div>
                                             <div class="col-md-6 col-6 text-center">
                                                 <div class="stats-box">
                                                     <p>Break</p>
                                                     <h6>1.21 hrs</h6>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Overtime</p>
-                                                    <h6>3 hrs</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -215,34 +182,6 @@ active
                                             <p class="res-activity-time">
                                                 <i class="fa fa-clock-o"></i>
                                                 11.00 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                11.15 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                1.30 PM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                2.00 PM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                7.30 PM.
                                             </p>
                                         </li>
                                     </ul>
