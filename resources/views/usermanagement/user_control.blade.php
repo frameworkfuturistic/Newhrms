@@ -17,14 +17,14 @@ active
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">User Management</h3>
+                    <h3 class="page-title">Employee Management</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">User</li>
+                        <li class="breadcrumb-item active">Employee</li>
                     </ul>
                 </div>
                 <div class="col-auto float-right ml-auto">
-                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add User</a>
+                    <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Employee</a>
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@ active
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>User ID</th>
+                                <th>Employee ID</th>
                                 <th>Email</th>
                                 <th>Post</th>
                                 <th>Phone</th>

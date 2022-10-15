@@ -19,10 +19,10 @@ active
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">Activity User</h3>
+                    <h3 class="page-title">Activity Employee</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Activity User</li>
+                        <li class="breadcrumb-item active">Employee Activity</li>
                     </ul>
                 </div>
             </div>

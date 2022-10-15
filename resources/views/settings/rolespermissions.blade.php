@@ -7,8 +7,8 @@
             <ul>
                 <li><a href="{{ route('home') }}"><i class="la la-home"></i> <span>Back to Home</span></a></li>
                 <li class="menu-title">Settings</li>
-                <!-- <li class="active"><a href="{{ route('roles/permissions/page') }}"><i class="la la-key"></i><span>Roles & Permissions</span></a></li> -->
                 <li><a href="{{ route('change/password') }}"><i class="la la-lock"></i><span>Change Password</span></a></li>
+                <li class="active"><a href="{{ route('roles/permissions/page') }}"><i class="la la-key"></i><span>Roles & Permissions</span></a></li>
             </ul>
         </div>
     </div>
@@ -37,7 +37,6 @@
                     <ul>
                         @foreach ($rolesPermissions as $rolesName )
                         <li class="{{ $loop->first ? 'active' : '' }}">
-                            <span hidden class="id">{{ $rolesName->id }}</span>
                             <a class="active" href="javascript:void(0);"><span class="roleNmae">{{ $rolesName->permissions_name }}</span>
                                 <span class="role-action">
                                     <span class="action-circle large rolesUpdate" data-toggle="modal" data-id="'.$rolesName->id.'" data-target="#edit_role">
@@ -78,27 +77,6 @@
                                 <label for="leave_module" class="checktoggle">checkbox</label>
                             </div>
                         </li>
-                        <li class="list-group-item">
-                            Events
-                            <div class="status-toggle">
-                                <input type="checkbox" id="events_module" class="check" checked>
-                                <label for="events_module" class="checktoggle">checkbox</label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            Chat
-                            <div class="status-toggle">
-                                <input type="checkbox" id="chat_module" class="check" checked>
-                                <label for="chat_module" class="checktoggle">checkbox</label>
-                            </div>
-                        </li>
-                        <li class="list-group-item">
-                            Jobs
-                            <div class="status-toggle">
-                                <input type="checkbox" id="job_module" class="check">
-                                <label for="job_module" class="checktoggle">checkbox</label>
-                            </div>
-                        </li>
                     </ul>
                 </div>
                 <div class="table-responsive">
@@ -110,19 +88,11 @@
                                 <th class="text-center">Write</th>
                                 <th class="text-center">Create</th>
                                 <th class="text-center">Delete</th>
-                                <th class="text-center">Import</th>
-                                <th class="text-center">Export</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>Employee</td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
                                 <td class="text-center">
                                     <input type="checkbox" checked="">
                                 </td>
@@ -150,42 +120,9 @@
                                 <td class="text-center">
                                     <input type="checkbox" checked="">
                                 </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
                             </tr>
                             <tr>
                                 <td>Leaves</td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Events</td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
-                                <td class="text-center">
-                                    <input type="checkbox" checked="">
-                                </td>
                                 <td class="text-center">
                                     <input type="checkbox" checked="">
                                 </td>

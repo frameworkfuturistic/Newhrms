@@ -7,8 +7,8 @@
                 <ul>
                     <li><a href="{{ route('home') }}"><i class="la la-home"></i> <span>Back to Home</span></a></li>
                     <li class="menu-title">Settings</li>
-                    <!-- <li><a href="{{ route('roles/permissions/page') }}"><i class="la la-key"></i><span>Roles & Permissions</span></a></li> -->
                     <li class="active"><a href="{{ route('change/password') }}"><i class="la la-lock"></i><span>Change Password</span></a></li>
+                    <li><a href="{{ route('roles/permissions/page') }}"><i class="la la-key"></i><span>Roles & Permissions</span></a></li>
                 </ul>
             </div>
         </div>

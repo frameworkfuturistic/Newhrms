@@ -437,6 +437,32 @@ class UserManagementController extends Controller
     }
 
     // save profile information
+    public function changeProfilePic(Request $request)
+    {
+        try {
+            if (!empty($request->upload)) {
+
+                $image = $request->id . '.' . $request->upload->extension();
+                $request->upload->move(public_path('assets/employee_image'), $image);
+                $update = [
+                    'avatar' => $image,
+                ];
+                User::where('id', $request->id)->update($update);
+                $result = DB::commit();
+                Toastr::success('Profile pic updated successfully :)', 'Success');
+                return redirect()->back();
+            } else {
+                Toastr::error('Updation failed :)', 'Error');
+                return redirect()->back();
+            }
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Updation failed :)', 'Error');
+            return redirect()->back();
+        }
+    }
+
+    // save profile information
     public function profileInformation(Request $request)
     {
         try {

@@ -109,7 +109,7 @@ active
                                                 <i class="fa fa-dot-circle-o text-info"></i> Pending
                                                 @elseif( $items->status == 'Approved' )
                                                 <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                                @elseif( $items->status == 'Pending' )
+                                                @elseif( $items->status == 'Declined' )
                                                 <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                                 @endif
                                             </a>
@@ -145,7 +145,7 @@ active
                                                     <i class="fa fa-dot-circle-o text-info"></i> Pending
                                                     @elseif( $items->status == 'Approved' )
                                                     <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                                    @elseif( $items->status == 'Pending' )
+                                                    @elseif( $items->status == 'Declined' )
                                                     <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                                     @endif
                                                 </a>
@@ -180,7 +180,7 @@ active
                                                     <i class="fa fa-dot-circle-o text-info"></i> Pending
                                                     @elseif( $items->status == 'Approved' )
                                                     <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                                    @elseif( $items->status == 'Pending' )
+                                                    @elseif( $items->status == 'Declined' )
                                                     <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                                     @endif
                                                 </a>
@@ -215,7 +215,7 @@ active
                                                     <i class="fa fa-dot-circle-o text-info"></i> Pending
                                                     @elseif( $items->status == 'Approved' )
                                                     <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                                    @elseif( $items->status == 'Pending' )
+                                                    @elseif( $items->status == 'Declined' )
                                                     <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                                     @endif
                                                 </a>
@@ -247,7 +247,7 @@ active
                                                         <i class="fa fa-dot-circle-o text-info"></i> Pending
                                                         @elseif( $items->status == 'Approved' )
                                                         <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                                        @elseif( $items->status == 'Pending' )
+                                                        @elseif( $items->status == 'Declined' )
                                                         <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                                         @endif
                                                     </a>
@@ -283,7 +283,7 @@ active
                                                         <i class="fa fa-dot-circle-o text-info"></i> Pending
                                                         @elseif( $items->status == 'Approved' )
                                                         <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                                        @elseif( $items->status == 'Pending' )
+                                                        @elseif( $items->status == 'Declined' )
                                                         <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                                         @endif
                                                     </a>
@@ -318,7 +318,7 @@ active
                                                         <i class="fa fa-dot-circle-o text-info"></i> Pending
                                                         @elseif( $items->status == 'Approved' )
                                                         <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                                        @elseif( $items->status == 'Pending' )
+                                                        @elseif( $items->status == 'Declined' )
                                                         <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                                         @endif
                                                     </a>

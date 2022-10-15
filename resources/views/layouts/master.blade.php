@@ -83,7 +83,7 @@
 												<img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
 											</span>
 											<div class="media-body">
-												<p class="noti-details"><span class="noti-title">Amit Singh</span> added new task <span class="noti-title">Patient appointment booking</span></p>
+												<p class="noti-details"><span class="noti-title">Amit Singh</span> added new task <span class="noti-title">Apply</span></p>
 												<p class="noti-time"><span class="notification-time">4 mins ago</span></p>
 											</div>
 										</div>

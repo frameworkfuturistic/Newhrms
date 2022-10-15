@@ -19,10 +19,10 @@ active
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">User Activity Log</h3>
+                    <h3 class="page-title">Employee Activity Log</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">User Activity Log</li>
+                        <li class="breadcrumb-item active">Activity Log</li>
                     </ul>
                 </div>
             </div>
@@ -37,8 +37,8 @@ active
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>User_ID</th>
-                                <th>Deleted User</th>
+                                <th>Employee_ID</th>
+                                <th>Deleted Employee</th>
                                 <th>Phone Number</th>
                                 <th>Status</th>
                                 <th>Role Name</th>

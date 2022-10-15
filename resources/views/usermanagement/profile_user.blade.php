@@ -40,7 +40,9 @@ active
                                         <img alt="" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
                                     </a>
                                 </div>
+                                <div class="pro-edit"><a data-target="#profile_pic_change" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
                             </div>
+
                             <div class="profile-basic">
                                 <div class="row">
                                     <div class="col-md-5">
@@ -158,7 +160,6 @@ active
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
-
                                     <li>
                                         @if(!empty($information->aadhar_no))
                                         <div class="title">Aadhar Number</div>
@@ -539,10 +540,7 @@ active
                                     </div>
                                 </div>
                             </div>
-
-                            <hr>
-
-
+                            <hr>                            
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn" type="submit">Save</button>
                             </div>
@@ -786,6 +784,48 @@ active
     </div>
     <!-- /Profile Modal -->
     @endif
+
+    <!-- Change Profile Pic Modal -->
+    <div id="profile_pic_change" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Profile Picture</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/profile/change-pic" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="profile-img-wrap edit-img">
+                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                                    <div class="fileupload btn">
+                                        <span class="btn-text">edit</span>
+                                        <input class="upload" type="file" id="upload" name="upload">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div hidden class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="id" name="id" value="{{ Auth::user()->id }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Change Profile Pic Modal -->
+
 
     <!-- Personal Info Modal -->
     <div id="personal_info_modal" class="modal custom-modal fade" role="dialog">

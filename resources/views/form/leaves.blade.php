@@ -122,6 +122,10 @@ active
                     <table class="table table-striped custom-table mb-0" id="datatable">
                         <thead>
                             <tr>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
+                                <th hidden></th>
                                 <th>Employee</th>
                                 <th>Leave Type</th>
                                 <th>From</th>
@@ -140,7 +144,7 @@ active
                                 <td>
                                     <h2 class="table-avatar">
                                         <a href="{{ url('employee/profile/'.$items->rec_id) }}" class="avatar"><img alt="" src="{{ URL::to('/assets/employee_image/'. $items->avatar) }}" alt="{{ $items->name }}"></a>
-                                        <a href="#">{{ $items->name }}<span>{{ $items->position }}</span></a>
+                                        <div>{{ $items->name }}<span>{{ $items->position }}</span></div>
                                     </h2>
                                 </td>
                                 <td hidden class="id">{{ $items->id }}</td>
@@ -149,7 +153,11 @@ active
                                 <td hidden class="from_date">{{ $items->from_date }}</td>
                                 <td>{{date('d F, Y',strtotime($items->from_date)) }}</td>
                                 <td hidden class="to_date">{{$items->to_date}}</td>
+                                @if(!empty($items->to_date))
                                 <td>{{date('d F, Y',strtotime($items->to_date)) }}</td>
+                                @else
+                                <td>N/A</td>
+                                @endif
                                 <td class="day">{{$items->day}} Day</td>
                                 <td class="leave_reason">{{$items->leave_reason}}</td>
                                 <td class="text-center">
@@ -161,14 +169,14 @@ active
                                             <i class="fa fa-dot-circle-o text-info"></i> Pending
                                             @elseif( $items->status == 'Approved' )
                                             <i class="fa fa-dot-circle-o text-success"></i> Approved
-                                            @elseif( $items->status == 'Pending' )
+                                            @elseif( $items->status == 'Declined' )
                                             <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                             @endif
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
                                             <a class="dropdown-item approveSubmit" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
+                                            <a class="dropdown-item declinedSubmit" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                         </div>
                                     </div>
                                 </td>
@@ -331,6 +339,36 @@ active
     </div>
     <!-- /Approve Leave Modal -->
 
+    <!-- Declined Leave Modal -->
+    <div class="modal custom-modal fade" id="declined_leave" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Declined Leave</h3>
+                        <p>Are you sure want to declined this leave?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="/form/leaves/status" id="declinedSubmit" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="e_id" value="">
+                            <input type="hidden" name="status" class="status" value="Declined">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn">Declined</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Approve Leave Modal -->
+
     <!-- Delete Leave Modal -->
     <div class="modal custom-modal fade" id="delete_approve" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
@@ -395,6 +433,10 @@ active
         $('.e_id').val(_this.find('.id').text());
     });
 
+    $(document).on('click', '.declinedSubmit', function() {
+        var _this = $(this).parents('tr');
+        $('.e_id').val(_this.find('.id').text());
+    });
 
     //toggle leave to date box
     jQuery($ => {

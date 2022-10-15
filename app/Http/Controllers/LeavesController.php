@@ -130,13 +130,10 @@ class LeavesController extends Controller
     // attendance admin
     public function attendanceIndex()
     {
-
-        // $attend_data = DB::table('attendance_records as ar')
-        //     ->join('users as u', 'u.id', '=', 'ar.user_id')
-        //     ->select('ar.user_id', 'u.avatar', 'u.name', 'ar.attend_date')
-        //     ->get();
-
-        $user_name = DB::table('users')->select('name', 'avatar', 'id')->get();
+        $user_name = DB::table('users as u')
+            ->join('leaves_admins as la', 'la.rec_id', '=', 'u.rec_id')
+            ->join('attendance_records as ar', 'ar.user_id', '=', 'u.id')
+            ->select('u.avatar', 'u.name', 'u.id', 'u.rec_id', 'ar.user_id', 'ar.attend_date', 'ar.inserted_on_time_in', 'ar.inserted_on_time_out')->get();
 
         $days = Carbon::now()->month;
         $no_of_days = Carbon::now()->month($days)->daysInMonth;
@@ -272,7 +269,7 @@ class LeavesController extends Controller
 
             LeavesAdmin::where('id', $id)->update($update);
             DB::commit();
-            Toastr::success('Application' . $status . ' :)', 'Success');
+            Toastr::success('Application ' . $status . ' :)', 'Success');
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
