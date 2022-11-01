@@ -572,12 +572,12 @@ class UserManagementController extends Controller
                 Mail::to($request->email)->send(new MailService($data));
                 Toastr::success('Login Id is created. Email Sent successfully to ' . $request->first_name . ' ' . $request->last_name . ' :)', 'Success');
             } catch (Exception $e) {
-                Toastr::error('Something went wrong :)', 'Error');
+                Toastr::error($e->getMessage(), 'Error');
             }
             return redirect()->route('userManagement');
         } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('User add new account fail :)', 'Error');
+            Toastr::error($e->getMessage(), 'Error');
             return redirect()->back();
         }
     }
