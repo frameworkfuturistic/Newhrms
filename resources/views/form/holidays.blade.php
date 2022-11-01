@@ -57,7 +57,7 @@ active
                             @foreach ($holiday as $key=>$items )
                             @if(($today_date > $items->date_holiday))
                             <tr class="holiday-completed">
-                                <th hidden></th>
+                                <td hidden></td>
                                 <td>{{ ++$key }}</td>
                                 <td>{{ $items->name_holiday }}</td>
                                 <td>{{date('d F, Y',strtotime($items->date_holiday)) }}</td>

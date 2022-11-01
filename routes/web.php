@@ -111,6 +111,7 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::post('user/delete', 'delete')->middleware('auth')->name('user/delete');
     Route::get('activity/log', 'activityLog')->middleware('can:isAdmin')->name('activity/log');
     Route::get('activity/login/logout', 'activityLogInLogOut')->middleware('can:isAdmin')->name('activity/login/logout');
+    Route::post('userManagement/status', 'updateStatus')->middleware('auth');
 
     // ----------------------------- search user management ------------------------------//
     Route::post('search/user/list', 'searchUser')->name('search/user/list');

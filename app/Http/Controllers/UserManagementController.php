@@ -712,4 +712,29 @@ class UserManagementController extends Controller
         Toastr::success('Password changed successfully :)', 'Success');
         return redirect()->intended('home');
     }
+
+    //Update status of user that would be active, inactive or disable.
+
+    public function updateStatus(Request $req)
+    {
+        DB::beginTransaction();
+        try {
+
+            $id     = $req->id;
+            $status = $req->status;
+
+            $update = [
+                'status' => $status
+            ];
+
+            User::where('id', $id)->update($update);
+            DB::commit();
+            Toastr::success('User Status ' . $status . ' :)', 'Success');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            Toastr::error('Something is wrong :)', 'Error');
+            return redirect()->back();
+        }
+    }
 }

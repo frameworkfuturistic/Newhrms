@@ -160,6 +160,7 @@ active
                                 @endif
                                 <td class="day">{{$items->day}} Day</td>
                                 <td class="leave_reason">{{$items->leave_reason}}</td>
+
                                 <td class="text-center">
                                     <div class="dropdown action-label">
                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
@@ -173,8 +174,9 @@ active
                                             <i class="fa fa-dot-circle-o text-danger"></i> Declined
                                             @endif
                                         </a>
+
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
+                                            <a class="dropdown-item pendingSubmit" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#pending_leave"><i class="fa fa-dot-circle-o text-info"></i> Pending</a>
                                             <a class="dropdown-item approveSubmit" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#approve_leave"><i class="fa fa-dot-circle-o text-success"></i> Approved</a>
                                             <a class="dropdown-item declinedSubmit" href="#" data-toggle="modal" data-id="'.$items->id.'" data-target="#declined_leave"><i class="fa fa-dot-circle-o text-danger"></i> Declined</a>
                                         </div>
@@ -367,7 +369,37 @@ active
             </div>
         </div>
     </div>
-    <!-- /Approve Leave Modal -->
+    <!-- /Declined Leave Modal -->
+
+    <!-- Pending Leave Modal -->
+    <div class="modal custom-modal fade" id="pending_leave" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Leave Pending</h3>
+                        <p>Are you sure want to set pending for this leave?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="/form/leaves/status" id="pendingSubmit" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="e_id" value="">
+                            <input type="hidden" name="status" class="status" value="Pending">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn">Pending</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Pending Leave Modal -->
 
     <!-- Delete Leave Modal -->
     <div class="modal custom-modal fade" id="delete_approve" role="dialog">
@@ -434,6 +466,11 @@ active
     });
 
     $(document).on('click', '.declinedSubmit', function() {
+        var _this = $(this).parents('tr');
+        $('.e_id').val(_this.find('.id').text());
+    });
+
+    $(document).on('click', '.pendingSubmit', function() {
         var _this = $(this).parents('tr');
         $('.e_id').val(_this.find('.id').text());
     });

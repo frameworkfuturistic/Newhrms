@@ -74,7 +74,6 @@ active
                                 <th>Join Date</th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th>Departement</th>
                                 <th class="text-right">Action</th>
                             </tr>
                         </thead>
@@ -89,9 +88,13 @@ active
                                     </h2>
                                 </td>
                                 <td hidden class="ids">{{ $user->id }}</td>
+                                <td hidden class="dobs">{{ $user->dob }}</td>
+                                <td hidden class="d_email">{{ $user->department_email }}</td>
                                 <td class="id">{{ $user->rec_id }}</td>
                                 <td class="email">{{ $user->email }}</td>
-                                <td class="position">{{ $user->position }}</td>
+                                <td class="position">
+                                    
+                                </td>
                                 <td class="phone_number">{{ $user->cug_no }}</td>
                                 <td>{{ $user->join_date }}</td>
                                 <td>
@@ -101,44 +104,33 @@ active
                                     <span class="badge bg-inverse-dark role_name">{{ $user->role_name }}</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td class="text-center">
                                     <div class="dropdown action-label">
-                                        @if ($user->status=='Active')
                                         <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-success"></i>
-                                            <span class="statuss">{{ $user->status }}</span>
+                                            @if ($user->status=='Active')
+                                            <i class="fa fa-dot-circle-o text-success"></i>Active
+                                            @elseif ($user->status=='Inactive')
+                                            <i class="fa fa-dot-circle-o text-info"></i>Inactive
+                                            @elseif ($user->status=='Disable')
+                                            <i class="fa fa-dot-circle-o text-danger"></i>Disable
+                                            @elseif ($user->status=='')
+                                            <i class="fa fa-dot-circle-o text-dark"></i>N/A
+                                            @endif
                                         </a>
-                                        @elseif ($user->status=='Inactive')
-                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-info"></i>
-                                            <span class="statuss">{{ $user->status }}</span>
-                                        </a>
-                                        @elseif ($user->status=='Disable')
-                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-danger"></i>
-                                            <span class="statuss">{{ $user->status }}</span>
-                                        </a>
-                                        @elseif ($user->status=='')
-                                        <a class="btn btn-white btn-sm btn-rounded dropdown-toggle" href="#" data-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa fa-dot-circle-o text-dark"></i>
-                                            <span class="statuss">N/A</span>
-                                        </a>
-                                        @endif
 
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item activeSubmit" href="#" data-toggle="modal" data-id="'.$user->id.'" data-target="#active_modal">
                                                 <i class="fa fa-dot-circle-o text-success"></i> Active
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item inactiveSubmit" href="#" data-toggle="modal" data-id="'.$user->id.'" data-target="#inactive_modal">
                                                 <i class="fa fa-dot-circle-o text-warning"></i> Inactive
                                             </a>
-                                            <a class="dropdown-item" href="#">
+                                            <a class="dropdown-item disableSubmit" href="#" data-toggle="modal" data-id="'.$user->id.'" data-target="#disable_modal">
                                                 <i class="fa fa-dot-circle-o text-danger"></i> Disable
                                             </a>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="department">{{ $user->department }}</td>
                                 <td class="text-right">
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
@@ -205,7 +197,7 @@ active
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Personal Email<span class="required">*</span></label>
+                                    <label>Personal E-mail<span class="required">*</span></label>
                                     <input class="form-control" type="email" id="" name="email" placeholder="Enter Your Personal Email" required />
                                     <div class="alert-danger">@error('email'){{ $message }}@enderror</div>
                                 </div>
@@ -358,7 +350,7 @@ active
 
     <!-- Edit User Modal -->
     <div id="edit_user" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Edit User</h5>
@@ -372,72 +364,142 @@ active
                         @csrf
                         <input type="hidden" name="rec_id" id="e_id" value="">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Name</label>
-                                    <input class="form-control" type="text" name="name" id="e_name" value="" />
+                                    <input class="form-control" type="text" name="name" id="e_name" value="" placeholder="Enter name" />
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Email</label>
-                                <input class="form-control" type="text" name="email" id="e_email" value="" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <label>Role Name</label>
-                                <select class="select form-control" name="role_name" id="e_role_name">
-                                    <option disabled selected value="">----Select----</option>
-                                    @foreach ($role_name as $role )
-                                    <option value="{{ $role->role_type }}">{{ $role->role_type }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <label>Position</label>
-                                <select class="select form-control" name="position" id="e_position">
-                                    <option disabled selected value="">----Select----</option>
-                                    @foreach ($position as $positions )
-                                    <option value="{{ $positions->position }}">{{ $positions->position }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Phone</label>
-                                    <input class="form-control" type="text" id="e_phone_number" name="phone" placeholder="Enter Phone">
+                                    <label>CUG Number</label>
+                                    <input class="form-control" type="text" id="cug_no" name="cug_no" placeholder="Enter Phone">
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Department</label>
-                                <select class="select form-control" name="department" id="e_department">
-                                    <option disabled selected value="">----Select----</option>
-                                    @foreach ($department as $departments )
-                                    <option value="{{ $departments->department }}">{{ $departments->department }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Date of birth</label>
+                                    <input class="form-control" type="date" name="dob" id="dob" value="" />
+                                </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6">
-                                <label>Status</label>
-                                <select class="select form-control" name="status" id="e_status">
-                                    <option disabled selected value="">----Select----</option>
-                                    @foreach ($status_user as $status )
-                                    <option value="{{ $status->type_name }}">{{ $status->type_name }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Personal E-mail</label>
+                                    <input class="form-control" type="email" name="email" id="email" value="" placeholder="Enter Your Personal Email" />
+                                </div>
                             </div>
-                            <div class="col-sm-6">
-                                <label>Photo</label>
-                                <input class="form-control" type="file" id="image" name="images">
-                                <input type="hidden" name="hidden_image" id="e_image" value="">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Department E-mail</label>
+                                    <input class="form-control" type="email" name="d_email" id="d_email" value="" placeholder="Enter Your department Email" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Role Name</label>
+                                    <select class="select form-control" name="role_name" id="e_role_name">
+                                        <option disabled selected value="">----Select----</option>
+                                        @foreach ($role_name as $role )
+                                        <option value="{{ $role->role_type }}">{{ $role->role_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <br>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Employee Type</label>
+                                    <select class="select form-control" name="emp_type" id="emp_type">
+                                        <option disabled selected value="">----Select----</option>
+                                        @foreach ($employee_types as $et )
+                                        <option value="{{ $et->emp_type_id }}">{{ $et->emp_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Organization Level</label>
+                                    <select class="select form-control" name="organ_level" id="org_level">
+                                        <option disabled selected value="">----Select----</option>
+                                        @foreach ($organisation['data'] as $org )
+                                        <option value="{{ $org->org_id }}">{{ $org->org_level }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Office</label>
+                                    <select class="select form-control" name="office_name" id="office_name">
+                                        <option disabled selected value="">----Select----</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Post</label>
+                                    <select class="select form-control" name="position" id="positions">
+                                        <option disabled selected value="">----Select----</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Designation</label>
+                                    <select class="select form-control" name="designation" id="designation">
+                                        <option disabled selected value="">----Select----</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Pay Slab</label>
+                                    <select class="select form-control" name="pay_slab" id="pay_slab">
+                                        <option disabled selected value="">----Select----</option>
+                                        <option value="Slab 1">Slab 1</option>
+                                        <option value="Slab 2">Slab 2</option>
+                                        <option value="Slab 3">Slab 3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Attendance Type</label>
+                                    <select class="select form-control" name="attend_type" id="attend_type">
+                                        <option disabled selected value="">----Select----</option>
+                                        @foreach ($attendance_type as $at )
+                                        <option value="{{ $at->attendance_type_id }}">{{ $at->attendance_type }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Reporting Authority</label>
+                                    <select class="select form-control" name="report_auth" id="report_auth">
+                                        <option disabled selected value="">----Select----</option>
+                                        @foreach($result as $user)
+                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Reporting Authority's Designation</label>
+                                    <select class="select form-control" id="ra_designation">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Update</button>
                         </div>
@@ -447,6 +509,96 @@ active
         </div>
     </div>
     <!-- /Edit Salary Modal -->
+
+    <!-- Active Modal -->
+    <div class="modal custom-modal fade" id="active_modal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Change Status</h3>
+                        <p>Are you sure want to active the status?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="/userManagement/status" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="e_id" value="">
+                            <input type="hidden" name="status" class="status" value="Active">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn">Active</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Active Modal -->
+
+    <!-- Inactive Modal -->
+    <div class="modal custom-modal fade" id="inactive_modal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Change Status</h3>
+                        <p>Are you sure want to inactive the status?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="/userManagement/status" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="e_id" value="">
+                            <input type="hidden" name="status" class="status" value="Inactive">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn">Inactive</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Inactive Modal -->
+
+    <!-- Disable Modal -->
+    <div class="modal custom-modal fade" id="disable_modal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="form-header">
+                        <h3>Change Status</h3>
+                        <p>Are you sure want to disable the status?</p>
+                    </div>
+                    <div class="modal-btn delete-action">
+                        <form action="/userManagement/status" method="POST">
+                            @csrf
+                            <input type="hidden" name="id" class="e_id" value="">
+                            <input type="hidden" name="status" class="status" value="Disable">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-primary continue-btn">Disable</button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Disable Modal -->
 
     <!-- Delete User Modal -->
     <div class="modal custom-modal fade" id="delete_user" role="dialog">
@@ -486,25 +638,26 @@ active
         var _this = $(this).parents('tr');
         $('#e_id').val(_this.find('.id').text());
         $('#e_name').val(_this.find('.name').text());
-        $('#e_email').val(_this.find('.email').text());
-        $('#e_phone_number').val(_this.find('.phone_number').text());
-        $('#e_image').val(_this.find('.image').text());
+        $('#email').val(_this.find('.email').text());
+        $('#cug_no').val(_this.find('.phone_number').text());
+        $('#dob').val(_this.find('.dobs').text());
+        $('#d_email').val(_this.find('.d_email').text());
 
-        // var name_role = (_this.find(".role_name").text());
-        // var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'
-        // $(_option).appendTo("#e_role_name");
+        var name_role = (_this.find(".role_name").text());
+        var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'
+        $(_option).appendTo("#e_role_name");
 
-        // var position = (_this.find(".position").text());
-        // var _option = '<option selected value="' + position + '">' + _this.find('.position').text() + '</option>'
-        // $(_option).appendTo("#e_position");
+        var position = (_this.find(".position").text());
+        var _option = '<option selected value="' + position + '">' + _this.find('.position').text() + '</option>'
+        $(_option).appendTo("#e_position");
 
-        // var department = (_this.find(".department").text());
-        // var _option = '<option selected value="' + department + '">' + _this.find('.department').text() + '</option>'
-        // $(_option).appendTo("#e_department");
+        var department = (_this.find(".department").text());
+        var _option = '<option selected value="' + department + '">' + _this.find('.department').text() + '</option>'
+        $(_option).appendTo("#e_department");
 
-        // var statuss = (_this.find(".statuss").text());
-        // var _option = '<option selected value="' + statuss + '">' + _this.find('.statuss').text() + '</option>'
-        // $(_option).appendTo("#e_status");
+        var statuss = (_this.find(".statuss").text());
+        var _option = '<option selected value="' + statuss + '">' + _this.find('.statuss').text() + '</option>'
+        $(_option).appendTo("#e_status");
 
     });
 </script>
@@ -514,6 +667,21 @@ active
         var _this = $(this).parents('tr');
         $('.id').val(_this.find('.ids').text());
         $('.e_avatar').val(_this.find('.image').text());
+    });
+
+    $(document).on('click', '.activeSubmit', function() {
+        var _this = $(this).parents('tr');
+        $('.e_id').val(_this.find('.ids').text());
+    });
+
+    $(document).on('click', '.inactiveSubmit', function() {
+        var _this = $(this).parents('tr');
+        $('.e_id').val(_this.find('.ids').text());
+    });
+
+    $(document).on('click', '.disableSubmit', function() {
+        var _this = $(this).parents('tr');
+        $('.e_id').val(_this.find('.ids').text());
     });
 </script>
 
