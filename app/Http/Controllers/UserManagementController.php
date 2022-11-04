@@ -516,10 +516,11 @@ class UserManagementController extends Controller
     {
         $request->validate([
             'first_name'      => 'required|string|max:255',
-            'last_name'      => 'required|string|max:255',
+            'middle_name'   => 'nullable|string|max:255',
+            'last_name'      => 'nullable|string|max:255',
             'dob'      => 'required|date',
             'email' => 'required|string|email|max:255|unique:users',
-            'department_email' => 'required|string|email|max:255|unique:users',
+            'department_email' => 'nullable|string|email|max:255|unique:users',
             'organ_level' => 'required',
             'office_name' => 'required',
             'emp_type' => 'required',
@@ -531,16 +532,27 @@ class UserManagementController extends Controller
             'role_name' => 'required|string|max:255',
             'designation' => 'required|string|max:255',
             'position'  => 'required|string|max:255',
-            'image'     => 'required|image'
+            'image'     => 'nullable|image'
         ]);
         DB::beginTransaction();
         try {
             $user = new User;
-            $user->name = $request->first_name . ' ' . $request->last_name;
+            if ($request->middle_name != null && $request->last_name != null)
+                $user->name = $request->first_name . ' ' . $request->middle_name . ' ' . $request->last_name;
 
-            $password = $request->first_name . $request->last_name;
-            $image = $request->cug_no . '.' . $request->image->extension();
-            $request->image->move(public_path('assets/employee_image'), $image);
+            if ($request->middle_name != null && $request->last_name == null)
+                $user->name = $request->first_name . ' ' . $request->middle_name;
+
+            if ($request->middle_name == null && $request->last_name != null)
+                $user->name = $request->first_name . ' ' . $request->last_name;
+
+            if ($request->middle_name == null && $request->last_name == null)
+                $user->name = $request->first_name;
+
+            if ($request->image != null) {
+                $image = $request->cug_no . '.' . $request->image->extension();
+                $request->image->move(public_path('assets/employee_image'), $image);
+            }
 
             $user->first_name = $request->first_name;
             $user->last_name = $request->last_name;
@@ -556,7 +568,10 @@ class UserManagementController extends Controller
             $user->reporting_authority = $request->report_auth;
             $user->role_name    = $request->role_name;
             $user->position     = $request->position;
-            $user->avatar       = $image;
+
+            if ($request->image != null)
+                $user->avatar       = $image;
+
             $user->designation       = $request->designation;
             $user->cug_no       = $request->cug_no;
             $password = Str::random(6);

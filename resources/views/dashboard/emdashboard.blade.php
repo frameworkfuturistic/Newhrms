@@ -28,7 +28,7 @@ active
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                 <div class="card dash-widget">
                     <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-book"></i></span>
@@ -61,6 +61,63 @@ active
                     <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-id-card"></i></span>
                         <div class="dash-widget-info">
                             <h3>118</h3> <span>Profile Incomplete</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        @php
+        $pendingLeaves = DB::table('leaves_admins as la')
+        ->leftjoin('users as u', 'la.rec_id', '=', 'u.rec_id')
+        ->select('u.name', 'u.rec_id', 'u.avatar', 'u.position', 'u.reporting_authority', 'la.id', 'la.leave_type', 'la.from_date', 'la.to_date', 'la.day', 'la.leave_reason', 'la.status')
+        ->where('la.reporting_authority', Auth()->user()->id)
+        ->count();
+        @endphp
+        <div class="row">
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-book"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>{{ $pendingLeaves }}</h3> <span>Pending Leaves</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-address-book"></i></span>
+                        <div class="dash-widget-info">
+                            @php
+                            use App\Models\User;
+                            $totalStaff = User::select('*')->count();
+                            @endphp
+                            <h3>{{ $totalStaff }}</h3> <span>Total Staff</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hidden">
+                <input type="hidden" id="totalNoOfStaff" value="{{ $totalStaff }}">
+            </div>
+            @php
+            use Illuminate\Support\Facades\DB;
+            $totalPresentStaff = DB::table('attendance_records')->select('attend_date')->where('attend_date',date('Y-m-d'))->count();
+
+            @endphp
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-users"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>{{ $totalPresentStaff }}</h3> <span>Present Staff</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
+                <div class="card dash-widget">
+                    <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-id-card"></i></span>
+                        <div class="dash-widget-info">
+                            <h3>{{ $totalStaff - $totalPresentStaff }}</h3> <span>Absent Staff</span>
                         </div>
                     </div>
                 </div>
@@ -131,12 +188,13 @@ active
 
     $(document).ready(function() {
         var ctx = $("#chart-emp");
+        var totalStaff = document.getElementById('totalNoOfStaff').value;
         var myLineChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
                 labels: ["Total Employees"],
                 datasets: [{
-                    data: [120],
+                    data: totalStaff,
                     backgroundColor: ["rgba(255, 0, 0, 1)"]
                 }]
             },

@@ -193,7 +193,6 @@
 								<span class="menu-arrow"></span>
 							</a>
 							<ul style="display: none;">
-								<li><a class="@yield('profile_active')" href="{{ route('profile_user') }}">My Profile</a></li>
 								<li><a class="@yield('add_user_active')" href="{{ route('userManagement/addUser') }}">Complete Profile</a></li>
 								@can('isAdmin')
 								<li><a class="@yield('holiday_active')" href="{{ route('form/holidays/new') }}">Holidays</a></li>

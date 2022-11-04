@@ -93,7 +93,7 @@ active
                                 <td class="id">{{ $user->rec_id }}</td>
                                 <td class="email">{{ $user->email }}</td>
                                 <td class="position">
-                                    
+
                                 </td>
                                 <td class="phone_number">{{ $user->cug_no }}</td>
                                 <td>{{ $user->join_date }}</td>
@@ -174,11 +174,20 @@ active
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Last Name<span class="required">*</span></label>
-                                    <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="" name="last_name" value="{{ old('last_name') }}" placeholder="Enter Your Last Name" required />
+                                    <label>Middle Name</label>
+                                    <input class="form-control @error('middle_name') is-invalid @enderror" type="text" id="" name="middle_name" value="{{ old('middle_name') }}" placeholder="Enter Your Middle Name" />
+                                    <div class="alert-danger">@error('middle_name'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <input class="form-control @error('last_name') is-invalid @enderror" type="text" id="" name="last_name" value="{{ old('last_name') }}" placeholder="Enter Your Last Name" />
                                     <div class="alert-danger">@error('last_name'){{ $message }}@enderror</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Date Of Birth<span class="required">*</span></label>
@@ -186,12 +195,10 @@ active
                                     <div class="alert-danger">@error('dob'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Profile Photo<span class="required">*</span></label>
-                                    <input class="form-control" type="file" id="image" name="image" required />
+                                    <label>Profile Photo</label>
+                                    <input class="form-control" type="file" id="image" name="image" />
                                     <div class="alert-danger">@error('image'){{ $message }}@enderror</div>
                                 </div>
                             </div>
@@ -202,15 +209,15 @@ active
                                     <div class="alert-danger">@error('email'){{ $message }}@enderror</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Department Email<span class="required">*</span></label>
-                                    <input class="form-control" type="email" id="" name="department_email" placeholder="Enter Your Department Email" required />
+                                    <label>Department Email</label>
+                                    <input class="form-control" type="email" id="" name="department_email" placeholder="Enter Your Department Email" />
                                     <div class="alert-danger">@error('department_email'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Date Of Joining<span class="required">*</span></label>
@@ -230,6 +237,8 @@ active
                                     <div class="alert-danger">@error('organ_level'){{ $message }}@enderror</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Office Name<span class="required">*</span></label>
@@ -239,8 +248,6 @@ active
                                     <div class="alert-danger">@error('office_name'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Employee Type<span class="required">*</span></label>
@@ -262,6 +269,8 @@ active
                                     <div class="alert-danger">@error('position'){{ $message }}@enderror</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Designation<span class="required">*</span></label>
@@ -271,8 +280,6 @@ active
                                     <div class="alert-danger">@error('designation'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Pay Slab<span class="required">*</span></label>
@@ -297,6 +304,8 @@ active
                                     <div class="alert-danger">@error('attend_type'){{ $message }}@enderror</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Reporting Authority<span class="required">*</span></label>
@@ -309,8 +318,6 @@ active
                                     <div class="alert-danger">@error('report_auth'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Reporting Authority's Designation</label>
@@ -325,6 +332,8 @@ active
                                     <div class="alert-danger">@error('cug_no'){{ $message }}@enderror</div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Role Type<span class="required">*</span></label>

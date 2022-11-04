@@ -4,9 +4,6 @@
 noti-dot
 @endsection
 
-@section('profile_active')
-active
-@endsection
 
 
 @section('content')
