@@ -30,7 +30,7 @@ class UserManagementController extends Controller
     public function index()
     {
         if (Auth::user()->role_name == 'Admin') {
-            $result      = DB::table('users')->get();
+            $result      = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->get();
             $role_name   = DB::table('role_type_users')->get();
             $position    = DB::table('position_types')->get();
             $department  = DB::table('departments')->get();
@@ -55,8 +55,8 @@ class UserManagementController extends Controller
     public function searchUser(Request $request)
     {
         if (Auth::user()->role_name == 'Admin') {
-            $users      = DB::table('users')->get();
-            $result     = DB::table('users')->get();
+            $users      = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->get();
+            $result     = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->get();
             $role_name  = DB::table('role_type_users')->get();
             $position   = DB::table('position_types')->get();
             $department = DB::table('departments')->get();
@@ -182,49 +182,48 @@ class UserManagementController extends Controller
     public function saveProfileData(Request $request)
     {
         $request->validate([
-            'aadhar_no' => 'required|unique:users',
-            'aadhar_card' => 'required',
-            'pan_no' => 'required',
-            'pan_card' => 'required',
+            'aadhar_no' => 'nullable|unique:users',
+            'aadhar_card' => 'nullable',
+            'pan_no' => 'nullable',
+            'pan_card' => 'nullable',
             'dl' => 'nullable',
             'passport' => 'nullable',
             'voter_id' => 'nullable',
             'uan' => 'nullable',
-            'present_state' => 'required',
-            'present_city' => 'required',
-            'present_pin' => 'required',
-            'permanent_state' => 'required',
-            'permanent_city' => 'required',
-            'permanent_pin' => 'required',
-            'personal_contact' => 'required',
-            'alternative_contact' => 'required',
-            'emergency_contact' => 'required',
-            'emerg_con_per_name' => 'required',
-            'emerg_con_per_rel' => 'required',
-            'emerg_con_per_add' => 'required',
-            'edu_qua_course_name' => 'required',
-            'edu_qua_stream' => 'required',
-            'edu_qua_board' => 'required',
-            'edu_qua_passing_year' => 'required',
-            'edu_qua_percentage' => 'required',
-            'edu_qua_certi_upload' => 'required',
-            'pro_qua_university_name' => 'required',
-            'pro_qua_degree' => 'required',
-            'pro_qua_subject' => 'required',
-            'pro_qua_duration' => 'required',
-            'pro_qua_ind_certi' => 'required',
-            'pro_qua_year' => 'required',
-            'skill_name' => 'required',
-            'skill_duration' => 'required',
-            'skill_certi' => 'required',
-            'organ_name' => 'required',
-            'job_profile' => 'required',
-            'organ_type' => 'required',
-            'supp_doc_upload' => 'required',
-            'eff_from_date' => 'required',
-            'eff_to_date' => 'required',
-            'fam_relation' => 'required',
-            'full_name' => 'required'
+            'present_state' => 'nullable',
+            'present_city' => 'nullable',
+            'present_pin' => 'nullable',
+            'permanent_state' => 'nullable',
+            'permanent_city' => 'nullable',
+            'permanent_pin' => 'nullable',
+            'personal_contact' => 'nullable',
+            'alternative_contact' => 'nullable',
+            'emergency_contact' => 'nullable',
+            'emerg_con_per_name' => 'nullable',
+            'emerg_con_per_rel' => 'nullable',
+            'emerg_con_per_add' => 'nullable',
+            'edu_qua_course_name' => 'nullable',
+            'edu_qua_stream' => 'nullable',
+            'edu_qua_board' => 'nullable',
+            'edu_qua_passing_year' => 'nullable',
+            'edu_qua_percentage' => 'nullable',
+            'edu_qua_certi_upload' => 'nullable',
+            'pro_qua_university_name' => 'nullable',
+            'pro_qua_degree' => 'nullable',
+            'pro_qua_subject' => 'nullable',
+            'pro_qua_duration' => 'nullable',
+            'pro_qua_ind_certi' => 'nullable',
+            'pro_qua_year' => 'nullable',
+            'skill_name' => 'nullable',
+            'skill_duration' => 'nullable',
+            'organ_name' => 'nullable',
+            'job_profile' => 'nullable',
+            'organ_type' => 'nullable',
+            'supp_doc_upload' => 'nullable',
+            'eff_from_date' => 'nullable',
+            'eff_to_date' => 'nullable',
+            'fam_relation' => 'nullable',
+            'full_name' => 'nullable'
         ]);
 
         DB::beginTransaction();
@@ -232,32 +231,44 @@ class UserManagementController extends Controller
             $id           = $request->user_id;
 
             $aadhar_no = $request->aadhar_no;
-            $aadhar_card_image = $request->aadhar_no . '.' . $request->aadhar_card->extension();
-            $request->aadhar_card->move(public_path('assets/User_aadhar_card'), $aadhar_card_image);
+
+            if ($request->aadhar_no && $request->aadhar_card) {
+                $aadhar_card_image = $request->aadhar_no . '.' . $request->aadhar_card->extension();
+                $request->aadhar_card->move(public_path('assets/User_aadhar_card'), $aadhar_card_image);
+            } else
+                $aadhar_card_image = null;
 
             $pan_no = $request->pan_no;
-            $pan_card_image = $request->pan_no . '.' . $request->pan_card->extension();
-            $request->pan_card->move(public_path('assets/User_pan_card'), $pan_card_image);
+
+            if ($request->pan_no && $request->pan_card) {
+                $pan_card_image = $request->pan_no . '.' . $request->pan_card->extension();
+                $request->pan_card->move(public_path('assets/User_pan_card'), $pan_card_image);
+            } else
+                $pan_card_image = null;
 
             if ($request->dl != null) {
                 $driving_licence_image = $id . '.' . $request->dl->extension();
                 $request->dl->move(public_path('assets/User_driving_licence'), $driving_licence_image);
-            }
+            } else
+                $driving_licence_image = null;
 
             if ($request->passport != null) {
                 $passport_image = $id . '.' . $request->passport->extension();
                 $request->passport->move(public_path('assets/User_passport'), $passport_image);
-            }
+            } else
+                $passport_image = null;
 
             if ($request->voter_id != null) {
                 $voter_id_image = $id . '.' . $request->voter_id->extension();
                 $request->voter_id->move(public_path('assets/User_voter_id'), $voter_id_image);
-            }
+            } else
+                $voter_id_image = null;
 
             if ($request->uan != null) {
                 $uan_image = $id . '.' . $request->uan->extension();
                 $request->uan->move(public_path('assets/User_uan'), $uan_image);
-            }
+            } else
+                $uan_image = null;
 
             $present_state = $request->present_state;
             $present_city = $request->present_city;
@@ -277,58 +288,70 @@ class UserManagementController extends Controller
             $edu_qua_passing_year = $request->edu_qua_passing_year;
             $edu_qua_percentage = $request->edu_qua_percentage;
 
-            $edu_qua_certi_image = $id . '.' . $request->edu_qua_certi_upload->extension();
-            $request->edu_qua_certi_upload->move(public_path('assets/User_edu_qua_certi'), $edu_qua_certi_image);
+            if ($request->edu_qua_certi_upload != null) {
+                $edu_qua_certi_image = $id . '.' . $request->edu_qua_certi_upload->extension();
+                $request->edu_qua_certi_upload->move(public_path('assets/User_edu_qua_certi'), $edu_qua_certi_image);
+            } else
+                $edu_qua_certi_image = null;
 
             $pro_qua_university_name = $request->pro_qua_university_name;
             $pro_qua_degree = $request->pro_qua_degree;
             $pro_qua_subject = $request->pro_qua_subject;
             $pro_qua_duration = $request->pro_qua_duration;
 
-            $pro_qua_ind_certi_image = $id . '.' . $request->pro_qua_ind_certi->extension();
-            $request->pro_qua_ind_certi->move(public_path('assets/User_pro_qua_ind'), $pro_qua_ind_certi_image);
+            if ($request->pro_qua_ind_certi != null) {
+                $pro_qua_ind_certi_image = $id . '.' . $request->pro_qua_ind_certi->extension();
+                $request->pro_qua_ind_certi->move(public_path('assets/User_pro_qua_ind'), $pro_qua_ind_certi_image);
+            } else
+                $pro_qua_ind_certi_image = null;
 
             $pro_qua_year = $request->pro_qua_year;
             $skill_name = $request->skill_name;
             $skill_duration = $request->skill_duration;
-
-            $skill_certi_image = $id . '.' . $request->skill_certi->extension();
-            $request->skill_certi->move(public_path('assets/User_skill_certi'), $skill_certi_image);
-
             $organ_name = $request->organ_name;
 
-            $job_profile_image = $id . '.' . $request->job_profile->extension();
-            $request->job_profile->move(public_path('assets/User_job_profile'), $job_profile_image);
+            if ($request->job_profile != null) {
+                $job_profile_image = $id . '.' . $request->job_profile->extension();
+                $request->job_profile->move(public_path('assets/User_job_profile'), $job_profile_image);
+            } else
+                $job_profile_image = null;
 
             $organ_type = $request->organ_type;
 
-            $supp_doc_image = $id . '.' . $request->supp_doc_upload->extension();
-            $request->supp_doc_upload->move(public_path('assets/User_supp_doc'), $supp_doc_image);
+            if ($request->supp_doc_upload != null) {
+                $supp_doc_image = $id . '.' . $request->supp_doc_upload->extension();
+                $request->supp_doc_upload->move(public_path('assets/User_supp_doc'), $supp_doc_image);
+            } else
+                $supp_doc_image = null;
 
             $eff_from_date = $request->eff_from_date;
             $eff_to_date = $request->eff_to_date;
             $fam_relation = $request->fam_relation;
             $full_name = $request->full_name;
 
-            if ($request->dl != null) {
-                $update_dl = ['driving_licence' => $driving_licence_image];
-                User::where('id', $id)->update($update_dl);
-            } elseif ($request->passport != null) {
-                $update_pass = ['passport' => $passport_image];
-                User::where('id', $id)->update($update_pass);
-            } elseif ($request->voter_id != null) {
-                $update_voter_card = ['voter_card' => $voter_id_image];
-                User::where('id', $id)->update($update_voter_card);
-            } elseif ($request->uan != null) {
-                $update_uan = ['uan_no' => $uan_image];
-                User::where('id', $id)->update($update_uan);
-            }
+            // if ($request->dl != null) {
+            //     $update_dl = ['driving_licence' => $driving_licence_image];
+            //     User::where('id', $id)->update($update_dl);
+            // } elseif ($request->passport != null) {
+            //     $update_pass = ['passport' => $passport_image];
+            //     User::where('id', $id)->update($update_pass);
+            // } elseif ($request->voter_id != null) {
+            //     $update_voter_card = ['voter_card' => $voter_id_image];
+            //     User::where('id', $id)->update($update_voter_card);
+            // } elseif ($request->uan != null) {
+            //     $update_uan = ['uan_no' => $uan_image];
+            //     User::where('id', $id)->update($update_uan);
+            // }
 
             $update = [
                 'aadhar_no' => $aadhar_no,
                 'aadhar_card' => $aadhar_card_image,
                 'pan_no' => $pan_no,
                 'pan_card' => $pan_card_image,
+                'driving_licence' => $driving_licence_image,
+                'passport' => $passport_image,
+                'voter_card' => $voter_id_image,
+                'uan_no' => $uan_image,
                 'present_state' => $present_state,
                 'present_city' => $present_city,
                 'present_pin' => $present_pin,
@@ -532,7 +555,8 @@ class UserManagementController extends Controller
             'role_name' => 'required|string|max:255',
             'designation' => 'required|string|max:255',
             'position'  => 'required|string|max:255',
-            'image'     => 'nullable|image'
+            'image'     => 'nullable|image',
+            'emp_id'    => 'nullable|unique:users'
         ]);
         DB::beginTransaction();
         try {
@@ -555,7 +579,7 @@ class UserManagementController extends Controller
             }
 
             $user->first_name = $request->first_name;
-            $user->last_name = $request->last_name;
+            $user->emp_id = $request->emp_id;
             $user->dob = $request->dob;
             $user->email = $request->email;
             $user->department_email = $request->department_email;
@@ -576,6 +600,8 @@ class UserManagementController extends Controller
             $user->cug_no       = $request->cug_no;
             $password = Str::random(6);
             $user->password     = Hash::make($password);
+          
+
             $user->save();
             DB::commit();
             $data = [

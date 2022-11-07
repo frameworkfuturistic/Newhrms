@@ -67,7 +67,6 @@ active
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Employee ID</th>
                                 <th>Email</th>
                                 <th>Post</th>
                                 <th>Phone</th>
@@ -89,11 +88,12 @@ active
                                 </td>
                                 <td hidden class="ids">{{ $user->id }}</td>
                                 <td hidden class="dobs">{{ $user->dob }}</td>
+                                <td hidden class="join_date">{{ $user->join_date }}</td>
                                 <td hidden class="d_email">{{ $user->department_email }}</td>
-                                <td class="id">{{ $user->rec_id }}</td>
+                                <td hidden class="id">{{ $user->rec_id }}</td>
                                 <td class="email">{{ $user->email }}</td>
                                 <td class="position">
-
+                                    {{ $user->post_title }}
                                 </td>
                                 <td class="phone_number">{{ $user->cug_no }}</td>
                                 <td>{{ $user->join_date }}</td>
@@ -346,6 +346,13 @@ active
                                     <div class="alert-danger">@error('role_name'){{ $message }}@enderror</div>
                                 </div>
                             </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Employee ID<span class="required">*</span></label>
+                                    <input class="form-control @error('emp_id') is-invalid @enderror" type="text" id="" name="emp_id" value="{{ old('emp_id') }}" placeholder="Enter Employee ID">
+                                    <div class="alert-danger">@error('emp_id'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
@@ -509,6 +516,14 @@ active
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Date Of Joining</label>
+                                    <input class="form-control" type="date" name="join_date" id="join_date" value="" placeholder="Enter Date Of Joining" />
+                                </div>
+                            </div>
+                        </div>
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Update</button>
                         </div>
@@ -651,6 +666,8 @@ active
         $('#cug_no').val(_this.find('.phone_number').text());
         $('#dob').val(_this.find('.dobs').text());
         $('#d_email').val(_this.find('.d_email').text());
+        $('#join_date').val(_this.find('.join_date').text());
+
 
         var name_role = (_this.find(".role_name").text());
         var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'

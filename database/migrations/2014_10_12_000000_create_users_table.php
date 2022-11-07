@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
+            $table->string('emp_id')->nullable();
             $table->string('name');
             $table->date('dob')->nullable();
             $table->string('rec_id')->nullable();
@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('org_id')->nullable();
             $table->string('office_id')->nullable();
             $table->string('emp_type_id')->nullable();
-            $table->string('status')->nullable();
+            $table->string('status')->default('Active');
             $table->string('role_name')->nullable();
             $table->string('designation')->nullable();
             $table->string('pay_slab')->nullable();

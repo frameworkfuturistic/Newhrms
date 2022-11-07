@@ -48,7 +48,6 @@ noti-dot
                                             <small class="text-muted">{{ $design_name[0]->design_name }}</small>
                                             <div class="staff-id">Employee ID : {{ Auth::user()->rec_id }}</div>
                                             <div class="small doj text-muted">Date of Join : {{ Auth::user()->join_date }}</div>
-                                            <div class="staff-msg"><a class="btn btn-custom" href="#">Send Message</a></div>
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -537,7 +536,7 @@ noti-dot
                                     </div>
                                 </div>
                             </div>
-                            <hr>                            
+                            <hr>
                             <div class="submit-section">
                                 <button class="btn btn-primary submit-btn" type="submit">Save</button>
                             </div>

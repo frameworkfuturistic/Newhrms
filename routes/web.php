@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth'], function () {
     // return 'Hii';
     Route::get('home', function () {
         $category = auth()->user()->role_name;
+
         if ($category == 'Employee') {
             return view('dashboard.emdashboard');
         } elseif ($category == 'Admin') {
@@ -57,6 +58,8 @@ Auth::routes();
 
 // ----------------------------- main dashboard ------------------------------//
 Route::get('em/dashboard', [App\Http\Controllers\HomeController::class, 'emDashboard'])->name('em/dashboard');
+Route::post('change-levelwise-data', [App\Http\Controllers\HomeController::class, 'addashboard']);
+
 
 // -----------------------------settings----------------------------------------//
 

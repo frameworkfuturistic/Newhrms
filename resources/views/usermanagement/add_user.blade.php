@@ -87,7 +87,7 @@ active
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Aadhar No.<span class="required">*</span></label>
-                                                    <input class="form-control @error('aadhar_no') is-invalid @enderror" type="text" id="" name="aadhar_no" value="{{ old('aadhar_no') }}" placeholder="Enter Aadhar Number" pattern="[0-9]+" minlength="12" maxlength="12">
+                                                    <input class="form-control @error('aadhar_no') is-invalid @enderror" type="text" id="" name="aadhar_no" value="{{ old('aadhar_no') }}" placeholder="Enter Aadhar Number">
                                                 </div>
                                                 <div class="alert-danger">@error('aadhar_no'){{ $message }}@enderror</div>
                                             </div>
@@ -103,7 +103,7 @@ active
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>PAN No.<span class="required">*</span></label>
-                                                    <input class="form-control @error('pan_no') is-invalid @enderror" type="text" id="" name="pan_no" value="{{ old('pan_no') }}" placeholder="Enter PAN Number" pattern="[A-Z0-9]+" minlength="10" maxlength="10">
+                                                    <input class="form-control @error('pan_no') is-invalid @enderror" type="text" id="" name="pan_no" value="{{ old('pan_no') }}" placeholder="Enter PAN Number">
                                                 </div>
                                                 <div class="alert-danger">@error('pan_no'){{ $message }}@enderror</div>
                                             </div>
@@ -153,12 +153,12 @@ active
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>City<span class="required">*</span></label>
-                                                <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" required pattern="[A-Za-z]+" />
+                                                <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('present_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>PIN Code<span class="required">*</span></label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" required pattern="[0-9]+" minlength="6" maxlength="6" />
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('present_pin'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -177,12 +177,12 @@ active
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>City<span class="required">*</span></label>
-                                                <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="" name="permanent_city" value="{{ old('permanent_city') }}" placeholder="Enter City" required pattern="[A-Za-z]+" />
+                                                <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="" name="permanent_city" value="{{ old('permanent_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('permanent_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>PIN Code<span class="required">*</span></label>
-                                                <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="" name="permanent_pin" value="{{ old('permanent_pin') }}" placeholder="Enter Pin" required pattern="[0-9]+" minlength="6" maxlength="6" />
+                                                <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="" name="permanent_pin" value="{{ old('permanent_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('permanent_pin'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -312,11 +312,6 @@ active
                                                 <label>Duration<span class="required">*</span></label>
                                                 <input class="form-control" type="text" id="" name="skill_duration" placeholder="Enter Duration" />
                                                 <div class="alert-danger">@error('skill_duration'){{ $message }}@enderror</div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label>Certificate<span class="required">*</span></label>
-                                                <input class="form-control" type="file" id="" name="skill_certi" />
-                                                <div class="alert-danger">@error('skill_certi'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />

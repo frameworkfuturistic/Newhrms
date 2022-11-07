@@ -38,23 +38,6 @@ active
         </div>
         <!-- /Page Header -->
 
-        @php
-        use Illuminate\Support\Facades\DB;
-        use App\Models\User;
-
-        $pendingLeaves = DB::table('leaves_admins')->select('rec_id')
-        ->where('from_date', '>=', date('Y-m-d'))->where(function ($query) {
-        $query->where('status', 'new')
-        ->orWhere('status', 'pending');
-        })->get()->count();
-
-        $totalPresentStaff = DB::table('attendance_records')->select('attend_date')->where('attend_date',date('Y-m-d'))->count();
-
-        $totalStaff = User::select('*')->count();
-
-        @endphp
-
-
         <div class="row">
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                 <div class="card dash-widget">
