@@ -600,7 +600,7 @@ class UserManagementController extends Controller
             $user->cug_no       = $request->cug_no;
             $password = Str::random(6);
             $user->password     = Hash::make($password);
-          
+
 
             $user->save();
             DB::commit();
@@ -777,5 +777,18 @@ class UserManagementController extends Controller
             Toastr::error('Something is wrong :)', 'Error');
             return redirect()->back();
         }
+    }
+
+    // Fetch office name by organisation level
+    public function searchOfficeName($org_idd = 0)
+    {
+
+        // Fetch district name by state id
+        $officeListData = MasterOfficeList::orderby("office_id", "asc")
+            ->select('office_id', 'office_name')
+            ->where('org_id', $org_idd)
+            ->get();
+
+        return response()->json($officeListData);
     }
 }

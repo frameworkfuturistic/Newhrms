@@ -415,8 +415,7 @@ active
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Role Name</label>
-                                    <select class="select form-control" name="role_name" id="e_role_name">
-                                        <option disabled selected value="">----Select----</option>
+                                    <select class="select form-control role_name" name="role_name" id="e_role_name">
                                         @foreach ($role_name as $role )
                                         <option value="{{ $role->role_type }}">{{ $role->role_type }}</option>
                                         @endforeach
@@ -668,10 +667,10 @@ active
         $('#d_email').val(_this.find('.d_email').text());
         $('#join_date').val(_this.find('.join_date').text());
 
-
         var name_role = (_this.find(".role_name").text());
         var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'
         $(_option).appendTo("#e_role_name");
+
 
         var position = (_this.find(".position").text());
         var _option = '<option selected value="' + position + '">' + _this.find('.position').text() + '</option>'
@@ -680,10 +679,6 @@ active
         var department = (_this.find(".department").text());
         var _option = '<option selected value="' + department + '">' + _this.find('.department').text() + '</option>'
         $(_option).appendTo("#e_department");
-
-        var statuss = (_this.find(".statuss").text());
-        var _option = '<option selected value="' + statuss + '">' + _this.find('.statuss').text() + '</option>'
-        $(_option).appendTo("#e_status");
 
     });
 </script>
@@ -721,8 +716,50 @@ active
 
 
     // Organization Change
-    $('#org_level').change(function() {
 
+    // $('#org_level_change').change(function() {
+    //     // Organization Level
+    //     var org_idd = $(this).val();
+    //     var mUrl = "getOfficeNames/" + org_idd;
+
+    //     // AJAX request 
+    //     $.ajax({
+    //         url: mUrl,
+    //         type: "GET",
+    //         cache: false,
+    //         contentType: "application/json;charset=utf-8",
+    //         datatype: "json",
+    //         success: function(result) {
+
+    //             if (result == false) {
+    //                 alert("Office Not Found");
+    //             } else {
+    //                 $select = $("#office_name");
+    //                 $select.find("option").remove();
+    //                 $select.append(
+    //                     $("<option>").html("-- Select Office --")
+    //                 );
+    //                 Object.keys(result).forEach(function(key) {
+    //                     $office_id = result[key].office_id;
+    //                     $office_name = result[key].office_name;
+    //                     $select.append(
+    //                         "<option data-myid=" +
+    //                         $office_name +
+    //                         " value=" +
+    //                         $office_id +
+    //                         ">" +
+    //                         $office_name +
+    //                         "</option>"
+    //                     );
+    //                 });
+    //             }
+
+    //         }
+    //     });
+    // });
+
+    // Organization Change
+    $('#org_level').change(function() {
         // Organization Level
         var org_idd = $(this).val();
 
