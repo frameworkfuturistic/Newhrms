@@ -84,28 +84,8 @@ active
                     <table class="table table-striped custom-table table-nowrap mb-0" id="datatable">
                         <thead>
                             <tr>
-
-                                <th>Employee Name</th>
-                                @php
-                                $today = today();
-                                $dates = [];
-
-                                for ($i = 1; $i < $today->daysInMonth + 1; ++$i) {
-                                    $dates[] = \Carbon\Carbon::createFromDate($today->year, $today->month, $i)->format('Y-m-d');
-                                    }
-
-                                    @endphp
-                                    @foreach ($dates as $date)
-                                    <th>
-
-
-                                        {{ $date }}
-
-                                    </th>
-
-
-                                    @endforeach
-
+                                <th>Employee</th>
+                                @for ($i = 1; $i <= $no_of_days; $i++) <th>{{ $i }}</th> @endfor
                             </tr>
                         </thead>
                         <tbody>
@@ -117,41 +97,18 @@ active
                                         <a href="#">{{ $ad->name }}</a>
                                     </h2>
                                 </td>
-                                @for ($i = 1; $i < $today->daysInMonth + 1; ++$i)
-
-
-
+                                @for ($i = 1; $i <= $no_of_days; $i++) <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
                                     <td>
-
-                                        <div class="form-check form-check-inline ">
-
-                                            @if (isset($check_attd))
-                                            @if ($check_attd->status==1)
-                                            <i class="fa fa-check text-success"></i>
-                                            @else
-                                            <i class="fa fa-check text-danger"></i>
-                                            @endif
-
-                                            @else
-                                            <i class="fas fa-times text-danger"></i>
-                                            @endif
+                                        <div class="half-day">
+                                            <span class="first-off"><i class="fa fa-close text-danger"></i></span>
                                         </div>
-                                        <div class="form-check form-check-inline">
-
-                                            @if (isset($check_leave))
-                                            @if ($check_leave->status==1)
-                                            <i class="fa fa-check text-success"></i>
-                                            @else
-                                            <i class="fa fa-check text-danger"></i>
-                                            @endif
-
-                                            @else
-                                            <i class="fas fa-times text-danger"></i>
-                                            @endif
-
-
+                                    </td>
+                                    <td><i class="fa fa-close text-danger"></i></td>
+                                    <td>
+                                        <div class="half-day">
+                                            <span class="first-off"><i class="fa fa-close text-danger"></i></span>
+                                            <span class="first-off"><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></span>
                                         </div>
-
                                     </td>
                                     @endfor
                             </tr>

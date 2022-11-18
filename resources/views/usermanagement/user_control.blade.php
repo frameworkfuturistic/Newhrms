@@ -714,50 +714,6 @@ active
     // This function for Selecting organisation level and according to organisation level show all office name  
 
 
-
-    // Organization Change
-
-    // $('#org_level_change').change(function() {
-    //     // Organization Level
-    //     var org_idd = $(this).val();
-    //     var mUrl = "getOfficeNames/" + org_idd;
-
-    //     // AJAX request 
-    //     $.ajax({
-    //         url: mUrl,
-    //         type: "GET",
-    //         cache: false,
-    //         contentType: "application/json;charset=utf-8",
-    //         datatype: "json",
-    //         success: function(result) {
-
-    //             if (result == false) {
-    //                 alert("Office Not Found");
-    //             } else {
-    //                 $select = $("#office_name");
-    //                 $select.find("option").remove();
-    //                 $select.append(
-    //                     $("<option>").html("-- Select Office --")
-    //                 );
-    //                 Object.keys(result).forEach(function(key) {
-    //                     $office_id = result[key].office_id;
-    //                     $office_name = result[key].office_name;
-    //                     $select.append(
-    //                         "<option data-myid=" +
-    //                         $office_name +
-    //                         " value=" +
-    //                         $office_id +
-    //                         ">" +
-    //                         $office_name +
-    //                         "</option>"
-    //                     );
-    //                 });
-    //             }
-
-    //         }
-    //     });
-    // });
-
     // Organization Change
     $('#org_level').change(function() {
         // Organization Level

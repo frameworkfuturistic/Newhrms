@@ -135,22 +135,22 @@ class LeavesController extends Controller
             ->join('attendance_records as ar', 'ar.user_id', '=', 'u.id')
             ->select('u.avatar', 'u.name', 'u.id', 'u.rec_id', 'ar.user_id', 'ar.attend_date', 'ar.inserted_on_time_in', 'ar.inserted_on_time_out')->get();
 
-        $date_picker = Carbon::now()->format('Y-m-d');
+        // $date_picker = Carbon::now()->format('Y-m-d');
         $days = Carbon::now()->month;
         $no_of_days = Carbon::now()->month($days)->daysInMonth;
-        $check_attd = DB::table('attendance_records')
-            ->select()
-            ->where('user_id', Auth()->user()->id)
-            ->where('attend_date', $date_picker)
-            ->first();
+        // $check_attd = DB::table('attendance_records')
+        //     ->select()
+        //     ->where('user_id', Auth()->user()->id)
+        //     ->where('attend_date', $date_picker)
+        //     ->first();
 
-        $check_leave = DB::table('leaves_admins')
-            ->select()
-            ->where('rec_id', Auth()->user()->rec_id)
-            ->where('from_date', $date_picker)
-            ->get();
+        // $check_leave = DB::table('leaves_admins')
+        //     ->select()
+        //     ->where('rec_id', Auth()->user()->rec_id)
+        //     ->where('from_date', $date_picker)
+        //     ->get();
 
-        return view('form.attendance', compact('user_name', 'no_of_days', 'date_picker', 'check_attd', 'check_leave'));
+        return view('form.attendance', compact('user_name', 'no_of_days'));
     }
 
     // show attendance form
@@ -162,7 +162,13 @@ class LeavesController extends Controller
     // attendance employee
     public function AttendanceEmployee()
     {
-        return view('form.attendanceemployee');
+        // $datess = Carbon::today()->format('y-m-d');
+        // $today_date = $datess->toDateTimeString();
+
+        $today_date = Carbon::now();
+
+
+        return view('form.attendanceemployee', compact('today_date'));
     }
 
     // show Employee Leaves
