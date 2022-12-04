@@ -131,13 +131,52 @@ class LeavesController extends Controller
     public function attendanceIndex()
     {
         $user_name = DB::table('users as u')
-            ->join('leaves_admins as la', 'la.rec_id', '=', 'u.rec_id')
-            ->join('attendance_records as ar', 'ar.user_id', '=', 'u.id')
-            ->select('u.avatar', 'u.name', 'u.id', 'u.rec_id', 'ar.user_id', 'ar.attend_date', 'ar.inserted_on_time_in', 'ar.inserted_on_time_out')->get();
+            ->join('master_designations as md', 'md.designation_id', '=', 'u.designation')
+            ->select('u.avatar', 'u.name', 'u.id', 'u.rec_id', 'u.emp_id', 'md.designation_code')->get();
 
-        // $date_picker = Carbon::now()->format('Y-m-d');
-        $days = Carbon::now()->month;
-        $no_of_days = Carbon::now()->month($days)->daysInMonth;
+        $dt_cycle = DB::table('attendance_records')->select('DateCycle')->where('attend_rec_id', 1)->first();
+
+        $attendenceRecord = AttendanceRecord::all();
+
+        $DateCycle = $dt_cycle->DateCycle;
+        $fromDate = Carbon::now()->format("Y-m-$DateCycle");
+        $toDate = Carbon::parse($fromDate)->addMonths(1)->format('Y-m-d');
+
+        $userAttendance = array();
+        $uptoDate = Carbon::parse($toDate)->addDays(-1)->format('Y-m-d');
+        foreach ($user_name as $user_names) {
+            $queryDateRange = "SELECT 
+                            *,
+                            $user_names->id AS refUserId,
+                            (CASE
+                                WHEN ar.user_id IS NULL THEN 0
+                                ELSE 1
+                            END) AS attend_status
+                            
+                            FROM 
+                            (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) selected_date from
+                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
+                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
+                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
+                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
+                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
+                            
+                            LEFT JOIN (SELECT * FROM attendance_records WHERE user_id='$user_names->id') AS ar ON ar.attend_date=selected_date
+                            
+                            where selected_date BETWEEN '$fromDate' AND '$uptoDate'
+                            ORDER BY selected_date ASC";
+
+            $rangeDates = DB::select($queryDateRange);      // range Dates
+            array_push($userAttendance, $rangeDates);
+        }
+
+        // return $userAttendance;
+        $no_of_days = array();
+        while ($fromDate < $toDate) {
+            array_push($no_of_days, Carbon::parse($fromDate)->format('d'));
+            $fromDate = Carbon::parse($fromDate)->addDays(1)->format('Y-m-d');
+        }
+
         // $check_attd = DB::table('attendance_records')
         //     ->select()
         //     ->where('user_id', Auth()->user()->id)
@@ -150,7 +189,7 @@ class LeavesController extends Controller
         //     ->where('from_date', $date_picker)
         //     ->get();
 
-        return view('form.attendance', compact('user_name', 'no_of_days'));
+        return view('form.attendance', compact('user_name', 'no_of_days', 'DateCycle', 'userAttendance'));
     }
 
     // show attendance form
@@ -294,5 +333,23 @@ class LeavesController extends Controller
             Toastr::error('Something is wrong :)', 'Error');
             return redirect()->back();
         }
+    }
+
+    public function changeDateCycle(Request $request)
+    {
+        $request->validate([
+            'from_date_cycle' => 'required|integer|min:1|max:28'
+        ]);
+
+        $from_date_cycle = $request->from_date_cycle;
+
+        $update = [
+            'DateCycle' => $from_date_cycle
+        ];
+
+        AttendanceRecord::where('attend_rec_id', 1)->update($update);
+        DB::commit();
+        Toastr::success('Date cycle Changed :)', 'Success');
+        return redirect()->back();
     }
 }

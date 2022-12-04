@@ -17,16 +17,23 @@ active
         <!-- Page Header -->
         <div class="page-header">
             <div class="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <h3 class="page-title">Attendance (Admin)</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Attendance (Admin)</li>
                     </ul>
                 </div>
+                <div class="col-sm-6">
+                    <div class="col-auto float-right ml-auto">
+                        <a href="#" class="btn add-btn" data-toggle="modal" data-target="#change_date_cycle"><i class="fa fa-plus"></i>Change Date cycle</a>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /Page Header -->
+        {{-- message --}}
+        {!! Toastr::message() !!}
 
         <!-- Search Filter -->
         <form action="/search-attendance-data" method="POST">
@@ -77,40 +84,33 @@ active
         </form>
         <!-- /Search Filter -->
 
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
                     <table class="table table-striped custom-table table-nowrap mb-0" id="datatable">
                         <thead>
                             <tr>
-                                <th>Employee</th>
-                                @for ($i = 1; $i <= $no_of_days; $i++) <th>{{ $i }}</th> @endfor
+                                <th>S.No.</th>
+                                <th>userID</th>
+                                @foreach($no_of_days as $no_of_day)
+                                <th>{{$no_of_day}}</th>
+                                @endforeach
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($user_name as $ad)
+                            @foreach($userAttendance as $key=>$ads)
                             <tr>
-                                <td>
-                                    <h2 class="table-avatar">
-                                        <a class="avatar avatar-sm" href="#"><img alt="" src="/assets/employee_image/{{ $ad->avatar }}"></a>
-                                        <a href="#">{{ $ad->name }}</a>
-                                    </h2>
-                                </td>
-                                @for ($i = 1; $i <= $no_of_days; $i++) <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
-                                    <td>
-                                        <div class="half-day">
-                                            <span class="first-off"><i class="fa fa-close text-danger"></i></span>
-                                        </div>
-                                    </td>
-                                    <td><i class="fa fa-close text-danger"></i></td>
-                                    <td>
-                                        <div class="half-day">
-                                            <span class="first-off"><i class="fa fa-close text-danger"></i></span>
-                                            <span class="first-off"><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></span>
-                                        </div>
-                                    </td>
-                                    @endfor
+                                <td>{{$key+1}}</td>
+                                <td>{{$ads[0]->refUserId}}</td>
+                                @foreach($ads as $ad)
+
+                                @if($ad->attend_status==1)
+                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
+                                @else
+                                <td><span class="first-off"><i class="fa fa-close text-danger"></i></span></td>
+                                @endif
+
+                                @endforeach
                             </tr>
                             @endforeach
                         </tbody>
@@ -120,6 +120,36 @@ active
         </div>
     </div>
     <!-- /Page Content -->
+
+    <!-- Change Date Cycle Modal -->
+    <div id="change_date_cycle" class="modal custom-modal fade" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Change Date Cycle</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/change-date-cycle" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label>Enter From Date <span class="text-danger">*</span></label>
+                            <div class="form-group">
+                                <input type="number" class="form-control" value="{{ $DateCycle }}" id="from_date_cycle" name="from_date_cycle" min="1" max="28">
+                            </div>
+                            <div class="alert-danger">@error('from_date_cycle'){{ $message }}@enderror</div>
+                        </div>
+                        <div class="submit-section">
+                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /Change Date Cycle Modal -->
 
     <!-- Attendance Modal -->
     <div class="modal custom-modal fade" id="attendance_info" role="dialog">

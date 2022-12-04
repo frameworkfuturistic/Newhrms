@@ -78,8 +78,8 @@ Route::get('lock_screen', [App\Http\Controllers\LockScreen::class, 'lockScreen']
 Route::post('unlock', [App\Http\Controllers\LockScreen::class, 'unlock'])->name('unlock');
 
 // ------------------------------ register ---------------------------------//
-Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('registerData');
+// Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+// Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'storeUser'])->name('registerData');
 
 // ----------------------------- forget password ----------------------------//
 Route::get('forget-password', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'getEmail'])->name('forget-password');
@@ -171,6 +171,7 @@ Route::controller(LeavesController::class)->group(function () {
     Route::get('attendance/employee/page', 'AttendanceEmployee')->middleware('auth')->name('attendance/employee/page');
     Route::get('take-attendance', 'showAttendance')->middleware('auth');
     Route::post('/insert-attendance-detail', 'insertAttendDetail')->middleware('auth');
+    Route::post('/change-date-cycle', 'changeDateCycle')->middleware('auth');    
 });
 
 

@@ -7574,6 +7574,9 @@ button.bg-dark:hover {
 .my-2 {
     margin-top: 0.5rem !important;
 }
+.mt-200 {
+    margin-top: 0.8rem !important;
+}
 .mr-2,
 .mx-2 {
     margin-right: 0.5rem !important;

@@ -10,4 +10,8 @@ class AttendanceRecord extends Model
     protected $primaryKey = 'attend_rec_id';
     use HasFactory;
     public $timestamps = false;
+
+    protected $dates = [
+        'DateCycle'
+    ];
 }

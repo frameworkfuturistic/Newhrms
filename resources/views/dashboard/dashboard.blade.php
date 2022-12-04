@@ -29,9 +29,9 @@ active
                                 <li class="breadcrumb-item active">Dashboard</li>
                             </ul>
                         </div>
-                        <div class="col-auto float-right ml-auto">
+                        <!-- <div class="col-auto float-right ml-auto">
                             <a href="#" class="btn add-btn" data-toggle="modal" data-target="#view_levelwise"><i class="fa fa-eye"></i> View Levelwise</a>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -133,38 +133,7 @@ active
     </div>
     <!-- /Page Content -->
 
-    <!-- view levelwise Modal -->
-    <div id="view_levelwise" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">View Levelwise</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/change-levelwise-data" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label>Select Level<span class="text-danger">*</span></label>
-                            <select class="select" name="level_type">
-                                <option selected disabled>Select Level Type</option>
-                                <option value="1">All Level</option>
-                                <option value="2">SPRC</option>
-                                <option value="3">DPRC</option>
-                                <option value="4">Block Level</option>
-                            </select>
-                        </div>
-                        <div class="submit-section">
-                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- /view levelwise Modal -->
+    
 
 </div>
 

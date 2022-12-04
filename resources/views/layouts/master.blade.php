@@ -70,6 +70,11 @@
 			<a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="fa fa-bars"></i></a>
 			<!-- Header Menu -->
 			<ul class="nav user-menu">
+				<li class="nav-item dropdown">
+					<div class="float-right mt-200">
+						<a href="#" class="btn add-btn" data-toggle="modal" data-target="#view_levelwise"><i class="fa fa-eye"></i> View Levelwise</a>
+					</div>
+				</li>
 				<!-- Notifications -->
 				<li class="nav-item dropdown">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fa fa-bell-o"></i> <span class="badge badge-pill">3</span> </a>
@@ -125,7 +130,7 @@
 						<span class="user-img">
 							<img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
 							<span class="status online"></span></span>
-						<span>{{ Auth::user()->name }}</span>
+						<!-- <span>{{ Auth::user()->name }}</span> -->
 					</a>
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="{{ route('profile_user') }}">My Profile</a>
@@ -263,6 +268,38 @@
 		<!-- /Sidebar -->
 		<!-- Page Wrapper -->
 
+		<!-- view levelwise Modal -->
+		<div id="view_levelwise" class="modal custom-modal fade" role="dialog">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">View Levelwise</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form action="/change-levelwise-data" method="POST">
+							@csrf
+							<div class="form-group">
+								<label>Select Level<span class="text-danger">*</span></label>
+								<select class="select" name="level_type">
+									<option selected disabled>Select Level Type</option>
+									<option value="1">All Level</option>
+									<option value="2">SPRC</option>
+									<option value="3">DPRC</option>
+									<option value="4">Block Level</option>
+								</select>
+							</div>
+							<div class="submit-section">
+								<button type="submit" class="btn btn-primary submit-btn">Submit</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /view levelwise Modal -->
 
 		@yield('content')
 		<!-- /Page Wrapper -->

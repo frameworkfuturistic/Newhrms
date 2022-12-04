@@ -18,6 +18,7 @@ class CreateAttendanceRecordsTable extends Migration
             $table->string('user_id');
             $table->date('attend_date');
             $table->boolean('status');
+            $table->integer('DateCycle')->nullable();
             $table->string('inserted_by_time_in_id')->nullable();
             $table->string('inserted_by_time_out_id')->nullable();
             $table->string('updated_by_time_in_id')->nullable();
