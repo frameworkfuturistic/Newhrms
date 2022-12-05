@@ -759,42 +759,42 @@ active
 
 
     // Organization Change
-    // $('#org_level').change(function() {
+    $('#org_level').change(function() {
 
-    //     // Organization Level
-    //     var org_idd = $(this).val();
+        // Organization Level
+        var org_idd = $(this).val();
 
-    //     // Empty the dropdown
-    //     $('#positions').find('option').not(':first').remove();
+        // Empty the dropdown
+        $('#positions').find('option').not(':first').remove();
 
-    //     // AJAX request 
-    //     $.ajax({
-    //         url: 'getPosts/' + org_idd,
-    //         type: 'get',
-    //         dataType: 'json',
-    //         success: function(response) {
+        // AJAX request 
+        $.ajax({
+            url: 'getPosts/' + org_idd,
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
 
-    //             var len = 0;
-    //             if (response['pd'] != null) {
-    //                 len = response['pd'].length;
-    //             }
+                var len = 0;
+                if (response['pd'] != null) {
+                    len = response['pd'].length;
+                }
 
-    //             if (len > 0) {
-    //                 // Read data and create <option >
-    //                 for (var i = 0; i < len; i++) {
+                if (len > 0) {
+                    // Read data and create <option >
+                    for (var i = 0; i < len; i++) {
 
-    //                     var post_id = response['pd'][i].post_id;
-    //                     var post_title = response['pd'][i].post_title;
+                        var post_id = response['pd'][i].post_id;
+                        var post_title = response['pd'][i].post_title;
 
-    //                     var option = "<option class='select' value='" + post_id + "'>" + post_title + "</option>";
+                        var option = "<option class='select' value='" + post_id + "'>" + post_title + "</option>";
 
-    //                     $("#positions").append(option);
-    //                 }
-    //             }
+                        $("#positions").append(option);
+                    }
+                }
 
-    //         }
-    //     });
-    // });
+            }
+        });
+    });
     //  This function is for Selecting designation according to post id show all designation name  
 
 
