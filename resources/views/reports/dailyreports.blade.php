@@ -124,7 +124,7 @@ active
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a href="#" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.png') }}"></a>
+                                        <a href="#" class="avatar"><img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.png') }}"></a>
                                         <a href="#">Rakesh Prakash <span>#0001</span></a>
                                     </h2>
                                 </td>

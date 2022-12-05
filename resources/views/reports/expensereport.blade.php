@@ -89,7 +89,7 @@ active
                                 <td>5 Jan 2019</td>
                                 <td>
                                     <a href="profile.html" class="avatar avatar-xs">
-                                        <img src="{{URL::to('assets/img/profiles/avatar-04.jpg')}}" alt="">
+                                        <img src="{{URL::to('assets/img/profiles/avatar-04.jpg')}}" alt="images/default.png">
                                     </a>
                                     <h2><a href="profile.html">Loren Gatlin</a></h2>
                                 </td>
@@ -124,7 +124,7 @@ active
                                 <td>5 Jan 2019</td>
                                 <td>
                                     <a href="profile.html" class="avatar avatar-xs">
-                                        <img src="{{URL::to('assets/img/profiles/avatar-03.jpg')}}" alt="">
+                                        <img src="{{URL::to('assets/img/profiles/avatar-03.jpg')}}" alt="images/default.png">
                                     </a>
                                     <h2><a href="profile.html">Tarah Shropshire</a></h2>
                                 </td>

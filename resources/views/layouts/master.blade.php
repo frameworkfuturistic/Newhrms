@@ -85,7 +85,7 @@
 								<li class="notification-message">
 									<a href="activities.html">
 										<div class="media"> <span class="avatar">
-												<img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
+												<img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
 											</span>
 											<div class="media-body">
 												<p class="noti-details"><span class="noti-title">Amit Singh</span> added new task <span class="noti-title">Apply</span></p>
@@ -111,7 +111,7 @@
 									<a href="chat.html">
 										<div class="list-item">
 											<div class="list-left"> <span class="avatar">
-													<img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}">
+													<img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}">
 												</span> </div>
 											<div class="list-body"> <span class="message-author">Rakesh Kumar </span> <span class="message-time">12:28 AM</span>
 												<div class="clearfix"></div> <span class="message-content">Nothing Special</span>
@@ -128,7 +128,7 @@
 				<li class="nav-item dropdown has-arrow main-drop">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 						<span class="user-img">
-							<img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+							<img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
 							<span class="status online"></span></span>
 						<!-- <span>{{ Auth::user()->name }}</span> -->
 					</a>

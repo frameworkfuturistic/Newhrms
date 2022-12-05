@@ -118,7 +118,7 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::get('/getOfficeNames/{org_idd}', 'searchOfficeName')->middleware('can:isAdmin');
 
     // ----------------------------- search user management ------------------------------//
-    Route::post('search/user/list', 'searchUser')->name('search/user/list');
+    // Route::post('search/user/list', 'searchUser')->name('search/user/list');
 
     // ----------------------------- form change password ------------------------------//
     Route::get('change/password', 'changePasswordView')->middleware('auth')->name('change/password');
@@ -171,7 +171,7 @@ Route::controller(LeavesController::class)->group(function () {
     Route::get('attendance/employee/page', 'AttendanceEmployee')->middleware('auth')->name('attendance/employee/page');
     Route::get('take-attendance', 'showAttendance')->middleware('auth');
     Route::post('/insert-attendance-detail', 'insertAttendDetail')->middleware('auth');
-    Route::post('/change-date-cycle', 'changeDateCycle')->middleware('auth');    
+    Route::post('/change-date-cycle', 'changeDateCycle')->middleware('auth');
 });
 
 

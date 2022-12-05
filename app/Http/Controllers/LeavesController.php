@@ -139,7 +139,8 @@ class LeavesController extends Controller
         $attendenceRecord = AttendanceRecord::all();
 
         $DateCycle = $dt_cycle->DateCycle;
-        $fromDate = Carbon::now()->format("Y-m-$DateCycle");
+        $FrfromDate = Carbon::now()->format("Y-m-$DateCycle");
+        $fromDate = Carbon::parse($FrfromDate)->format('Y-m-d');
         $toDate = Carbon::parse($fromDate)->addMonths(1)->format('Y-m-d');
 
         $userAttendance = array();
@@ -162,6 +163,7 @@ class LeavesController extends Controller
                             (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
                             
                             LEFT JOIN (SELECT * FROM attendance_records WHERE user_id='$user_names->id') AS ar ON ar.attend_date=selected_date
+                            LEFT JOIN users as u ON u.id = $user_names->id
                             
                             where selected_date BETWEEN '$fromDate' AND '$uptoDate'
                             ORDER BY selected_date ASC";
@@ -177,6 +179,11 @@ class LeavesController extends Controller
             $fromDate = Carbon::parse($fromDate)->addDays(1)->format('Y-m-d');
         }
 
+        $cDate = Carbon::now()->format("Y-m-d");
+
+        $currentDate = Carbon::parse($cDate)->format('Y-m-d');
+
+
         // $check_attd = DB::table('attendance_records')
         //     ->select()
         //     ->where('user_id', Auth()->user()->id)
@@ -189,7 +196,7 @@ class LeavesController extends Controller
         //     ->where('from_date', $date_picker)
         //     ->get();
 
-        return view('form.attendance', compact('user_name', 'no_of_days', 'DateCycle', 'userAttendance'));
+        return view('form.attendance', compact('user_name', 'no_of_days', 'DateCycle', 'userAttendance', 'currentDate'));
     }
 
     // show attendance form

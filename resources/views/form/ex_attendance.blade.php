@@ -113,7 +113,7 @@ active
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a class="avatar avatar-sm" href="#"><img alt="" src="/assets/employee_image/{{ $ad->avatar }}"></a>
+                                        <a class="avatar avatar-sm" href="#"><img alt="images/default.png" src="/assets/employee_image/{{ $ad->avatar }}"></a>
                                         <a href="#">{{ $ad->name }}</a>
                                     </h2>
                                 </td>

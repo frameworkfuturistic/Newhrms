@@ -141,8 +141,8 @@ active
                                             <td>5 Year Service </td>
                                             <td>5</td>
                                             <td>
-                                                <a href="#" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}"></a>
-                                                <a href="#">John Doe</a>
+                                                <a href="#" class="avatar"><img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}"></a>
+                                                <a href="#">ABC</a>
                                             </td>
                                             <td class="text-right">
                                                 <div class="dropdown dropdown-action">
@@ -254,8 +254,8 @@ active
                                             <td>5 Year Service </td>
                                             <td>5</td>
                                             <td>
-                                                <a href="#" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}"></a>
-                                                <a href="#">John Doe</a>
+                                                <a href="#" class="avatar"><img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}"></a>
+                                                <a href="#">ABC</a>
                                             </td>
                                             <td class="text-right">
                                                 <div class="dropdown dropdown-action">
@@ -457,8 +457,8 @@ active
                                             <td>5 Year Service </td>
                                             <td>5</td>
                                             <td>
-                                                <a href="#" class="avatar"><img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}"></a>
-                                                <a href="#">John Doe</a>
+                                                <a href="#" class="avatar"><img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}"></a>
+                                                <a href="#">ABC</a>
                                             </td>
                                             <td class="text-right">
                                                 <div class="dropdown dropdown-action">

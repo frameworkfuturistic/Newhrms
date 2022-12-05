@@ -1312,6 +1312,9 @@ table.dataTable thead > tr > td.sorting {
 .modal-dialog.modal-md {
     max-width: 600px;
 }
+.modal-dialog.modal-half-md {
+    max-width: 450px;
+}
 .custom-modal .modal-content {
     border: 0;
     border-radius: 10px;

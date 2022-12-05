@@ -5,7 +5,7 @@
         <div class="container">
             <!-- Account Logo -->
             <div class="account-logo">
-                <a href="index.html"><img src="{{ URL::to('assets/img/logo.png') }}" alt="SoengSouy"></a>
+                <a href="index.html"><img src="{{ URL::to('assets/img/logo.png') }}" alt=""></a>
             </div>
             <!-- /Account Logo -->
             <div class="account-box">

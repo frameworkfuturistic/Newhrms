@@ -82,7 +82,7 @@ active
                                 <td>
                                     <span hidden class="image">{{ $user->avatar}}</span>
                                     <h2 class="table-avatar">
-                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/employee_image/'. $user->avatar) }}" alt="{{ $user->avatar }}"></a>
+                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/employee_image/'. $user->avatar) }}" alt="images/default.png"></a>
                                         <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="name">{{ $user->name }}</span></a>
                                     </h2>
                                 </td>
@@ -339,7 +339,7 @@ active
                                     <label>Role Type<span class="required">*</span></label>
                                     <select class="select form-control" name="role_name" id="">
                                         <option selected disabled> --Select --</option>
-                                        @foreach ($role_type as $rt )
+                                        @foreach ($role_name as $rt )
                                         <option value="{{ $rt->role_type }}">{{ $rt->role_type }}</option>
                                         @endforeach
                                     </select>
@@ -724,11 +724,12 @@ active
 
         // AJAX request 
         $.ajax({
+            type: 'GET',
             url: 'getOfficeLists/' + org_idd,
-            type: 'get',
-            dataType: 'json',
+            cache: false,
+            contentType: "application/json;",
+            datatype: 'json',
             success: function(response) {
-
                 var len = 0;
                 if (response['data'] != null) {
                     len = response['data'].length;
@@ -747,7 +748,10 @@ active
                     }
                 }
 
-            }
+            },
+            error: function(error) {
+                alert(error);
+            },
         });
     });
 
@@ -755,42 +759,42 @@ active
 
 
     // Organization Change
-    $('#org_level').change(function() {
+    // $('#org_level').change(function() {
 
-        // Organization Level
-        var org_idd = $(this).val();
+    //     // Organization Level
+    //     var org_idd = $(this).val();
 
-        // Empty the dropdown
-        $('#positions').find('option').not(':first').remove();
+    //     // Empty the dropdown
+    //     $('#positions').find('option').not(':first').remove();
 
-        // AJAX request 
-        $.ajax({
-            url: 'getPosts/' + org_idd,
-            type: 'get',
-            dataType: 'json',
-            success: function(response) {
+    //     // AJAX request 
+    //     $.ajax({
+    //         url: 'getPosts/' + org_idd,
+    //         type: 'get',
+    //         dataType: 'json',
+    //         success: function(response) {
 
-                var len = 0;
-                if (response['pd'] != null) {
-                    len = response['pd'].length;
-                }
+    //             var len = 0;
+    //             if (response['pd'] != null) {
+    //                 len = response['pd'].length;
+    //             }
 
-                if (len > 0) {
-                    // Read data and create <option >
-                    for (var i = 0; i < len; i++) {
+    //             if (len > 0) {
+    //                 // Read data and create <option >
+    //                 for (var i = 0; i < len; i++) {
 
-                        var post_id = response['pd'][i].post_id;
-                        var post_title = response['pd'][i].post_title;
+    //                     var post_id = response['pd'][i].post_id;
+    //                     var post_title = response['pd'][i].post_title;
 
-                        var option = "<option class='select' value='" + post_id + "'>" + post_title + "</option>";
+    //                     var option = "<option class='select' value='" + post_id + "'>" + post_title + "</option>";
 
-                        $("#positions").append(option);
-                    }
-                }
+    //                     $("#positions").append(option);
+    //                 }
+    //             }
 
-            }
-        });
-    });
+    //         }
+    //     });
+    // });
     //  This function is for Selecting designation according to post id show all designation name  
 
 

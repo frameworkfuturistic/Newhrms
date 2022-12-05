@@ -73,7 +73,7 @@
 									<a href="activities.html">
 										<div class="media">
 											<span class="avatar">
-												<img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
+												<img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
 											</span>
 											<div class="media-body">
 												<p class="noti-details"><span class="noti-title">Amit Singh</span> added new task <span class="noti-title">Patient appointment booking</span></p>
@@ -108,7 +108,7 @@
 										<div class="list-item">
 											<div class="list-left">
 												<span class="avatar">
-													<img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}">
+													<img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}">
 												</span>
 											</div>
 											<div class="list-body">
@@ -131,7 +131,7 @@
 				<li class="nav-item dropdown has-arrow main-drop">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 						<span class="user-img">
-							<img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+							<img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
 							<span class="status online"></span></span>
 						<span>{{ Auth::user()->name }}</span>
 					</a>

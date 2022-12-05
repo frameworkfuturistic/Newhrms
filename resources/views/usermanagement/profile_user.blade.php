@@ -34,7 +34,7 @@ noti-dot
                             <div class="profile-img-wrap">
                                 <div class="profile-img">
                                     <a href="#">
-                                        <img alt="" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                                        <img alt="" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
                                     </a>
                                 </div>
                                 <div class="pro-edit"><a data-target="#profile_pic_change" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
@@ -565,7 +565,7 @@ noti-dot
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="profile-img-wrap edit-img">
-                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input class="upload" type="file" id="image" name="images">
@@ -668,7 +668,7 @@ noti-dot
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="profile-img-wrap edit-img">
-                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input class="upload" type="file" id="upload" name="upload">
@@ -797,7 +797,7 @@ noti-dot
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="profile-img-wrap edit-img">
-                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>
                                         <input class="upload" type="file" id="upload" name="upload">

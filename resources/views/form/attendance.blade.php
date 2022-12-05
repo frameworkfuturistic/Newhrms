@@ -91,7 +91,8 @@ active
                         <thead>
                             <tr>
                                 <th>S.No.</th>
-                                <th>userID</th>
+                                <th hidden>userID</th>
+                                <th>Employee Name</th>
                                 @foreach($no_of_days as $no_of_day)
                                 <th>{{$no_of_day}}</th>
                                 @endforeach
@@ -101,13 +102,25 @@ active
                             @foreach($userAttendance as $key=>$ads)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$ads[0]->refUserId}}</td>
+                                <td hidden class="ref_id">{{$ads[0]->refUserId}}</td>
+                                <td>{{$ads[0]->name}}</td>
+
                                 @foreach($ads as $ad)
 
-                                @if($ad->attend_status==1)
-                                <td><a href="javascript:void(0);" data-toggle="modal" data-target="#attendance_info"><i class="fa fa-check text-success"></i></a></td>
+                                @if($ad->selected_date > $currentDate)
+                                <td><span class="first-off"><span class="text-secondary">--</span></span></td>
                                 @else
-                                <td><span class="first-off"><i class="fa fa-close text-danger"></i></span></td>
+
+                                @if($ad->attend_status==1)
+
+                                <td hidden class="date_of_attend">{{ $ad->attend_date }}</td>
+                                <td hidden class="time_in">{{ $ad->time_in }}</td>
+                                <td hidden class="time_out">{{ $ad->time_out }}</td>
+                                <td><a class="insertData" data-toggle="modal" data-target="#attendance_info"><span class="text-success">P</span></a></td>
+                                @elseif($ad->attend_status==0)
+                                <td><span class="first-off"><span class="text-danger">A</span></span></td>
+                                @endif
+
                                 @endif
 
                                 @endforeach
@@ -153,7 +166,7 @@ active
 
     <!-- Attendance Modal -->
     <div class="modal custom-modal fade" id="attendance_info" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-half-md" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Attendance Info</h5>
@@ -163,13 +176,15 @@ active
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card punch-status">
                                 <div class="card-body">
-                                    <h5 class="card-title">Timesheet <small class="text-muted">11 Mar 2019</small></h5>
+                                    <h5 class="card-title">Timesheet <small class="text-muted">
+                                            <input type="text" id="date_of_attend" value="" disabled>
+                                        </small></h5>
                                     <div class="punch-det">
                                         <h6>Punch In at</h6>
-                                        <p>Wed, 11th Mar 2019 10.00 AM</p>
+                                        <p><input type="text" id="time_in" value="" disabled></p>
                                     </div>
                                     <div class="punch-info">
                                         <div class="punch-hours">
@@ -178,43 +193,8 @@ active
                                     </div>
                                     <div class="punch-det">
                                         <h6>Punch Out at</h6>
-                                        <p>Wed, 20th Feb 2019 9.00 PM</p>
+                                        <p><input type="text" id="time_out" value="" disabled></p>
                                     </div>
-                                    <div class="statistics">
-                                        <div class="row">
-                                            <div class="col-md-3 col-3 text-center">
-                                            </div>
-                                            <div class="col-md-6 col-6 text-center">
-                                                <div class="stats-box">
-                                                    <p>Break</p>
-                                                    <h6>1.21 hrs</h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card recent-activity">
-                                <div class="card-body">
-                                    <h5 class="card-title">Activity</h5>
-                                    <ul class="res-activity-list">
-                                        <li>
-                                            <p class="mb-0">Punch In at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                10.00 AM.
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p class="mb-0">Punch Out at</p>
-                                            <p class="res-activity-time">
-                                                <i class="fa fa-clock-o"></i>
-                                                11.00 AM.
-                                            </p>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -226,4 +206,18 @@ active
     <!-- /Attendance Modal -->
 </div>
 <!-- Page Wrapper -->
+@endsection
+
+@section('script')
+{{-- insert data of time in & time out --}}
+
+<script>
+    $(document).on('click', '.insertData', function() {
+        var _this = $(this).parents('tr');
+        $('#ref_id').val(_this.find('.ref_id').text());
+        $('#date_of_attend').val(_this.find('.date_of_attend').text());
+        $('#time_in').val(_this.find('.time_in').text());
+        $('#time_out').val(_this.find('.time_out').text());
+    });
+</script>
 @endsection

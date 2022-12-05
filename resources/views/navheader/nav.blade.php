@@ -1,7 +1,7 @@
 <div class="header">
     <!-- Logo -->
     <div class="header-left">
-        <a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt=""> </a>
+        <a href="{{ route('home') }}" class="logo"> <img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt="images/default.png"> </a>
     </div>
     <!-- /Logo -->
     <a id="toggle_btn" href="javascript:void(0);">
@@ -34,7 +34,7 @@
                         <li class="notification-message">
                             <a href="activities.html">
                                 <div class="media"> <span class="avatar">
-                                            <img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
+                                            <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
                                         </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Rakesh Kumar</span> added new task <span class="noti-title">Patient appointment booking</span></p>
@@ -46,7 +46,7 @@
                         <li class="notification-message">
                             <a href="activities.html">
                                 <div class="media"> <span class="avatar">
-                                            <img alt="" src="{{ URL::to('assets/img/profiles/avatar-03.jpg') }}">
+                                            <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-03.jpg') }}">
                                         </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Tara Singh</span> changed the task name <span class="noti-title">Appointment booking with payment gateway</span></p>
@@ -58,7 +58,7 @@
                         <li class="notification-message">
                             <a href="activities.html">
                                 <div class="media"> <span class="avatar">
-                                            <img alt="" src="{{ URL::to('assets/img/profiles/avatar-06.jpg') }}">
+                                            <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-06.jpg') }}">
                                         </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Misty Devgan</span> added <span class="noti-title">Domenic Houston</span> and <span class="noti-title">Claire Mapes</span> to project <span class="noti-title">Doctor available module</span></p>
@@ -70,7 +70,7 @@
                         <li class="notification-message">
                             <a href="activities.html">
                                 <div class="media"> <span class="avatar">
-                                            <img alt="" src="{{ URL::to('assets/img/profiles/avatar-17.jpg') }}">
+                                            <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-17.jpg') }}">
                                         </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Rohit Prakash</span> completed task <span class="noti-title">Patient and Doctor video conferencing</span></p>
@@ -82,7 +82,7 @@
                         <li class="notification-message">
                             <a href="activities.html">
                                 <div class="media"> <span class="avatar">
-                                            <img alt="" src="{{ URL::to('assets/img/profiles/avatar-13.jpg') }}">
+                                            <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-13.jpg') }}">
                                         </span>
                                     <div class="media-body">
                                         <p class="noti-details"><span class="noti-title">Binny Kaur</span> added new task <span class="noti-title">Private chat module</span></p>
@@ -108,7 +108,7 @@
                             <a href="chat.html">
                                 <div class="list-item">
                                     <div class="list-left"> <span class="avatar">
-                                                <img alt="" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}">
+                                                <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-09.jpg') }}">
                                             </span> </div>
                                     <div class="list-body"> <span class="message-author">Rakesh Kumar</span> <span class="message-time">12:28 AM</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
@@ -119,7 +119,7 @@
                             <a href="chat.html">
                                 <div class="list-item">
                                     <div class="list-left"> <span class="avatar">
-                                                <img alt="" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
+                                                <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-02.jpg') }}">
                                             </span> </div>
                                     <div class="list-body"> <span class="message-author">Kumkum Rana</span> <span class="message-time">6 Mar</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
@@ -130,7 +130,7 @@
                             <a href="chat.html">
                                 <div class="list-item">
                                     <div class="list-left"> <span class="avatar">
-                                                <img alt="" src="{{ URL::to('assets/img/profiles/avatar-03.jpg') }}">
+                                                <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-03.jpg') }}">
                                             </span> </div>
                                     <div class="list-body"> <span class="message-author"> Tara Kumari</span> <span class="message-time">5 Mar</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
@@ -141,7 +141,7 @@
                             <a href="chat.html">
                                 <div class="list-item">
                                     <div class="list-left"> <span class="avatar">
-                                                <img alt="" src="{{ URL::to('assets/img/profiles/avatar-05.jpg') }}">
+                                                <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-05.jpg') }}">
                                             </span> </div>
                                     <div class="list-body"> <span class="message-author">Mikky Singh</span> <span class="message-time">3 Mar</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
@@ -152,7 +152,7 @@
                             <a href="chat.html">
                                 <div class="list-item">
                                     <div class="list-left"> <span class="avatar">
-                                                <img alt="" src="{{ URL::to('assets/img/profiles/avatar-08.jpg') }}">
+                                                <img alt="images/default.png" src="{{ URL::to('assets/img/profiles/avatar-08.jpg') }}">
                                             </span> </div>
                                     <div class="list-body"> <span class="message-author"> Chinki Kumari </span> <span class="message-time">27 Feb</span>
                                         <div class="clearfix"></div> <span class="message-content">Lorem ipsum dolor sit amet, consectetur adipiscing</span> </div>
@@ -166,7 +166,7 @@
         </li>
         <!-- /Message Notifications -->
         <li class="nav-item dropdown has-arrow main-drop">
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img src="{{ URL::to('/assets/images/'. Auth::user()->avatar) }}" alt="images/default.png">
                     <span class="status online"></span></span> <span>{{ Auth::user()->name }}</span> </a>
             <div class="dropdown-menu"> <a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item" href="settings.html">Settings</a> <a class="dropdown-item" href="{{ route('logout') }}">Logout</a> </div>
         </li>

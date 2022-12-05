@@ -21,7 +21,7 @@ active
                 <div class="col-sm-12">
                     <div class="welcome-box">
                         <div class="welcome-img">
-                            <img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="{{ Auth::user()->name }}">
+                            <img src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
                         </div>
                         <div class="welcome-det">
                             <h3>Welcome, Admin {{ Auth::user()->name }}</h3>

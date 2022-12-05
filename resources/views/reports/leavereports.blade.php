@@ -86,7 +86,7 @@ active
                             <tr>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a href="#" class="avatar"><img alt="{{ $items->avatar }}" src="{{ URL::to('/assets/employee_image/'. $items->avatar) }}"></a>
+                                        <a href="#" class="avatar"><img alt="images/default.png" src="{{ URL::to('/assets/employee_image/'. $items->avatar) }}"></a>
                                         <a href="#">{{ $items->name }} <span>{{ $items->rec_id }}</span></a>
                                     </h2>
                                 </td>

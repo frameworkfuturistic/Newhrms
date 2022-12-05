@@ -39,7 +39,7 @@ noti-dot
                         <div class="profile-view">
                             <div class="profile-img-wrap">
                                 <div class="profile-img">
-                                    <a href="#"><img alt="" src="{{ URL::to('/assets/employee_image/'. $user[0]->avatar) }}" alt="{{ $user[0]->name }}"></a>
+                                    <a href="#"><img alt="images/default.png" src="{{ URL::to('/assets/employee_image/'. $user[0]->avatar) }}" alt="{{ $user[0]->name }}"></a>
                                 </div>
                             </div>
                             <div class="profile-basic">
@@ -531,7 +531,7 @@ noti-dot
                             <div class="col-md-12">
                                 <div class="profile-img-wrap edit-img">
                                     @if(!empty($users))
-                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. $users->avatar) }}" alt="{{ $users->name }}">
+                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. $users->avatar) }}" alt="images/default.png">
                                     @endif
                                     <div class="fileupload btn">
                                         <span class="btn-text">edit</span>

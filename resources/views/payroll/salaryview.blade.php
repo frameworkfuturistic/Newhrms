@@ -26,7 +26,7 @@
                                 <div class="row">
                                     <div class="col-sm-6 m-b-20">
                                         @if(!empty($users->avatar))
-                                        <img src="{{ URL::to('/assets/employee_image/'. $users->avatar) }}" class="inv-logo" alt="{{ $users->name }}">
+                                        <img src="{{ URL::to('/assets/employee_image/'. $users->avatar) }}" class="inv-logo" alt="images/default.png">
                                         @endif
                                         <ul class="list-unstyled mb-0">
                                             <li class="font-weight-bold">HRMS</li>
