@@ -33,16 +33,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('php-info', function () {
-    return phpinfo();
-});
-
 Route::get('/', function () {
     return view('auth.login');
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    // return 'Hii';
+  
     Route::get('home', function () {
         $category = auth()->user()->role_name;
 
@@ -88,7 +84,6 @@ Route::post('forget-passwordd', [App\Http\Controllers\Auth\ForgotPasswordControl
 // ----------------------------- reset password -----------------------------//
 Route::get('reset-password/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'getPassword']);
 Route::post('reset-password', [App\Http\Controllers\Auth\ResetPasswordController::class, 'updatePassword']);
-
 
 
 Route::controller(UserManagementController::class)->group(function () {

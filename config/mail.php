@@ -88,7 +88,7 @@ return [
     //     'name' => env('MAIL_FROM_NAME', 'Example'),
     // ],
 
-    'from' => ['address' => 'frameworkfuturistic@gmail.com', 'name' => 'HRMS'],
+    'from' => ['address' => 'aniketkumarstu2000@gmail.com', 'name' => 'HRMS'],
 
     /*
     |--------------------------------------------------------------------------

@@ -1,63 +1,131 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
 
-@section('links')
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <title>HRMS</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/logo.png') }}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="loginPageCss/css/util.css">
+    <link rel="stylesheet" type="text/css" href="loginPageCss/css/main.css">
+    <!--===============================================================================================-->
+    {{-- message toastr --}}
+    <link rel="stylesheet" href="{{ URL::to('assets/css/toastr.min.css') }}">
+    <script src="{{ URL::to('assets/js/toastr_jquery.min.js') }}"></script>
+    <script src="{{ URL::to('assets/js/toastr.min.js') }}"></script>
 
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-@endsection
+</head>
 
-@section('content')
-
-<body class="antialiased">
+<body>
     {{-- message --}}
     {!! Toastr::message() !!}
-    <div class="h-screen flex">
-        <div class="hidden md-visible lg:flex w-full lg:w-1/2 bg-[#31b13a] center center
-          justify-around items-center">
-            <div class="bg-black opacity-20 inset-0 z-0"></div>
-            <div class="w-full mx-auto px-20 flex-col items-center space-y-6">
-                <h1 class="text-white font-bold text-6xl font-sans leading-normal">बिहार ग्राम स्वराज योजना सोसाइटी</h1>
-                <p class="text-white mt-1">Log in to continue to your BGSYS HRMS account</p>
-                <img src="images/panchaytLoginImage.png" class="w-9/12 my-auto" />
-
-            </div>
-        </div>
-        <div class="flex w-full lg:w-1/2 justify-center items-center bg-white space-y-8">
-            <div class="w-full px-8 md:px-32 lg:px-24">
-                <form method="POST" action="{{ route('login') }}" class="bg-white rounded-md shadow-2xl p-5 bg-center">
+    <div class="limiter">
+        <div class="container-login100 bg-success">
+            <div class="wrap-login100">
+                <span class="login100-form-title p-b-6 font-bold">
+                    <h1>बिहार ग्राम स्वराज योजना सोसाइटी</h1>
+                </span>
+                <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
                     @csrf
-                    <center><img src="images/logo.png" class="max-w-[50%]" /></center>
-                    <h1 class="text-gray-800 font-bold text-2xl mb-1">Login</h1>
-                    <div class="flex items-center border-2 mb-8 py-2 px-3 rounded-2xl">
-                        <img src="images/userLogo.png" class="h-5 w-5 text-gray-400" />
-                        <input id="email" class="form-control @error('email') is-invalid @enderror" type="email" name="email" value="{{ old('email') }}" placeholder="Email Address" required autofocus />
+                    <span class="login100-form-title p-b-48">
+                        <img src="images/logo.png" class="img-fluid" />
+                    </span>
+                    <span class="login100-form-title p-b-48">
+                        <p class="text-dark mt-1">Log in to continue to your BGSYS HRMS account</p>
+                    </span>
+
+                    <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
+                        <input class="input100 @error('email') is-invalid @enderror" type="email" id="email" name="email" value="{{ old('email') }}" />
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                        <span class="focus-input100" data-placeholder="Email"></span>
                     </div>
-                    <div class="flex items-center border-2 mb-12 py-2 px-3 rounded-2xl ">
-                        <img src="images/passwordLogo.png" class="h-5 w-5 text-gray-400" />
-                        <input class="form-control @error('password') is-invalid @enderror" type="password" name="password" placeholder="Enter Password" />
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+                        <span class="btn-show-pass">
+                            <i class="zmdi zmdi-eye"></i>
+                        </span>
+                        <input class="input100 @error('password') is-invalid @enderror" type="password" name="password">
+                        <span class="focus-input100" data-placeholder="Password"></span>
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-                    @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                    @enderror
-                    <button type="submit" class="block w-full bg-indigo-600 mt-5 py-2 rounded-2xl hover:bg-indigo-700 hover:-translate-y-1 transition-all duration-500 text-white font-semibold mb-2">Login</button>
+
+                    <div class="container-login100-form-btn">
+                        <div class="wrap-login100-form-btn">
+                            <div class="login100-form-bgbtn"></div>
+                            <button type="submit" class="login100-form-btn">
+                                Login
+                            </button>
+                        </div>
+                    </div>
                     <div class="flex justify-between mt-4">
                         <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"><a class="text-muted" href="{{ route('forget-password') }}">
                                 Forgot password ?
                             </a></span>
 
-                        <a href="{{ route('register') }}" class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all">Don't have an account yet?</a>
                     </div>
+
                 </form>
             </div>
         </div>
     </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    <script src="loginPageCss/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="loginPageCss/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="loginPageCss/vendor/bootstrap/js/popper.js"></script>
+    <script src="loginPageCss/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="loginPageCss/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="loginPageCss/vendor/daterangepicker/moment.min.js"></script>
+    <script src="loginPageCss/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="loginPageCss/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="loginPageCss/js/main.js"></script>
+
+
+
+    <!-- jQuery -->
+    <script src="{{ URL::to('assets/js/jquery-3.5.1.min.js') }}"></script>
+    <!-- Bootstrap Core JS -->
+    <script src="{{ URL::to('assets/js/popper.min.js') }}"></script>
+    <script src="{{ URL::to('assets/js/bootstrap.min.js') }}"></script>
+    <!-- Custom JS -->
+    <script src="{{ URL::to('assets/js/app.js') }}"></script>
+
 </body>
-@endsection
+
+</html>

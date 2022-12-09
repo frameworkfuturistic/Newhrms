@@ -101,7 +101,7 @@
 				</li>
 				<!-- /Notifications -->
 				<!-- Message Notifications -->
-				<li class="nav-item dropdown">
+				<!-- <li class="nav-item dropdown">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <i class="fa fa-comment-o"></i> <span class="badge badge-pill">8</span> </a>
 					<div class="dropdown-menu notifications">
 						<div class="topnav-dropdown-header"> <span class="notification-title">Messages</span> <a href="javascript:void(0)" class="clear-noti"> Clear All </a> </div>
@@ -123,7 +123,7 @@
 						</div>
 						<div class="topnav-dropdown-footer"> <a href="chat.html">View all Messages</a> </div>
 					</div>
-				</li>
+				</li> -->
 				<!-- /Message Notifications -->
 				<li class="nav-item dropdown has-arrow main-drop">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">

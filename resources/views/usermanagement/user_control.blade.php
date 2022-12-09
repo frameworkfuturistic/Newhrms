@@ -190,6 +190,39 @@ active
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="form-group">
+                                    <label>Employee ID<span class="required">*</span></label>
+                                    <input class="form-control @error('emp_id') is-invalid @enderror" type="text" id="" name="emp_id" value="{{ old('emp_id') }}" placeholder="Enter Employee ID">
+                                    <div class="alert-danger">@error('emp_id'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Gender<span class="required">*</span></label>
+                                    <select class="select form-control" name="gender" id="gender">
+                                        <option selected disabled> --Select --</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                    <div class="alert-danger">@error('gender'){{ $message }}@enderror</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Category</label>
+                                    <select class="select form-control" name="category" id="category">
+                                        <option selected disabled> --Select --</option>
+                                        <option value="General">General</option>
+                                        <option value="OBC">OBC</option>
+                                        <option value="ST">ST</option>
+                                        <option value="SC">SC</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
                                     <label>Date Of Birth<span class="required">*</span></label>
                                     <input class="form-control" type="date" id="" name="dob" placeholder="Enter Your date of birth" required />
                                     <div class="alert-danger">@error('dob'){{ $message }}@enderror</div>
@@ -344,13 +377,6 @@ active
                                         @endforeach
                                     </select>
                                     <div class="alert-danger">@error('role_name'){{ $message }}@enderror</div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Employee ID<span class="required">*</span></label>
-                                    <input class="form-control @error('emp_id') is-invalid @enderror" type="text" id="" name="emp_id" value="{{ old('emp_id') }}" placeholder="Enter Employee ID">
-                                    <div class="alert-danger">@error('emp_id'){{ $message }}@enderror</div>
                                 </div>
                             </div>
                         </div>

@@ -21,6 +21,7 @@ use App\Models\MasterEmployeeType;
 use App\Models\MasterOfficeList;
 use App\Models\MasterPost;
 use App\Models\MasterStates;
+use App\Models\PersonalInformation;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -225,106 +226,119 @@ class UserManagementController extends Controller
 
         DB::beginTransaction();
         try {
-            $id           = $request->user_id;
+            $personal_info = new PersonalInformation;
+            $id = $request->user_id;
+            $personal_info->user_id = $request->user_id;
 
             $aadhar_no = $request->aadhar_no;
+            $personal_info->aadhar_no = $request->aadhar_no;
 
             if ($request->aadhar_no && $request->aadhar_card) {
                 $aadhar_card_image = $request->aadhar_no . '.' . $request->aadhar_card->extension();
+                $personal_info->aadhar_card = $request->aadhar_no . '.' . $request->aadhar_card->extension();
                 $request->aadhar_card->move(public_path('assets/User_aadhar_card'), $aadhar_card_image);
             } else
-                $aadhar_card_image = null;
+                $personal_info->aadhar_card = null;
 
-            $pan_no = $request->pan_no;
+            $personal_info->pan_no = $request->pan_no;
 
             if ($request->pan_no && $request->pan_card) {
                 $pan_card_image = $request->pan_no . '.' . $request->pan_card->extension();
+                $personal_info->pan_card = $request->pan_no . '.' . $request->pan_card->extension();
                 $request->pan_card->move(public_path('assets/User_pan_card'), $pan_card_image);
             } else
-                $pan_card_image = null;
+                $personal_info->pan_card = null;
 
             if ($request->dl != null) {
                 $driving_licence_image = $id . '.' . $request->dl->extension();
+                $personal_info->driving_licence = $id . '.' . $request->dl->extension();
                 $request->dl->move(public_path('assets/User_driving_licence'), $driving_licence_image);
             } else
-                $driving_licence_image = null;
+                $personal_info->driving_licence = null;
 
             if ($request->passport != null) {
                 $passport_image = $id . '.' . $request->passport->extension();
+                $personal_info->passport = $id . '.' . $request->passport->extension();
                 $request->passport->move(public_path('assets/User_passport'), $passport_image);
             } else
-                $passport_image = null;
+                $personal_info->passport = null;
 
             if ($request->voter_id != null) {
                 $voter_id_image = $id . '.' . $request->voter_id->extension();
+                $personal_info->voter_card = $id . '.' . $request->voter_id->extension();
                 $request->voter_id->move(public_path('assets/User_voter_id'), $voter_id_image);
             } else
-                $voter_id_image = null;
+                $personal_info->voter_card = null;
 
             if ($request->uan != null) {
                 $uan_image = $id . '.' . $request->uan->extension();
+                $personal_info->uan_no = $id . '.' . $request->uan->extension();
                 $request->uan->move(public_path('assets/User_uan'), $uan_image);
             } else
-                $uan_image = null;
+                $personal_info->uan_no = null;
 
-            $present_state = $request->present_state;
-            $present_city = $request->present_city;
-            $present_pin = $request->present_pin;
-            $permanent_state = $request->permanent_state;
-            $permanent_city = $request->permanent_city;
-            $permanent_pin = $request->permanent_pin;
-            $personal_contact = $request->personal_contact;
-            $alternative_contact = $request->alternative_contact;
-            $emergency_contact = $request->emergency_contact;
-            $emerg_con_per_name = $request->emerg_con_per_name;
-            $emerg_con_per_rel = $request->emerg_con_per_rel;
-            $emerg_con_per_add = $request->emerg_con_per_add;
-            $edu_qua_course_name = $request->edu_qua_course_name;
-            $edu_qua_stream = $request->edu_qua_stream;
-            $edu_qua_board = $request->edu_qua_board;
-            $edu_qua_passing_year = $request->edu_qua_passing_year;
-            $edu_qua_percentage = $request->edu_qua_percentage;
+            $personal_info->present_state = $request->present_state;
+            $personal_info->present_city = $request->present_city;
+            $personal_info->present_pin = $request->present_pin;
+            $personal_info->permanent_state = $request->permanent_state;
+            $personal_info->permanent_city = $request->permanent_city;
+            $personal_info->permanent_pin = $request->permanent_pin;
+            $personal_info->personal_contact = $request->personal_contact;
+            $personal_info->alternative_contact = $request->alternative_contact;
+            $personal_info->emergency_contact = $request->emergency_contact;
+            $personal_info->emerg_con_per_name = $request->emerg_con_per_name;
+            $personal_info->emerg_con_per_rel = $request->emerg_con_per_rel;
+            $personal_info->emerg_con_per_add = $request->emerg_con_per_add;
+            $personal_info->edu_qua_course_name = $request->edu_qua_course_name;
+            $personal_info->edu_qua_stream = $request->edu_qua_stream;
+            $personal_info->edu_qua_board = $request->edu_qua_board;
+            $personal_info->edu_qua_passing_year = $request->edu_qua_passing_year;
+            $personal_info->edu_qua_percentage = $request->edu_qua_percentage;
 
             if ($request->edu_qua_certi_upload != null) {
                 $edu_qua_certi_image = $id . '.' . $request->edu_qua_certi_upload->extension();
+                $personal_info->edu_qua_certi_upload = $id . '.' . $request->edu_qua_certi_upload->extension();
                 $request->edu_qua_certi_upload->move(public_path('assets/User_edu_qua_certi'), $edu_qua_certi_image);
             } else
-                $edu_qua_certi_image = null;
+                $personal_info->edu_qua_certi_upload = null;
 
-            $pro_qua_university_name = $request->pro_qua_university_name;
-            $pro_qua_degree = $request->pro_qua_degree;
-            $pro_qua_subject = $request->pro_qua_subject;
-            $pro_qua_duration = $request->pro_qua_duration;
+            $personal_info->pro_qua_university_name = $request->pro_qua_university_name;
+            $personal_info->pro_qua_degree = $request->pro_qua_degree;
+            $personal_info->pro_qua_subject = $request->pro_qua_subject;
+            $personal_info->pro_qua_duration = $request->pro_qua_duration;
 
             if ($request->pro_qua_ind_certi != null) {
                 $pro_qua_ind_certi_image = $id . '.' . $request->pro_qua_ind_certi->extension();
+                $personal_info->pro_qua_ind_certi = $id . '.' . $request->pro_qua_ind_certi->extension();
                 $request->pro_qua_ind_certi->move(public_path('assets/User_pro_qua_ind'), $pro_qua_ind_certi_image);
             } else
-                $pro_qua_ind_certi_image = null;
+                $personal_info->pro_qua_ind_certi = null;
 
-            $pro_qua_year = $request->pro_qua_year;
-            $skill_name = $request->skill_name;
-            $skill_duration = $request->skill_duration;
-            $organ_name = $request->organ_name;
+            $personal_info->pro_qua_year = $request->pro_qua_year;
+            $personal_info->tech_skill = $request->skill_name;
+            $personal_info->skill_duration = $request->skill_duration;
+            $personal_info->organ_name = $request->organ_name;
 
             if ($request->job_profile != null) {
                 $job_profile_image = $id . '.' . $request->job_profile->extension();
+                $personal_info->job_profile = $id . '.' . $request->job_profile->extension();
                 $request->job_profile->move(public_path('assets/User_job_profile'), $job_profile_image);
             } else
-                $job_profile_image = null;
+                $personal_info->job_profile = null;
 
-            $organ_type = $request->organ_type;
+            $personal_info->organ_type = $request->organ_type;
 
             if ($request->supp_doc_upload != null) {
                 $supp_doc_image = $id . '.' . $request->supp_doc_upload->extension();
+                $personal_info->supp_doc_upload = $id . '.' . $request->supp_doc_upload->extension();
                 $request->supp_doc_upload->move(public_path('assets/User_supp_doc'), $supp_doc_image);
             } else
-                $supp_doc_image = null;
+                $personal_info->supp_doc_upload = null;
 
-            $eff_from_date = $request->eff_from_date;
-            $eff_to_date = $request->eff_to_date;
-            $fam_relation = $request->fam_relation;
-            $full_name = $request->full_name;
+            $personal_info->eff_from_date = $request->eff_from_date;
+            $personal_info->eff_to_date = $request->eff_to_date;
+            $personal_info->fam_relation = $request->fam_relation;
+            $personal_info->full_name = $request->full_name;
 
             // if ($request->dl != null) {
             //     $update_dl = ['driving_licence' => $driving_licence_image];
@@ -340,53 +354,9 @@ class UserManagementController extends Controller
             //     User::where('id', $id)->update($update_uan);
             // }
 
-            $update = [
-                'aadhar_no' => $aadhar_no,
-                'aadhar_card' => $aadhar_card_image,
-                'pan_no' => $pan_no,
-                'pan_card' => $pan_card_image,
-                'driving_licence' => $driving_licence_image,
-                'passport' => $passport_image,
-                'voter_card' => $voter_id_image,
-                'uan_no' => $uan_image,
-                'present_state' => $present_state,
-                'present_city' => $present_city,
-                'present_pin' => $present_pin,
-                'permanent_state' => $permanent_state,
-                'permanent_city' => $permanent_city,
-                'permanent_pin' => $permanent_pin,
-                'personal_contact' => $personal_contact,
-                'alternative_contact' => $alternative_contact,
-                'emergency_contact' => $emergency_contact,
-                'emerg_con_per_name' => $emerg_con_per_name,
-                'emerg_con_per_rel' => $emerg_con_per_rel,
-                'emerg_con_per_add' => $emerg_con_per_add,
-                'edu_qua_course_name' => $edu_qua_course_name,
-                'edu_qua_stream' => $edu_qua_stream,
-                'edu_qua_board' => $edu_qua_board,
-                'edu_qua_passing_year' => $edu_qua_passing_year,
-                'edu_qua_percentage' => $edu_qua_percentage,
-                'edu_qua_certi_upload' => $edu_qua_certi_image,
-                'pro_qua_university_name' => $pro_qua_university_name,
-                'pro_qua_degree' => $pro_qua_degree,
-                'pro_qua_subject' => $pro_qua_subject,
-                'pro_qua_duration' => $pro_qua_duration,
-                'pro_qua_ind_certi' => $pro_qua_ind_certi_image,
-                'pro_qua_year' => $pro_qua_year,
-                'tech_skill' => $skill_name,
-                'skill_duration' => $skill_duration,
-                'organ_name' => $organ_name,
-                'job_profile' => $job_profile_image,
-                'organ_type' => $organ_type,
-                'supp_doc_upload' => $supp_doc_image,
-                'eff_from_date' => $eff_from_date,
-                'eff_to_date' => $eff_to_date,
-                'fam_relation' => $fam_relation,
-                'full_name' => $full_name
 
-            ];
 
-            User::where('id', $id)->update($update);
+            $personal_info->save();
             DB::commit();
             return back()->with(Toastr::success('Profile Information Saved successfully :)', 'Success'));
         } catch (\Exception $e) {
@@ -431,26 +401,28 @@ class UserManagementController extends Controller
         $user = Session::get('user');
         $profile = $user->id;
 
-        $user = DB::table('users')->get();
-        $employees = DB::table('users')->where('id', $profile)->first();
+        $user = DB::table('users')->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')->get();
+        $employees = DB::table('users')->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')->where('users.id', $profile)->first();
         $design_name = DB::select("SELECT m.designation_name as design_name
         FROM users u 
         LEFT JOIN master_designations m ON m.designation_id = u.designation
         WHERE u.id = $profile ");
+
         $state_name = DB::select("SELECT s.state_name FROM users u 
-        LEFT JOIN master_states s ON s.state_id = u.present_state
+        LEFT JOIN personal_information p ON p.user_id = u.id 
+        LEFT JOIN master_states s ON s.state_id = p.present_state
         WHERE u.id = $profile ");
 
         if (empty($employees)) {
-            $information = DB::table('users')->where('id', $profile)->first();
+            $information = DB::table('users')->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')->where('users.id', $profile)->first();
             return view('usermanagement.profile_user', compact('information', 'user', 'design_name', 'state_name'));
         } else {
             $id = $employees->id;
             if ($id == $profile) {
-                $information = DB::table('users')->where('id', $profile)->first();
+                $information = DB::table('users')->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')->where('users.id', $profile)->first();
                 return view('usermanagement.profile_user', compact('information', 'user', 'design_name', 'state_name'));
             } else {
-                $information = User::all();
+                $information = DB::table('users')->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')->where('users.id', $profile)->first();
                 return view('usermanagement.profile_user', compact('information', 'user', 'design_name', 'state_name'));
             }
         }
@@ -538,6 +510,8 @@ class UserManagementController extends Controller
             'first_name'      => 'required|string|max:255',
             'middle_name'   => 'nullable|string|max:255',
             'last_name'      => 'nullable|string|max:255',
+            'gender'      => 'required|string|max:255',
+            'category'      => 'nullable|string|max:255',
             'dob'      => 'required|date',
             'email' => 'required|string|email|max:255|unique:users',
             'department_email' => 'nullable|string|email|max:255|unique:users',
@@ -547,7 +521,7 @@ class UserManagementController extends Controller
             'pay_slab' => 'required',
             'attend_type' => 'required',
             'report_auth' => 'required',
-            'cug_no' => 'required',
+            'cug_no' => 'required|unique:users',
             'join_date' => 'required',
             'role_name' => 'required|string|max:255',
             'designation' => 'required|string|max:255',
@@ -573,10 +547,20 @@ class UserManagementController extends Controller
             if ($request->image != null) {
                 $image = $request->cug_no . '.' . $request->image->extension();
                 $request->image->move(public_path('assets/employee_image'), $image);
+            } else {
+                if ($request->gender == 'Male')
+                    $image = 'boy.png';
+                else
+                    $image = 'girl.png';
             }
 
+
             $user->first_name = $request->first_name;
+            $user->middle_name = $request->middle_name;
+            $user->last_name = $request->last_name;
             $user->emp_id = $request->emp_id;
+            $user->gender = $request->gender;
+            $user->category = $request->category;
             $user->dob = $request->dob;
             $user->email = $request->email;
             $user->department_email = $request->department_email;
@@ -589,10 +573,7 @@ class UserManagementController extends Controller
             $user->reporting_authority = $request->report_auth;
             $user->role_name    = $request->role_name;
             $user->position     = $request->position;
-
-            if ($request->image != null)
-                $user->avatar       = $image;
-
+            $user->avatar       = $image;
             $user->designation       = $request->designation;
             $user->cug_no       = $request->cug_no;
             $password = Str::random(6);

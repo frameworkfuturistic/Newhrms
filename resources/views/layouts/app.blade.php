@@ -4,10 +4,6 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <meta name="description" content="soengsouy - Bootstrap Admin Template">
-    <meta name="keywords" content="admin, estimates, bootstrap, business, corporate, creative, management, minimal, modern, accounts, invoice, html5, responsive, CRM, Projects">
-    <meta name="author" content="soengsouy">
-    <meta name="robots" content="noindex, nofollow">
     <title>HRMS</title>
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{ URL::to('assets/img/logo.png') }}">

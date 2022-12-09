@@ -146,27 +146,38 @@ class LeavesController extends Controller
         $userAttendance = array();
         $uptoDate = Carbon::parse($toDate)->addDays(-1)->format('Y-m-d');
         foreach ($user_name as $user_names) {
-            $queryDateRange = "SELECT 
-                            *,
-                            $user_names->id AS refUserId,
-                            (CASE
-                                WHEN ar.user_id IS NULL THEN 0
-                                ELSE 1
-                            END) AS attend_status
-                            
-                            FROM 
-                            (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) selected_date from
-                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
-                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
-                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
-                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
-                            (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
-                            
-                            LEFT JOIN (SELECT * FROM attendance_records WHERE user_id='$user_names->id') AS ar ON ar.attend_date=selected_date
-                            LEFT JOIN users as u ON u.id = $user_names->id
-                            
-                            where selected_date BETWEEN '$fromDate' AND '$uptoDate'
-                            ORDER BY selected_date ASC";
+            $queryDateRange =  "SELECT *,
+                                      if((SELECT DAYNAME(selected_date))='SATURDAY','S1',if((SELECT DAYNAME(selected_date))='SUNDAY','S2','Day')) as NameofDay     
+                                from (SELECT *,
+                                            $user_names->id AS refUserId,
+                                            (CASE
+                                            WHEN ar.user_id IS NULL THEN 0
+                                            ELSE 1
+                                            END) AS attend_status
+                                
+                                        from 
+                                        (select adddate('1970-01-01',t4.i*10000 + t3.i*1000 + t2.i*100 + t1.i*10 + t0.i) selected_date from
+                                        (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t0,
+                                        (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t1,
+                                        (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t2,
+                                        (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t3,
+                                        (select 0 i union select 1 union select 2 union select 3 union select 4 union select 5 union select 6 union select 7 union select 8 union select 9) t4) v
+                                        
+                                        
+                                        LEFT JOIN (SELECT attend_rec_id,
+                                                            user_id,
+                                                            attend_date,
+                                                            time_in,
+                                                            time_out,
+                                                            inserted_on_time_in,
+                                                            inserted_on_time_out 
+                                                    FROM attendance_records WHERE user_id='$user_names->id') AS ar ON ar.attend_date=selected_date
+                                        LEFT JOIN users AS u ON u.id = $user_names->id
+                                        
+                                        
+                                        where selected_date BETWEEN '$fromDate' AND '$uptoDate'
+                                        ORDER BY selected_date ASC
+                                    ) as A";
 
             $rangeDates = DB::select($queryDateRange);      // range Dates
             array_push($userAttendance, $rangeDates);

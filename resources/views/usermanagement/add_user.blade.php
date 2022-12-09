@@ -72,6 +72,7 @@ active
                             <form action="user-profile/save" method="POST" enctype="multipart/form-data">
                                 @method('POST')
                                 @csrf
+                                
                                 <div class="tab-content mb-0 pt-0">
                                     <!-- START: Define your progress bar here -->
                                     <div id="bar" class="progress mb-3" style="height: 7px;">

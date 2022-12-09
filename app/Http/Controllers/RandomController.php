@@ -13,9 +13,9 @@ class RandomController extends Controller
     {
 
         $customer = new Buyer([
-            'name'          => 'John Doe',
+            'name'          => 'Aniket Kumar',
             'custom_fields' => [
-            'email' => 'test@example.com',
+                'email' => 'test@example.com',
             ],
         ]);
 

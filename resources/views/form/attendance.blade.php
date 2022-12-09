@@ -107,10 +107,21 @@ active
 
                                 @foreach($ads as $ad)
 
+                                <!-- If date is greater than current date then show - symbol . -->
                                 @if($ad->selected_date > $currentDate)
+                                @if($ad->NameofDay!= 'S1' && $ad->NameofDay!= 'S2')
                                 <td><span class="first-off"><span class="text-secondary">--</span></span></td>
                                 @else
+                                <td><span class="text-secondary">{{ $ad->NameofDay }}</span></td>
+                                @endif
+                                @else
+                                <!-- If date is smaller than current date then show - symbol .  -->
 
+                                <!-- If organisation is SPRC  -->
+                                @if( $ad->org_id == 1 )
+
+                                <!-- Organisation is SPRC and date is not saturday or sunday then show S1 or S2 -->
+                                @if($ad->NameofDay!= 'S1' && $ad->NameofDay!= 'S2')
                                 @if($ad->attend_status==1)
 
                                 <td hidden class="date_of_attend">{{ $ad->attend_date }}</td>
@@ -120,6 +131,25 @@ active
                                 @elseif($ad->attend_status==0)
                                 <td><span class="first-off"><span class="text-danger">A</span></span></td>
                                 @endif
+                                @else
+                                <td><span class="first-off"><span class="text-secondary">{{ $ad->NameofDay }}</span></span></td>
+                                @endif
+                                @else
+                                @if($ad->NameofDay!= 'S2')
+                                @if($ad->attend_status==1)
+
+                                <td hidden class="date_of_attend">{{ $ad->attend_date }}</td>
+                                <td hidden class="time_in">{{ $ad->time_in }}</td>
+                                <td hidden class="time_out">{{ $ad->time_out }}</td>
+                                <td><a class="insertData" data-toggle="modal" data-target="#attendance_info"><span class="text-success">P</span></a></td>
+                                @elseif($ad->attend_status==0)
+                                <td><span class="first-off"><span class="text-danger">A</span></span></td>
+                                @endif
+                                @else
+                                <td><span class="first-off"><span class="text-secondary">{{ $ad->NameofDay }}</span></span></td>
+                                @endif
+                                @endif
+
 
                                 @endif
 
