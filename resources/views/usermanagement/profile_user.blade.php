@@ -46,17 +46,33 @@ noti-dot
                                         <div class="profile-info-left">
                                             <h3 class="user-name m-t-0 mb-0">{{ Auth::user()->name }}</h3>
                                             <small class="text-muted">{{ $design_name[0]->design_name }}</small>
-                                            <div class="staff-id">Employee ID : {{ Auth::user()->rec_id }}</div>
+                                            <div class="staff-id">Employee ID : {{ Auth::user()->emp_id }}</div><br />
                                             <div class="small doj text-muted">Date of Join : {{ Auth::user()->join_date }}</div>
+                                            <small class="text-muted">Gender : {{ Auth::user()->gender }}</small><br />
+                                            <small class="text-muted">Reporting Authority : {{ $reporting_auth_name[0]->name }}({{ $reporting_auth_name[0]->emp_id }})</small>
+
                                         </div>
                                     </div>
                                     <div class="col-md-7">
                                         <ul class="personal-info">
                                             <li>
+                                                @if(!empty($information->email))
                                                 <div class="title">Email:</div>
                                                 <div class="text"><a href="">{{ Auth::user()->email }}</a></div>
+                                                @else
+                                                <div class="title">Email:</div>
+                                                <div class="text">N/A</div>
+                                                @endif
                                             </li>
-                                            @if(!empty($information))
+                                            <li>
+                                                @if(!empty($information->department_email))
+                                                <div class="title">Dept. Email:</div>
+                                                <div class="text">{{ $information->department_email }}</div>
+                                                @else
+                                                <div class="title">Dept. Email:</div>
+                                                <div class="text">N/A</div>
+                                                @endif
+                                            </li>
                                             <li>
                                                 @if(!empty($information->dob))
                                                 <div class="title">Birthday:</div>
@@ -67,41 +83,23 @@ noti-dot
                                                 @endif
                                             </li>
                                             <li>
-                                                @if(!empty($information->present_city))
-                                                <div class="title">City:</div>
-                                                <div class="text">{{ $information->present_city }}</div>
+                                                @if(!empty($information->cug_no))
+                                                <div class="title">CUG No:</div>
+                                                <div class="text">{{ $information->cug_no }}</div>
                                                 @else
-                                                <div class="title">City:</div>
+                                                <div class="title">CUG No:</div>
                                                 <div class="text">N/A</div>
                                                 @endif
                                             </li>
                                             <li>
-                                                @if(!empty($information->present_state))
-                                                <div class="title">State:</div>
-                                                <div class="text">{{ $state_name[0]->state_name }}</div>
+                                                @if(!empty($information->emp_type))
+                                                <div class="title">Emp Type:</div>
+                                                <div class="text">{{ $information->emp_type }}</div>
                                                 @else
-                                                <div class="title">State:</div>
+                                                <div class="title">Emp Type:</div>
                                                 <div class="text">N/A</div>
                                                 @endif
                                             </li>
-                                            @else
-                                            <li>
-                                                <div class="title">Email:</div>
-                                                <div class="text">N/A</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">Birthday:</div>
-                                                <div class="text">N/A</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">City:</div>
-                                                <div class="text">N/A</div>
-                                            </li>
-                                            <li>
-                                                <div class="title">State:</div>
-                                                <div class="text">N/A</div>
-                                            </li>
-                                            @endif
                                         </ul>
                                     </div>
                                 </div>
