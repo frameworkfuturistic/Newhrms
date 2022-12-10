@@ -161,7 +161,8 @@ class UserManagementController extends Controller
     public function addUserForm()
     {
         $state['data'] = MasterStates::orderby("state_id", "asc")->select('state_id', 'state_name')->get();
-        return view('usermanagement.add_user', compact('state'));
+        $personal_info = PersonalInformation::where("user_id", Auth::user()->id)->first();
+        return view('usermanagement.add_user', compact('state', 'personal_info'));
     }
 
     // Fetch designation name through Ajax
@@ -180,7 +181,7 @@ class UserManagementController extends Controller
     public function saveProfileData(Request $request)
     {
         $request->validate([
-            'aadhar_no' => 'nullable|unique:users',
+            'aadhar_no' => 'nullable|unique:personal_information',
             'aadhar_card' => 'nullable',
             'pan_no' => 'nullable',
             'pan_card' => 'nullable',
@@ -188,6 +189,8 @@ class UserManagementController extends Controller
             'passport' => 'nullable',
             'voter_id' => 'nullable',
             'uan' => 'nullable',
+            'uan_no_of_emp' => 'nullable|numeric',
+            'blood_group' => 'nullable',
             'present_state' => 'nullable',
             'present_city' => 'nullable',
             'present_pin' => 'nullable',
@@ -227,118 +230,8 @@ class UserManagementController extends Controller
         DB::beginTransaction();
         try {
             $personal_info = new PersonalInformation;
+
             $id = $request->user_id;
-            $personal_info->user_id = $request->user_id;
-
-            $aadhar_no = $request->aadhar_no;
-            $personal_info->aadhar_no = $request->aadhar_no;
-
-            if ($request->aadhar_no && $request->aadhar_card) {
-                $aadhar_card_image = $request->aadhar_no . '.' . $request->aadhar_card->extension();
-                $personal_info->aadhar_card = $request->aadhar_no . '.' . $request->aadhar_card->extension();
-                $request->aadhar_card->move(public_path('assets/User_aadhar_card'), $aadhar_card_image);
-            } else
-                $personal_info->aadhar_card = null;
-
-            $personal_info->pan_no = $request->pan_no;
-
-            if ($request->pan_no && $request->pan_card) {
-                $pan_card_image = $request->pan_no . '.' . $request->pan_card->extension();
-                $personal_info->pan_card = $request->pan_no . '.' . $request->pan_card->extension();
-                $request->pan_card->move(public_path('assets/User_pan_card'), $pan_card_image);
-            } else
-                $personal_info->pan_card = null;
-
-            if ($request->dl != null) {
-                $driving_licence_image = $id . '.' . $request->dl->extension();
-                $personal_info->driving_licence = $id . '.' . $request->dl->extension();
-                $request->dl->move(public_path('assets/User_driving_licence'), $driving_licence_image);
-            } else
-                $personal_info->driving_licence = null;
-
-            if ($request->passport != null) {
-                $passport_image = $id . '.' . $request->passport->extension();
-                $personal_info->passport = $id . '.' . $request->passport->extension();
-                $request->passport->move(public_path('assets/User_passport'), $passport_image);
-            } else
-                $personal_info->passport = null;
-
-            if ($request->voter_id != null) {
-                $voter_id_image = $id . '.' . $request->voter_id->extension();
-                $personal_info->voter_card = $id . '.' . $request->voter_id->extension();
-                $request->voter_id->move(public_path('assets/User_voter_id'), $voter_id_image);
-            } else
-                $personal_info->voter_card = null;
-
-            if ($request->uan != null) {
-                $uan_image = $id . '.' . $request->uan->extension();
-                $personal_info->uan_no = $id . '.' . $request->uan->extension();
-                $request->uan->move(public_path('assets/User_uan'), $uan_image);
-            } else
-                $personal_info->uan_no = null;
-
-            $personal_info->present_state = $request->present_state;
-            $personal_info->present_city = $request->present_city;
-            $personal_info->present_pin = $request->present_pin;
-            $personal_info->permanent_state = $request->permanent_state;
-            $personal_info->permanent_city = $request->permanent_city;
-            $personal_info->permanent_pin = $request->permanent_pin;
-            $personal_info->personal_contact = $request->personal_contact;
-            $personal_info->alternative_contact = $request->alternative_contact;
-            $personal_info->emergency_contact = $request->emergency_contact;
-            $personal_info->emerg_con_per_name = $request->emerg_con_per_name;
-            $personal_info->emerg_con_per_rel = $request->emerg_con_per_rel;
-            $personal_info->emerg_con_per_add = $request->emerg_con_per_add;
-            $personal_info->edu_qua_course_name = $request->edu_qua_course_name;
-            $personal_info->edu_qua_stream = $request->edu_qua_stream;
-            $personal_info->edu_qua_board = $request->edu_qua_board;
-            $personal_info->edu_qua_passing_year = $request->edu_qua_passing_year;
-            $personal_info->edu_qua_percentage = $request->edu_qua_percentage;
-
-            if ($request->edu_qua_certi_upload != null) {
-                $edu_qua_certi_image = $id . '.' . $request->edu_qua_certi_upload->extension();
-                $personal_info->edu_qua_certi_upload = $id . '.' . $request->edu_qua_certi_upload->extension();
-                $request->edu_qua_certi_upload->move(public_path('assets/User_edu_qua_certi'), $edu_qua_certi_image);
-            } else
-                $personal_info->edu_qua_certi_upload = null;
-
-            $personal_info->pro_qua_university_name = $request->pro_qua_university_name;
-            $personal_info->pro_qua_degree = $request->pro_qua_degree;
-            $personal_info->pro_qua_subject = $request->pro_qua_subject;
-            $personal_info->pro_qua_duration = $request->pro_qua_duration;
-
-            if ($request->pro_qua_ind_certi != null) {
-                $pro_qua_ind_certi_image = $id . '.' . $request->pro_qua_ind_certi->extension();
-                $personal_info->pro_qua_ind_certi = $id . '.' . $request->pro_qua_ind_certi->extension();
-                $request->pro_qua_ind_certi->move(public_path('assets/User_pro_qua_ind'), $pro_qua_ind_certi_image);
-            } else
-                $personal_info->pro_qua_ind_certi = null;
-
-            $personal_info->pro_qua_year = $request->pro_qua_year;
-            $personal_info->tech_skill = $request->skill_name;
-            $personal_info->skill_duration = $request->skill_duration;
-            $personal_info->organ_name = $request->organ_name;
-
-            if ($request->job_profile != null) {
-                $job_profile_image = $id . '.' . $request->job_profile->extension();
-                $personal_info->job_profile = $id . '.' . $request->job_profile->extension();
-                $request->job_profile->move(public_path('assets/User_job_profile'), $job_profile_image);
-            } else
-                $personal_info->job_profile = null;
-
-            $personal_info->organ_type = $request->organ_type;
-
-            if ($request->supp_doc_upload != null) {
-                $supp_doc_image = $id . '.' . $request->supp_doc_upload->extension();
-                $personal_info->supp_doc_upload = $id . '.' . $request->supp_doc_upload->extension();
-                $request->supp_doc_upload->move(public_path('assets/User_supp_doc'), $supp_doc_image);
-            } else
-                $personal_info->supp_doc_upload = null;
-
-            $personal_info->eff_from_date = $request->eff_from_date;
-            $personal_info->eff_to_date = $request->eff_to_date;
-            $personal_info->fam_relation = $request->fam_relation;
-            $personal_info->full_name = $request->full_name;
 
             // if ($request->dl != null) {
             //     $update_dl = ['driving_licence' => $driving_licence_image];
@@ -354,9 +247,399 @@ class UserManagementController extends Controller
             //     User::where('id', $id)->update($update_uan);
             // }
 
+            $personal_information = PersonalInformation::where("user_id", Auth::user()->id)->first();
 
 
-            $personal_info->save();
+
+            if ($request->aadhar_no == null && $personal_information->aadhar_no != null)
+                $aadhar_no = $personal_information->aadhar_no;
+            else
+                $aadhar_no = $request->aadhar_no;
+
+
+            if ($request->aadhar_card) {
+                $aadhar_card_img = $id . '.' . $request->aadhar_card->extension();
+                $request->aadhar_card->move(public_path('assets/User_aadhar_card'), $aadhar_card_img);
+            } else
+                $aadhar_card_img = null;
+
+            if ($request->aadhar_card == null && $personal_information->aadhar_card != null)
+                $aadhar_card_image = $personal_information->aadhar_card;
+            else
+                $aadhar_card_image = $aadhar_card_img;
+
+            if ($request->pan_no == null && $personal_information->pan_no != null)
+                $pan_no = $personal_information->pan_no;
+            else
+                $pan_no = $request->pan_no;
+
+
+            if ($request->pan_card) {
+                $pan_card_img = $id . '.' . $request->pan_card->extension();
+                $request->pan_card->move(public_path('assets/User_pan_card'), $pan_card_img);
+            } else
+                $pan_card_img = null;
+
+
+            if ($request->pan_card == null && $personal_information->pan_card != null)
+                $pan_card_image = $personal_information->pan_card;
+            else
+                $pan_card_image = $pan_card_img;
+
+            if ($request->dl != null) {
+                $driving_licence_img = $id . '.' . $request->dl->extension();
+                $request->dl->move(public_path('assets/User_driving_licence'), $driving_licence_img);
+            } else
+                $driving_licence_img = null;
+
+            if ($request->dl == null && $personal_information->driving_licence != null)
+                $driving_licence_image = $personal_information->driving_licence;
+            else
+                $driving_licence_image = $driving_licence_img;
+
+
+            if ($request->passport != null) {
+                $passport_img = $id . '.' . $request->passport->extension();
+                $request->passport->move(public_path('assets/User_passport'), $passport_img);
+            } else
+                $passport_img = null;
+
+            if ($request->passport == null && $personal_information->passport != null)
+                $passport_image = $personal_information->passport;
+            else
+                $passport_image = $passport_img;
+
+            if ($request->voter_id != null) {
+                $voter_id_img = $id . '.' . $request->voter_id->extension();
+                $request->voter_id->move(public_path('assets/User_voter_id'), $voter_id_img);
+            } else
+                $voter_id_img = null;
+
+            if ($request->voter_id == null && $personal_information->voter_card != null)
+                $voter_id_image = $personal_information->voter_card;
+            else
+                $voter_id_image = $voter_id_img;
+
+
+            if ($request->uan != null) {
+                $uan_img = $id . '.' . $request->uan->extension();
+                $request->uan->move(public_path('assets/User_uan'), $uan_img);
+            } else
+                $uan_img = null;
+
+            if ($request->uan == null && $personal_information->uan_no != null)
+                $uan_image = $personal_information->uan_no;
+            else
+                $uan_image = $uan_img;
+
+
+            if ($request->uan_no_of_emp == null && $personal_information->uan_no_of_emp != null)
+                $uan_no_of_emp = $personal_information->uan_no_of_emp;
+            else
+                $uan_no_of_emp = $request->uan_no_of_emp;
+
+            if ($request->blood_group == null && $personal_information->blood_group != null)
+                $blood_group = $personal_information->blood_group;
+            else
+                $blood_group = $request->blood_group;
+
+            if ($request->present_city == null && $personal_information->present_city != null)
+                $present_city = $personal_information->present_city;
+            else
+                $present_city = $request->present_city;
+
+
+            if ($request->present_state == null && $personal_information->present_state != null)
+                $present_state = $personal_information->present_state;
+            else
+                $present_state = $request->present_state;
+
+            if ($request->present_pin == null && $personal_information->present_pin != null)
+                $present_pin = $personal_information->present_pin;
+            else
+                $present_pin = $request->present_pin;
+
+            if ($request->permanent_city == null && $personal_information->permanent_city != null)
+                $permanent_city = $personal_information->permanent_city;
+            else
+                $permanent_city = $request->permanent_city;
+
+            if ($request->permanent_state == null && $personal_information->permanent_state != null)
+                $permanent_state = $personal_information->permanent_state;
+            else
+                $permanent_state = $request->permanent_state;
+
+            if ($request->permanent_pin == null && $personal_information->permanent_pin != null)
+                $permanent_pin = $personal_information->permanent_pin;
+            else
+                $permanent_pin = $request->permanent_pin;
+
+            if ($request->personal_contact == null && $personal_information->personal_contact != null)
+                $personal_contact = $personal_information->personal_contact;
+            else
+                $personal_contact = $request->personal_contact;
+
+            if ($request->alternative_contact == null && $personal_information->alternative_contact != null)
+                $alternative_contact = $personal_information->alternative_contact;
+            else
+                $alternative_contact = $request->alternative_contact;
+
+            if ($request->emergency_contact == null && $personal_information->emergency_contact != null)
+                $emergency_contact = $personal_information->emergency_contact;
+            else
+                $emergency_contact = $request->emergency_contact;
+
+            if ($request->emerg_con_per_name == null && $personal_information->emerg_con_per_name != null)
+                $emerg_con_per_name = $personal_information->emerg_con_per_name;
+            else
+                $emerg_con_per_name = $request->emerg_con_per_name;
+
+            if ($request->emerg_con_per_rel == null && $personal_information->emerg_con_per_rel != null)
+                $emerg_con_per_rel = $personal_information->emerg_con_per_rel;
+            else
+                $emerg_con_per_rel = $request->emerg_con_per_rel;
+
+            if ($request->emerg_con_per_add == null && $personal_information->emerg_con_per_add != null)
+                $emerg_con_per_add = $personal_information->emerg_con_per_add;
+            else
+                $emerg_con_per_add = $request->emerg_con_per_add;
+
+            if ($request->edu_qua_course_name == null && $personal_information->edu_qua_course_name != null)
+                $edu_qua_course_name = $personal_information->edu_qua_course_name;
+            else
+                $edu_qua_course_name = $request->edu_qua_course_name;
+
+            if ($request->edu_qua_stream == null && $personal_information->edu_qua_stream != null)
+                $edu_qua_stream = $personal_information->edu_qua_stream;
+            else
+                $edu_qua_stream = $request->edu_qua_stream;
+
+            if ($request->edu_qua_board == null && $personal_information->edu_qua_board != null)
+                $edu_qua_board = $personal_information->edu_qua_board;
+            else
+                $edu_qua_board = $request->edu_qua_board;
+
+            if ($request->edu_qua_passing_year == null && $personal_information->edu_qua_passing_year != null)
+                $edu_qua_passing_year = $personal_information->edu_qua_passing_year;
+            else
+                $edu_qua_passing_year = $request->edu_qua_passing_year;
+
+            if ($request->edu_qua_percentage == null && $personal_information->edu_qua_percentage != null)
+                $edu_qua_percentage = $personal_information->edu_qua_percentage;
+            else
+                $edu_qua_percentage = $request->edu_qua_percentage;
+
+
+            if ($request->edu_qua_certi_upload != null) {
+                $edu_qua_certi_img = $id . '.' . $request->edu_qua_certi_upload->extension();
+                $request->edu_qua_certi_upload->move(public_path('assets/User_edu_qua_certi'), $edu_qua_certi_img);
+            } else
+                $edu_qua_certi_img = null;
+
+
+            if ($request->edu_qua_certi_upload == null && $personal_information->edu_qua_certi_upload != null)
+                $edu_qua_certi_image = $personal_information->edu_qua_certi_upload;
+            else
+                $edu_qua_certi_image = $edu_qua_certi_img;
+
+
+            if ($request->pro_qua_university_name == null && $personal_information->pro_qua_university_name != null)
+                $pro_qua_university_name = $personal_information->pro_qua_university_name;
+            else
+                $pro_qua_university_name = $request->pro_qua_university_name;
+
+            if ($request->pro_qua_degree == null && $personal_information->pro_qua_degree != null)
+                $pro_qua_degree = $personal_information->pro_qua_degree;
+            else
+                $pro_qua_degree = $request->pro_qua_degree;
+
+            if ($request->pro_qua_subject == null && $personal_information->pro_qua_subject != null)
+                $pro_qua_subject = $personal_information->pro_qua_subject;
+            else
+                $pro_qua_subject = $request->pro_qua_subject;
+
+            if ($request->pro_qua_duration == null && $personal_information->pro_qua_duration != null)
+                $pro_qua_duration = $personal_information->pro_qua_duration;
+            else
+                $pro_qua_duration = $request->pro_qua_duration;
+
+            if ($request->pro_qua_year == null && $personal_information->pro_qua_year != null)
+                $pro_qua_year = $personal_information->pro_qua_year;
+            else
+                $pro_qua_year = $request->pro_qua_year;
+
+            if ($request->pro_qua_ind_certi != null) {
+                $pro_qua_ind_certi_img = $id . '.' . $request->pro_qua_ind_certi->extension();
+                $request->pro_qua_ind_certi->move(public_path('assets/User_pro_qua_ind'), $pro_qua_ind_certi_img);
+            } else
+                $pro_qua_ind_certi_img = null;
+
+            if ($request->pro_qua_ind_certi == null && $personal_information->pro_qua_ind_certi != null)
+                $pro_qua_ind_certi_image = $personal_information->pro_qua_ind_certi;
+            else
+                $pro_qua_ind_certi_image = $pro_qua_ind_certi_img;
+
+            if ($request->skill_name == null && $personal_information->tech_skill != null)
+                $skill_name = $personal_information->tech_skill;
+            else
+                $skill_name = $request->skill_name;
+
+            if ($request->skill_duration == null && $personal_information->skill_duration != null)
+                $skill_duration = $personal_information->skill_duration;
+            else
+                $skill_duration = $request->skill_duration;
+
+            if ($request->organ_name == null && $personal_information->organ_name != null)
+                $organ_name = $personal_information->organ_name;
+            else
+                $organ_name = $request->organ_name;
+
+            if ($request->job_profile != null) {
+                $job_profile_img = $id . '.' . $request->job_profile->extension();
+                $request->job_profile->move(public_path('assets/User_job_profile'), $job_profile_img);
+            } else
+                $job_profile_img = null;
+
+            if ($request->job_profile == null && $personal_information->job_profile != null)
+                $job_profile_image = $personal_information->job_profile;
+            else
+                $job_profile_image = $job_profile_img;
+
+            if ($request->organ_type == null && $personal_information->organ_type != null)
+                $organ_type = $personal_information->organ_type;
+            else
+                $organ_type = $request->organ_type;
+
+            if ($request->supp_doc_upload != null) {
+                $supp_doc_img = $id . '.' . $request->supp_doc_upload->extension();
+                $request->supp_doc_upload->move(public_path('assets/User_supp_doc'), $supp_doc_img);
+            } else
+                $supp_doc_img = null;
+
+            if ($request->supp_doc_upload == null && $personal_information->supp_doc_upload != null)
+                $supp_doc_image = $personal_information->supp_doc_upload;
+            else
+                $supp_doc_image = $supp_doc_img;
+
+            if ($request->eff_from_date == null && $personal_information->eff_from_date != null)
+                $eff_from_date = $personal_information->eff_from_date;
+            else
+                $eff_from_date = $request->eff_from_date;
+
+            if ($request->eff_to_date == null && $personal_information->eff_to_date != null)
+                $eff_to_date = $personal_information->eff_to_date;
+            else
+                $eff_to_date = $request->eff_to_date;
+
+            if ($request->fam_relation == null && $personal_information->fam_relation != null)
+                $fam_relation = $personal_information->fam_relation;
+            else
+                $fam_relation = $request->fam_relation;
+
+            if ($request->full_name == null && $personal_information->full_name != null)
+                $full_name = $personal_information->full_name;
+            else
+                $full_name = $request->full_name;
+
+            $personal_information = PersonalInformation::where('user_id', request('user_id'))->first();
+            if ($personal_information !== null) {
+                $personal_information->update([
+                    'aadhar_card' => $aadhar_card_image,
+                    'aadhar_no' => $aadhar_no,
+                    'pan_no' => $pan_no,
+                    'pan_card' => $pan_card_image,
+                    'driving_licence' => $driving_licence_image,
+                    'passport' => $passport_image,
+                    'voter_card' => $voter_id_image,
+                    'uan_no' => $uan_image,
+                    'uan_no_of_emp' => $uan_no_of_emp,
+                    'blood_group' => $blood_group,
+                    'present_city' => $present_city,
+                    'present_state' => $present_state,
+                    'present_pin' => $present_pin,
+                    'permanent_city' => $permanent_city,
+                    'permanent_state' => $permanent_state,
+                    'permanent_pin' => $permanent_pin,
+                    'personal_contact' => $personal_contact,
+                    'alternative_contact' => $alternative_contact,
+                    'emergency_contact' => $emergency_contact,
+                    'emerg_con_per_name' => $emerg_con_per_name,
+                    'emerg_con_per_rel' => $emerg_con_per_rel,
+                    'emerg_con_per_add' => $emerg_con_per_add,
+                    'edu_qua_course_name' => $edu_qua_course_name,
+                    'edu_qua_stream' => $edu_qua_stream,
+                    'edu_qua_board' => $edu_qua_board,
+                    'edu_qua_passing_year' => $edu_qua_passing_year,
+                    'edu_qua_percentage' => $edu_qua_percentage,
+                    'edu_qua_certi_upload' => $edu_qua_certi_image,
+                    'pro_qua_university_name' => $pro_qua_university_name,
+                    'pro_qua_degree' => $pro_qua_degree,
+                    'pro_qua_subject' => $pro_qua_subject,
+                    'pro_qua_duration' => $pro_qua_duration,
+                    'pro_qua_year' => $pro_qua_year,
+                    'pro_qua_ind_certi' => $pro_qua_ind_certi_image,
+                    'tech_skill' => $skill_name,
+                    'skill_duration' => $skill_duration,
+                    'organ_name' => $organ_name,
+                    'job_profile' => $job_profile_image,
+                    'organ_type' => $organ_type,
+                    'supp_doc_upload' => $supp_doc_image,
+                    'eff_from_date' => $eff_from_date,
+                    'eff_to_date' => $eff_to_date,
+                    'fam_relation' => $fam_relation,
+                    'full_name' => $full_name
+                ]);
+            } else {
+                $user = PersonalInformation::create([
+                    'user_id' => request('user_id'),
+                    'aadhar_card' => $aadhar_card_image,
+                    'aadhar_no' => $aadhar_no,
+                    'pan_no' => $pan_no,
+                    'pan_card' => $pan_card_image,
+                    'driving_licence' => $driving_licence_image,
+                    'passport' => $passport_image,
+                    'voter_card' => $voter_id_image,
+                    'uan_no' => $uan_image,
+                    'uan_no_of_emp' => $uan_no_of_emp,
+                    'blood_group' => $blood_group,
+                    'present_city' => $present_city,
+                    'present_state' => $present_state,
+                    'present_pin' => $present_pin,
+                    'permanent_city' => $permanent_city,
+                    'permanent_state' => $permanent_state,
+                    'permanent_pin' => $permanent_pin,
+                    'personal_contact' => $personal_contact,
+                    'alternative_contact' => $alternative_contact,
+                    'emergency_contact' => $emergency_contact,
+                    'emerg_con_per_name' => $emerg_con_per_name,
+                    'emerg_con_per_rel' => $emerg_con_per_rel,
+                    'emerg_con_per_add' => $emerg_con_per_add,
+                    'edu_qua_course_name' => $edu_qua_course_name,
+                    'edu_qua_stream' => $edu_qua_stream,
+                    'edu_qua_board' => $edu_qua_board,
+                    'edu_qua_passing_year' => $edu_qua_passing_year,
+                    'edu_qua_percentage' => $edu_qua_percentage,
+                    'edu_qua_certi_upload' => $edu_qua_certi_image,
+                    'pro_qua_university_name' => $pro_qua_university_name,
+                    'pro_qua_degree' => $pro_qua_degree,
+                    'pro_qua_subject' => $pro_qua_subject,
+                    'pro_qua_duration' => $pro_qua_duration,
+                    'pro_qua_year' => $pro_qua_year,
+                    'pro_qua_ind_certi' => $pro_qua_ind_certi_image,
+                    'tech_skill' => $skill_name,
+                    'skill_duration' => $skill_duration,
+                    'organ_name' => $organ_name,
+                    'job_profile' => $job_profile_image,
+                    'organ_type' => $organ_type,
+                    'supp_doc_upload' => $supp_doc_image,
+                    'eff_from_date' => $eff_from_date,
+                    'eff_to_date' => $eff_to_date,
+                    'fam_relation' => $fam_relation,
+                    'full_name' => $full_name
+
+                ]);
+            }
+
             DB::commit();
             return back()->with(Toastr::success('Profile Information Saved successfully :)', 'Success'));
         } catch (\Exception $e) {
@@ -401,7 +684,7 @@ class UserManagementController extends Controller
         $user = Session::get('user');
         $profile = $user->id;
         $reporting_auth = Auth::user()->reporting_authority;
-        $reporting_auth_name = DB::select("SELECT name,emp_id from users where id = $reporting_auth");
+        $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
 
         $user = DB::table('users')
             ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')

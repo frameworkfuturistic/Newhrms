@@ -55,8 +55,8 @@
 			<div class="header-left">
 				<a href="{{ route('home') }}" class="logo">
 					<img src="{{ URL::to('assets/img/logo.png') }}" width="40" height="40" alt="">
-					<span style="color:azure;  font-size: 25px; font-weight: 900;">HRMS</span>
 				</a>
+				<span style="color:azure;  font-size: 25px; font-weight: 900;">HRMS</span>
 			</div>
 			<!-- /Logo -->
 			<a id="toggle_btn" href="javascript:void(0);">
@@ -72,7 +72,21 @@
 			<ul class="nav user-menu">
 				<li class="nav-item dropdown">
 					<div class="float-right mt-200">
-						<a href="#" class="btn add-btn" data-toggle="modal" data-target="#view_levelwise"><i class="fa fa-eye"></i> View Levelwise</a>
+						<!-- <a href="#" class="btn add-btn" data-toggle="modal" data-target="#view_levelwise"><i class="fa fa-eye"></i> View Levelwise</a> -->
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								View Levelwise
+							</button>
+							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+								<form action="/change-levelwise-data" method="POST">
+									@csrf
+									<button type="submit" class="dropdown-item" name="level_type" value="1">All Level</button>
+									<button type="submit" class="dropdown-item" name="level_type" value="2">SPRC</button>
+									<button type="submit" class="dropdown-item" name="level_type" value="3">DPRC</button>
+									<button type="submit" class="dropdown-item" name="level_type" value="4">Block Level</button>
+								</form>
+							</div>
+						</div>
 					</div>
 				</li>
 				<!-- Notifications -->
@@ -213,7 +227,7 @@
 						</li>
 						<li class="submenu">
 							<a href="#" class="@yield('editle_noti_dot')">
-								<i class="fa fa-calendar-minus-o fa-2x" style="font-size: 18px;" aria-hidden="true"></i>
+								<i class="la la-calendar" aria-hidden="true"></i>
 								<span> Leave</span>
 								<span class="menu-arrow"></span>
 							</a>
@@ -249,7 +263,7 @@
 								<li><a class="@yield('daily_active')" href="{{ route('form/daily/reports/page') }}"> Daily Report </a></li>
 							</ul>
 						</li>
-						<li class="submenu"> <a href="#" class="@yield('masters_noti')"><i class="la la-pie-chart"></i>
+						<li class="submenu"> <a href="#" class="@yield('masters_noti')"><i class="la la-table"></i>
 								<span> Master Tables </span> <span class="menu-arrow"></span></a>
 							<ul style="display: none;">
 								<li><a class="@yield('allowance_active')" href="{{ route('masters/allowanceMaster') }}"> Allowance Master </a></li>
@@ -268,38 +282,6 @@
 		<!-- /Sidebar -->
 		<!-- Page Wrapper -->
 
-		<!-- view levelwise Modal -->
-		<div id="view_levelwise" class="modal custom-modal fade" role="dialog">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title">View Levelwise</h5>
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						<form action="/change-levelwise-data" method="POST">
-							@csrf
-							<div class="form-group">
-								<label>Select Level<span class="text-danger">*</span></label>
-								<select class="select" name="level_type">
-									<option selected disabled>Select Level Type</option>
-									<option value="1">All Level</option>
-									<option value="2">SPRC</option>
-									<option value="3">DPRC</option>
-									<option value="4">Block Level</option>
-								</select>
-							</div>
-							<div class="submit-section">
-								<button type="submit" class="btn btn-primary submit-btn">Submit</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /view levelwise Modal -->
 
 		@yield('content')
 		<!-- /Page Wrapper -->

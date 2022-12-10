@@ -111,7 +111,7 @@ noti-dot
             </div>
         </div>
 
-        <div class="card tab-box">
+        <!-- <div class="card tab-box">
             <div class="row user-tabs">
                 <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                     <ul class="nav nav-tabs nav-tabs-bottom">
@@ -121,7 +121,7 @@ noti-dot
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="tab-content">
             <!-- Profile Info Tab -->

@@ -15,7 +15,7 @@ class CreatePersonalInformationTable extends Migration
     {
         Schema::create('personal_information', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
+            $table->string('user_id')->nullable();
             $table->string('aadhar_no')->nullable();
             $table->string('aadhar_card')->nullable();
             $table->string('pan_no')->nullable();
@@ -24,6 +24,8 @@ class CreatePersonalInformationTable extends Migration
             $table->string('passport')->nullable();
             $table->string('voter_card')->nullable();
             $table->string('uan_no')->nullable();
+            $table->string('uan_no_of_emp')->nullable();
+            $table->string('blood_group')->nullable();
             $table->string('present_city')->nullable();
             $table->string('present_state')->nullable();
             $table->string('present_pin')->nullable();

@@ -72,7 +72,7 @@ active
                             <form action="user-profile/save" method="POST" enctype="multipart/form-data">
                                 @method('POST')
                                 @csrf
-                                
+
                                 <div class="tab-content mb-0 pt-0">
                                     <!-- START: Define your progress bar here -->
                                     <div id="bar" class="progress mb-3" style="height: 7px;">
@@ -87,14 +87,14 @@ active
 
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Aadhar No.<span class="required">*</span></label>
+                                                    <label>Aadhar No.</label>
                                                     <input class="form-control @error('aadhar_no') is-invalid @enderror" type="text" id="" name="aadhar_no" value="{{ old('aadhar_no') }}" placeholder="Enter Aadhar Number">
                                                 </div>
                                                 <div class="alert-danger">@error('aadhar_no'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Aadhar Card<span class="required">*</span></label>
+                                                    <label>Aadhar Card</label>
                                                     <input class="form-control @error('aadhar_card') is-invalid @enderror" type="file" id="" name="aadhar_card" value="{{ old('aadhar_card') }}">
                                                 </div>
                                                 <div class="alert-danger">@error('aadhar_card'){{ $message }}@enderror</div>
@@ -103,14 +103,14 @@ active
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label>PAN No.<span class="required">*</span></label>
+                                                    <label>PAN No.</label>
                                                     <input class="form-control @error('pan_no') is-invalid @enderror" type="text" id="" name="pan_no" value="{{ old('pan_no') }}" placeholder="Enter PAN Number">
                                                 </div>
                                                 <div class="alert-danger">@error('pan_no'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label>PAN Card<span class="required">*</span></label>
+                                                    <label>PAN Card</label>
                                                     <input class="form-control @error('pan_card') is-invalid @enderror" type="file" id="" name="pan_card">
                                                 </div>
                                                 <div class="alert-danger">@error('pan_card'){{ $message }}@enderror</div>
@@ -133,8 +133,30 @@ active
                                                 <input class="form-control" type="file" id="" name="voter_id">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label>UAN No.</label>
+                                                <label>UAN Document</label>
                                                 <input class="form-control" type="file" id="" name="uan">
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>UAN No.</label>
+                                                <input class="form-control" type="text" id="" name="uan_no_of_emp" value="{{ old('uan_no_of_emp') }}" placeholder="Enter UAN Number">
+                                                <div class="alert-danger">@error('uan_no_of_emp'){{ $message }}@enderror</div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>Blood Group</label>
+                                                <select class="select" name="blood_group" id="blood_group">
+                                                    <option selected disabled> --Select --</option>
+                                                    <option value="A-">A-</option>
+                                                    <option value="A+">A+</option>
+                                                    <option value="B-">B-</option>
+                                                    <option value="B+">B+</option>
+                                                    <option value="AB-">AB-</option>
+                                                    <option value="AB+">AB+</option>
+                                                    <option value="O+">O+</option>
+                                                    <option value="O-">O-</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -143,7 +165,7 @@ active
                                         <h4 class="mb-3 mt-0"><u>Present Address</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>State<span class="required">*</span></label>
+                                                <label>State</label>
                                                 <select class="select" name="present_state" id="present_state">
                                                     <option selected disabled> --Select --</option>
                                                     @foreach($state['data'] as $st)
@@ -153,12 +175,12 @@ active
                                                 <div class="alert-danger">@error('present_state'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>City<span class="required">*</span></label>
+                                                <label>City</label>
                                                 <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('present_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>PIN Code<span class="required">*</span></label>
+                                                <label>PIN Code</label>
                                                 <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('present_pin'){{ $message }}@enderror</div>
                                             </div>
@@ -167,7 +189,7 @@ active
                                         <h4 class="mb-3 mt-0"><u>Permanent Address</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>State<span class="required">*</span></label>
+                                                <label>State</label>
                                                 <select class="select" name="permanent_state" id="">
                                                     <option selected disabled> --Select --</option>
                                                     @foreach($state['data'] as $st)
@@ -177,12 +199,12 @@ active
                                                 <div class="alert-danger">@error('permanent_state'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>City<span class="required">*</span></label>
+                                                <label>City</label>
                                                 <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="" name="permanent_city" value="{{ old('permanent_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('permanent_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>PIN Code<span class="required">*</span></label>
+                                                <label>PIN Code</label>
                                                 <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="" name="permanent_pin" value="{{ old('permanent_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('permanent_pin'){{ $message }}@enderror</div>
                                             </div>
@@ -190,17 +212,17 @@ active
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <div>Personal Contact Number<span class="required">*</span></div>
+                                                <div>Personal Contact Number</div>
                                                 <input class="form-control" type="text" id="" name="personal_contact" placeholder="Enter Personal Contact Number">
                                                 <div class="alert-danger">@error('personal_contact'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <div>Alternative Contact Number<span class="required">*</span></div>
+                                                <div>Alternative Contact Number</div>
                                                 <input class="form-control" type="text" id="" name="alternative_contact" placeholder="Enter Alternative Contact Number">
                                                 <div class="alert-danger">@error('alternative_contact'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <div>Emergency Contact Number<span class="required">*</span></div>
+                                                <div>Emergency Contact Number</div>
                                                 <input class="form-control" type="text" id="" name="emergency_contact" placeholder="Enter Emergency Contact Number">
                                                 <div class="alert-danger">@error('emergency_contact'){{ $message }}@enderror</div>
                                             </div>
@@ -208,17 +230,17 @@ active
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <div>Emergency Contact Person Name<span class="required">*</span></div>
+                                                <div>Emergency Contact Person Name</div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_name" placeholder="Enter Emergency Contact Person Name">
                                                 <div class="alert-danger">@error('emerg_con_per_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <div>Emergency Contact Person Relation<span class="required">*</span></div>
+                                                <div>Emergency Contact Person Relation</div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_rel" placeholder="Enter Emergency Contact Person Relation">
                                                 <div class="alert-danger">@error('emerg_con_per_rel'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <div>Emergency Contact Person Address<span class="required">*</span></div>
+                                                <div>Emergency Contact Person Address</div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_add" placeholder="Enter Emergency Contact Person Address">
                                                 <div class="alert-danger">@error('emerg_con_per_add'){{ $message }}@enderror</div>
                                             </div>
@@ -229,17 +251,17 @@ active
                                         <h4 class="mb-3 mt-0"><u>Education Qualification Details</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Course Name<span class="required">*</span></label>
+                                                <label>Course Name</label>
                                                 <input class="form-control" type="text" id="" name="edu_qua_course_name" placeholder="Enter Course Name">
                                                 <div class="alert-danger">@error('edu_qua_course_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Stream<span class="required">*</span></label>
+                                                <label>Stream</label>
                                                 <input class="form-control" type="text" id="stream" name="edu_qua_stream" placeholder="Enter Stream">
                                                 <div class="alert-danger">@error('edu_qua_stream'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Board<span class="required">*</span></label>
+                                                <label>Board</label>
                                                 <input class="form-control" type="text" id="" name="edu_qua_board" placeholder="Enter Board Name">
                                                 <div class="alert-danger">@error('edu_qua_board'){{ $message }}@enderror</div>
                                             </div>
@@ -247,17 +269,17 @@ active
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Passing Year<span class="required">*</span></label>
+                                                <label>Passing Year</label>
                                                 <input class="form-control" type="number" id="" name="edu_qua_passing_year" placeholder="YYYY" min="1940" max="2060">
                                                 <div class="alert-danger">@error('edu_qua_passing_year'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Percentage/ GPA<span class="required">*</span></label>
+                                                <label>Percentage/ GPA</label>
                                                 <input class="form-control" type="text" id="" name="edu_qua_percentage" placeholder="Enter Percentage/ GPA">
                                                 <div class="alert-danger">@error('edu_qua_percentage'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Certificate Upload<span class="required">*</span></label>
+                                                <label>Certificate Upload</label>
                                                 <input class="form-control" type="file" id="" name="edu_qua_certi_upload" placeholder="Enter Percentage/ GPA">
                                                 <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
                                             </div>
@@ -266,17 +288,17 @@ active
                                         <h4 class="mb-3 mt-0"><u>Professional Qualification Details</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Institution/ University Name<span class="required">*</span></label>
+                                                <label>Institution/ University Name</label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_university_name" placeholder="Enter University Name">
                                                 <div class="alert-danger">@error('pro_qua_university_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Degree/ Diploma<span class="required">*</span></label>
+                                                <label>Degree/ Diploma</label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_degree" placeholder="Enter degree/ Diploma">
                                                 <div class="alert-danger">@error('pro_qua_degree'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Subject/ Courses<span class="required">*</span></label>
+                                                <label>Subject/ Courses</label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_subject" placeholder="Enter Subject/ Courses">
                                                 <div class="alert-danger">@error('pro_qua_subject'){{ $message }}@enderror</div>
                                             </div>
@@ -285,17 +307,17 @@ active
                                         <div class="row">
 
                                             <div class="col-sm-4">
-                                                <label>Duration<span class="required">*</span></label>
+                                                <label>Duration</label>
                                                 <input class="form-control" type="text" id="" name="pro_qua_duration" placeholder="Enter Course Duration">
                                                 <div class="alert-danger">@error('pro_qua_duration'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Industry Certification<span class="required">*</span></label>
+                                                <label>Industry Certification</label>
                                                 <input class="form-control" type="file" id="" name="pro_qua_ind_certi" />
                                                 <div class="alert-danger">@error('pro_qua_ind_certi'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Year Of Passing<span class="required">*</span></label>
+                                                <label>Year Of Passing</label>
                                                 <input class="form-control" type="number" id="" name="pro_qua_year" placeholder="YYYY" min="1940" max="2060">
                                                 <div class="alert-danger">@error('pro_qua_year'){{ $message }}@enderror</div>
                                             </div>
@@ -305,12 +327,12 @@ active
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Skill Name<span class="required">*</span></label>
+                                                <label>Skill Name</label>
                                                 <input class="form-control" type="text" id="" name="skill_name" placeholder="Enter Skills Name" />
                                                 <div class="alert-danger">@error('skill_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Duration<span class="required">*</span></label>
+                                                <label>Duration</label>
                                                 <input class="form-control" type="text" id="" name="skill_duration" placeholder="Enter Duration" />
                                                 <div class="alert-danger">@error('skill_duration'){{ $message }}@enderror</div>
                                             </div>
@@ -320,17 +342,17 @@ active
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Organisation Name<span class="required">*</span></label>
+                                                <label>Organisation Name</label>
                                                 <input class="form-control" type="text" id="" name="organ_name" placeholder="Enter Organisation Name" />
                                                 <div class="alert-danger">@error('organ_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Job Profile<span class="required">*</span></label>
+                                                <label>Job Profile</label>
                                                 <input class="form-control" type="file" id="" name="job_profile" />
                                                 <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Organisation Type<span class="required">*</span></label>
+                                                <label>Organisation Type</label>
                                                 <select class="select" name="organ_type" id="">
                                                     <option selected disabled> --Select --</option>
                                                     <option value="Government">Government</option>
@@ -342,17 +364,17 @@ active
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Supporting Document Upload<span class="required">*</span></label>
+                                                <label>Supporting Document Upload</label>
                                                 <input class="form-control" type="file" id="" name="supp_doc_upload" />
                                                 <div class="alert-danger">@error('supp_doc_upload'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Effective From Date<span class="required">*</span></label>
+                                                <label>Effective From Date</label>
                                                 <input class="form-control" type="date" id="" name="eff_from_date" />
                                                 <div class="alert-danger">@error('eff_from_date'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Effective To Date<span class="required">*</span></label>
+                                                <label>Effective To Date</label>
                                                 <input class="form-control" type="date" id="" name="eff_to_date" />
                                                 <div class="alert-danger">@error('eff_to_date'){{ $message }}@enderror</div>
                                             </div>
@@ -364,12 +386,12 @@ active
                                         <h4 class="mb-3 mt-0"><u>Family Information</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Relation<span class="required">*</span></label>
+                                                <label>Relation</label>
                                                 <input class="form-control" type="text" id="" name="fam_relation" placeholder="Enter relation">
                                                 <div class="alert-danger">@error('fam_relation'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Full Name<span class="required">*</span></label>
+                                                <label>Full Name</label>
                                                 <input class="form-control" type="text" id="" name="full_name" placeholder="Enter Full Name">
                                                 <div class="alert-danger">@error('full_name'){{ $message }}@enderror</div>
                                             </div>
