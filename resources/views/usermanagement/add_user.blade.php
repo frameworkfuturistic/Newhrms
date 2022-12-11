@@ -221,14 +221,15 @@ active
                                                 <input class="form-control" type="text" id="" name="alternative_contact" placeholder="Enter Alternative Contact Number">
                                                 <div class="alert-danger">@error('alternative_contact'){{ $message }}@enderror</div>
                                             </div>
+                                        </div>
+                                        <br />
+                                        <h4 class="mb-3 mt-0"><u>Emergency Contact Details</u></h4>
+                                        <div class="row">
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Number</div>
                                                 <input class="form-control" type="text" id="" name="emergency_contact" placeholder="Enter Emergency Contact Number">
                                                 <div class="alert-danger">@error('emergency_contact'){{ $message }}@enderror</div>
                                             </div>
-                                        </div>
-                                        <br />
-                                        <div class="row">
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Name</div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_name" placeholder="Enter Emergency Contact Person Name">
@@ -239,6 +240,9 @@ active
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_rel" placeholder="Enter Emergency Contact Person Relation">
                                                 <div class="alert-danger">@error('emerg_con_per_rel'){{ $message }}@enderror</div>
                                             </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Address</div>
                                                 <input class="form-control" type="text" id="" name="emerg_con_per_add" placeholder="Enter Emergency Contact Person Address">
@@ -408,22 +412,23 @@ active
                                     <!-- START: Define your controller buttons here-->
                                     <div class="d-flex wizard justify-content-between mt-3">
                                         <div class="first">
-                                            <a href="javascript:void(0);" class="btn btn-primary">
+                                            <a href="javascript:void(0);" class="btn btn-primary mt-3 mt-md-0">
                                                 First
                                             </a>
-                                        </div>
+                                        </div>&nbsp;
                                         <div class="d-flex">
-                                            <div class="previous me-2">
-                                                <a href="javascript:void(0);" class="btn icon-btn btn-primary">
+                                            <span class="previous me-2">
+                                                <a href="javascript:void(0);" class="btn icon-btn btn-primary mt-3 mt-md-0">
                                                     <i class="bx bx-left-arrow-alt me-2"></i>Back To Previous
                                                 </a>
-                                            </div>
-                                            <div class="next">
+                                            </span>
+                                            &nbsp;&nbsp;
+                                            <span class="next">
                                                 <a href="javascript:void(0);" class="btn icon-btn btn-primary mt-3 mt-md-0">
                                                     Next Step<i class="bx bx-right-arrow-alt ms-2"></i>
                                                 </a>
-                                            </div>
-                                        </div>
+                                            </span>
+                                        </div>&nbsp;
                                         <div class="last">
                                             <a href="javascript:void(0);" class="btn btn-primary mt-3 mt-md-0">
                                                 Finish
