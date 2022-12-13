@@ -22,6 +22,7 @@ class CreateMasterDistrictsTable extends Migration
             $table->boolean('discontinued')->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**

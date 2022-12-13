@@ -224,7 +224,18 @@ class UserManagementController extends Controller
             'eff_from_date' => 'nullable',
             'eff_to_date' => 'nullable',
             'fam_relation' => 'nullable',
-            'full_name' => 'nullable'
+            'full_name' => 'nullable',
+            'fam_age ' => 'nullable',
+            'present_address_one' => 'nullable',
+            'present_address_two' => 'nullable',
+            'permanent_address_two' => 'nullable',
+            ' permanent_address_one' => 'nullable',
+            'account_holder_name' => 'nullable',
+            'account_type' => 'nullable',
+            'bank_ifsc' => 'nullable',
+            'name_of_bank' => 'nullable'
+
+
         ]);
 
         DB::beginTransaction();
@@ -249,11 +260,9 @@ class UserManagementController extends Controller
 
             $personal_information = PersonalInformation::where("user_id", Auth::user()->id)->first();
 
-
-
-            if ($request->aadhar_no == null && $personal_information->aadhar_no != null)
-                $aadhar_no = $personal_information->aadhar_no;
-            else
+            if ($request->aadhar_no != null && $personal_information->aadhar_no == null)
+                $aadhar_no = $request->aadhar_no;
+            else if ($request->aadhar_no != null && $personal_information->aadhar_no != null)
                 $aadhar_no = $request->aadhar_no;
 
 
@@ -263,14 +272,14 @@ class UserManagementController extends Controller
             } else
                 $aadhar_card_img = null;
 
-            if ($request->aadhar_card == null && $personal_information->aadhar_card != null)
-                $aadhar_card_image = $personal_information->aadhar_card;
-            else
+            if ($request->aadhar_card != null && $personal_information->aadhar_card == null)
+                $aadhar_card_image = $aadhar_card_img;
+            else if ($request->aadhar_card != null && $personal_information->aadhar_card != null)
                 $aadhar_card_image = $aadhar_card_img;
 
-            if ($request->pan_no == null && $personal_information->pan_no != null)
-                $pan_no = $personal_information->pan_no;
-            else
+            if ($request->pan_no != null && $personal_information->pan_no == null)
+                $pan_no = $request->pan_no;
+            else if ($request->pan_no != null && $personal_information->pan_no != null)
                 $pan_no = $request->pan_no;
 
 
@@ -281,9 +290,9 @@ class UserManagementController extends Controller
                 $pan_card_img = null;
 
 
-            if ($request->pan_card == null && $personal_information->pan_card != null)
-                $pan_card_image = $personal_information->pan_card;
-            else
+            if ($request->pan_card != null && $personal_information->pan_card == null)
+                $pan_card_image = $pan_card_img;
+            else if ($request->pan_card != null && $personal_information->pan_card != null)
                 $pan_card_image = $pan_card_img;
 
             if ($request->dl != null) {
@@ -292,9 +301,9 @@ class UserManagementController extends Controller
             } else
                 $driving_licence_img = null;
 
-            if ($request->dl == null && $personal_information->driving_licence != null)
-                $driving_licence_image = $personal_information->driving_licence;
-            else
+            if ($request->dl != null && $personal_information->driving_licence == null)
+                $driving_licence_image = $driving_licence_img;
+            else if ($request->dl != null && $personal_information->driving_licence != null)
                 $driving_licence_image = $driving_licence_img;
 
 
@@ -304,9 +313,9 @@ class UserManagementController extends Controller
             } else
                 $passport_img = null;
 
-            if ($request->passport == null && $personal_information->passport != null)
-                $passport_image = $personal_information->passport;
-            else
+            if ($request->passport != null && $personal_information->passport == null)
+                $passport_image = $passport_img;
+            else if ($request->passport != null && $personal_information->passport != null)
                 $passport_image = $passport_img;
 
             if ($request->voter_id != null) {
@@ -315,9 +324,9 @@ class UserManagementController extends Controller
             } else
                 $voter_id_img = null;
 
-            if ($request->voter_id == null && $personal_information->voter_card != null)
-                $voter_id_image = $personal_information->voter_card;
-            else
+            if ($request->voter_id != null && $personal_information->voter_card == null)
+                $voter_id_image = $voter_id_img;
+            else if ($request->voter_id != null && $personal_information->voter_card != null)
                 $voter_id_image = $voter_id_img;
 
 
@@ -327,106 +336,106 @@ class UserManagementController extends Controller
             } else
                 $uan_img = null;
 
-            if ($request->uan == null && $personal_information->uan_no != null)
-                $uan_image = $personal_information->uan_no;
-            else
+            if ($request->uan != null && $personal_information->uan_no == null)
+                $uan_image = $uan_img;
+            else if ($request->uan != null && $personal_information->uan_no != null)
                 $uan_image = $uan_img;
 
 
-            if ($request->uan_no_of_emp == null && $personal_information->uan_no_of_emp != null)
-                $uan_no_of_emp = $personal_information->uan_no_of_emp;
-            else
+            if ($request->uan_no_of_emp != null && $personal_information->uan_no_of_emp == null)
+                $uan_no_of_emp = $request->uan_no_of_emp;
+            else if ($request->uan_no_of_emp != null && $personal_information->uan_no_of_emp != null)
                 $uan_no_of_emp = $request->uan_no_of_emp;
 
-            if ($request->blood_group == null && $personal_information->blood_group != null)
-                $blood_group = $personal_information->blood_group;
-            else
+            if ($request->blood_group != null && $personal_information->blood_group == null)
+                $blood_group = $request->blood_group;
+            else if ($request->blood_group != null && $personal_information->blood_group != null)
                 $blood_group = $request->blood_group;
 
-            if ($request->present_city == null && $personal_information->present_city != null)
-                $present_city = $personal_information->present_city;
-            else
+            if ($request->present_city != null && $personal_information->present_city == null)
+                $present_city = $request->present_city;
+            else if ($request->present_city != null && $personal_information->present_city != null)
                 $present_city = $request->present_city;
 
 
-            if ($request->present_state == null && $personal_information->present_state != null)
-                $present_state = $personal_information->present_state;
-            else
+            if ($request->present_state != null && $personal_information->present_state == null)
+                $present_state = $request->present_state;
+            else if ($request->present_state != null && $personal_information->present_state != null)
                 $present_state = $request->present_state;
 
-            if ($request->present_pin == null && $personal_information->present_pin != null)
-                $present_pin = $personal_information->present_pin;
-            else
+            if ($request->present_pin != null && $personal_information->present_pin == null)
+                $present_pin = $request->present_pin;
+            else if ($request->present_pin != null && $personal_information->present_pin != null)
                 $present_pin = $request->present_pin;
 
-            if ($request->permanent_city == null && $personal_information->permanent_city != null)
-                $permanent_city = $personal_information->permanent_city;
-            else
+            if ($request->permanent_city != null && $personal_information->permanent_city == null)
+                $permanent_city = $request->permanent_city;
+            else if ($request->permanent_city != null && $personal_information->permanent_city != null)
                 $permanent_city = $request->permanent_city;
 
-            if ($request->permanent_state == null && $personal_information->permanent_state != null)
-                $permanent_state = $personal_information->permanent_state;
-            else
+            if ($request->permanent_state != null && $personal_information->permanent_state == null)
+                $permanent_state = $request->permanent_state;
+            else if ($request->permanent_state != null && $personal_information->permanent_state != null)
                 $permanent_state = $request->permanent_state;
 
-            if ($request->permanent_pin == null && $personal_information->permanent_pin != null)
-                $permanent_pin = $personal_information->permanent_pin;
-            else
+            if ($request->permanent_pin != null && $personal_information->permanent_pin == null)
+                $permanent_pin = $request->permanent_pin;
+            else if ($request->permanent_pin != null && $personal_information->permanent_pin != null)
                 $permanent_pin = $request->permanent_pin;
 
-            if ($request->personal_contact == null && $personal_information->personal_contact != null)
-                $personal_contact = $personal_information->personal_contact;
-            else
+            if ($request->personal_contact != null && $personal_information->personal_contact == null)
+                $personal_contact = $request->personal_contact;
+            else if ($request->personal_contact != null && $personal_information->personal_contact != null)
                 $personal_contact = $request->personal_contact;
 
-            if ($request->alternative_contact == null && $personal_information->alternative_contact != null)
-                $alternative_contact = $personal_information->alternative_contact;
-            else
+            if ($request->alternative_contact != null && $personal_information->alternative_contact == null)
+                $alternative_contact = $request->alternative_contact;
+            else if ($request->alternative_contact != null && $personal_information->alternative_contact != null)
                 $alternative_contact = $request->alternative_contact;
 
-            if ($request->emergency_contact == null && $personal_information->emergency_contact != null)
-                $emergency_contact = $personal_information->emergency_contact;
-            else
+            if ($request->emergency_contact != null && $personal_information->emergency_contact == null)
+                $emergency_contact = $request->emergency_contact;
+            else if ($request->emergency_contact != null && $personal_information->emergency_contact != null)
                 $emergency_contact = $request->emergency_contact;
 
-            if ($request->emerg_con_per_name == null && $personal_information->emerg_con_per_name != null)
-                $emerg_con_per_name = $personal_information->emerg_con_per_name;
-            else
+            if ($request->emerg_con_per_name != null && $personal_information->emerg_con_per_name == null)
+                $emerg_con_per_name = $request->emerg_con_per_name;
+            else if ($request->emerg_con_per_name != null && $personal_information->emerg_con_per_name != null)
                 $emerg_con_per_name = $request->emerg_con_per_name;
 
-            if ($request->emerg_con_per_rel == null && $personal_information->emerg_con_per_rel != null)
-                $emerg_con_per_rel = $personal_information->emerg_con_per_rel;
-            else
+            if ($request->emerg_con_per_rel != null && $personal_information->emerg_con_per_rel == null)
+                $emerg_con_per_rel = $request->emerg_con_per_rel;
+            else if ($request->emerg_con_per_rel != null && $personal_information->emerg_con_per_rel != null)
                 $emerg_con_per_rel = $request->emerg_con_per_rel;
 
-            if ($request->emerg_con_per_add == null && $personal_information->emerg_con_per_add != null)
-                $emerg_con_per_add = $personal_information->emerg_con_per_add;
-            else
+            if ($request->emerg_con_per_add != null && $personal_information->emerg_con_per_add == null)
+                $emerg_con_per_add = $request->emerg_con_per_add;
+            else if ($request->emerg_con_per_add != null && $personal_information->emerg_con_per_add != null)
                 $emerg_con_per_add = $request->emerg_con_per_add;
 
-            if ($request->edu_qua_course_name == null && $personal_information->edu_qua_course_name != null)
-                $edu_qua_course_name = $personal_information->edu_qua_course_name;
-            else
+            if ($request->edu_qua_course_name != null && $personal_information->edu_qua_course_name == null)
+                $edu_qua_course_name = $request->edu_qua_course_name;
+            else if ($request->edu_qua_course_name != null && $personal_information->edu_qua_course_name != null)
                 $edu_qua_course_name = $request->edu_qua_course_name;
 
-            if ($request->edu_qua_stream == null && $personal_information->edu_qua_stream != null)
-                $edu_qua_stream = $personal_information->edu_qua_stream;
-            else
+            if ($request->edu_qua_stream != null && $personal_information->edu_qua_stream == null)
+                $edu_qua_stream = $request->edu_qua_stream;
+            else if ($request->edu_qua_stream != null && $personal_information->edu_qua_stream != null)
                 $edu_qua_stream = $request->edu_qua_stream;
 
-            if ($request->edu_qua_board == null && $personal_information->edu_qua_board != null)
-                $edu_qua_board = $personal_information->edu_qua_board;
-            else
+            if ($request->edu_qua_board != null && $personal_information->edu_qua_board == null)
+                $edu_qua_board = $request->edu_qua_board;
+            else if ($request->edu_qua_board != null && $personal_information->edu_qua_board != null)
                 $edu_qua_board = $request->edu_qua_board;
 
-            if ($request->edu_qua_passing_year == null && $personal_information->edu_qua_passing_year != null)
-                $edu_qua_passing_year = $personal_information->edu_qua_passing_year;
-            else
+            if ($request->edu_qua_passing_year != null && $personal_information->edu_qua_passing_year == null)
+                $edu_qua_passing_year = $request->edu_qua_passing_year;
+            else if ($request->edu_qua_passing_year != null && $personal_information->edu_qua_passing_year != null)
                 $edu_qua_passing_year = $request->edu_qua_passing_year;
 
-            if ($request->edu_qua_percentage == null && $personal_information->edu_qua_percentage != null)
-                $edu_qua_percentage = $personal_information->edu_qua_percentage;
-            else
+            if ($request->edu_qua_percentage != null && $personal_information->edu_qua_percentage == null)
+                $edu_qua_percentage = $request->edu_qua_percentage;
+            else if ($request->edu_qua_percentage != null && $personal_information->edu_qua_percentage != null)
                 $edu_qua_percentage = $request->edu_qua_percentage;
 
 
@@ -437,35 +446,35 @@ class UserManagementController extends Controller
                 $edu_qua_certi_img = null;
 
 
-            if ($request->edu_qua_certi_upload == null && $personal_information->edu_qua_certi_upload != null)
-                $edu_qua_certi_image = $personal_information->edu_qua_certi_upload;
-            else
+            if ($request->edu_qua_certi_upload != null && $personal_information->edu_qua_certi_upload == null)
+                $edu_qua_certi_image = $edu_qua_certi_img;
+            else if ($request->edu_qua_certi_upload != null && $personal_information->edu_qua_certi_upload != null)
                 $edu_qua_certi_image = $edu_qua_certi_img;
 
 
-            if ($request->pro_qua_university_name == null && $personal_information->pro_qua_university_name != null)
-                $pro_qua_university_name = $personal_information->pro_qua_university_name;
-            else
+            if ($request->pro_qua_university_name != null && $personal_information->pro_qua_university_name == null)
+                $pro_qua_university_name = $request->pro_qua_university_name;
+            else if ($request->pro_qua_university_name != null && $personal_information->pro_qua_university_name != null)
                 $pro_qua_university_name = $request->pro_qua_university_name;
 
-            if ($request->pro_qua_degree == null && $personal_information->pro_qua_degree != null)
-                $pro_qua_degree = $personal_information->pro_qua_degree;
-            else
+            if ($request->pro_qua_degree != null && $personal_information->pro_qua_degree == null)
+                $pro_qua_degree = $request->pro_qua_degree;
+            else if ($request->pro_qua_degree != null && $personal_information->pro_qua_degree != null)
                 $pro_qua_degree = $request->pro_qua_degree;
 
-            if ($request->pro_qua_subject == null && $personal_information->pro_qua_subject != null)
-                $pro_qua_subject = $personal_information->pro_qua_subject;
-            else
+            if ($request->pro_qua_subject != null && $personal_information->pro_qua_subject == null)
+                $pro_qua_subject = $request->pro_qua_subject;
+            else if ($request->pro_qua_subject != null && $personal_information->pro_qua_subject != null)
                 $pro_qua_subject = $request->pro_qua_subject;
 
-            if ($request->pro_qua_duration == null && $personal_information->pro_qua_duration != null)
-                $pro_qua_duration = $personal_information->pro_qua_duration;
-            else
+            if ($request->pro_qua_duration != null && $personal_information->pro_qua_duration == null)
+                $pro_qua_duration = $request->pro_qua_duration;
+            else if ($request->pro_qua_duration != null && $personal_information->pro_qua_duration != null)
                 $pro_qua_duration = $request->pro_qua_duration;
 
-            if ($request->pro_qua_year == null && $personal_information->pro_qua_year != null)
-                $pro_qua_year = $personal_information->pro_qua_year;
-            else
+            if ($request->pro_qua_year != null && $personal_information->pro_qua_year == null)
+                $pro_qua_year = $request->pro_qua_year;
+            else if ($request->pro_qua_year != null && $personal_information->pro_qua_year == null)
                 $pro_qua_year = $request->pro_qua_year;
 
             if ($request->pro_qua_ind_certi != null) {
@@ -474,24 +483,24 @@ class UserManagementController extends Controller
             } else
                 $pro_qua_ind_certi_img = null;
 
-            if ($request->pro_qua_ind_certi == null && $personal_information->pro_qua_ind_certi != null)
-                $pro_qua_ind_certi_image = $personal_information->pro_qua_ind_certi;
-            else
+            if ($request->pro_qua_ind_certi != null && $personal_information->pro_qua_ind_certi == null)
+                $pro_qua_ind_certi_image = $pro_qua_ind_certi_img;
+            else if ($request->pro_qua_ind_certi != null && $personal_information->pro_qua_ind_certi != null)
                 $pro_qua_ind_certi_image = $pro_qua_ind_certi_img;
 
-            if ($request->skill_name == null && $personal_information->tech_skill != null)
-                $skill_name = $personal_information->tech_skill;
-            else
+            if ($request->skill_name != null && $personal_information->tech_skill == null)
+                $skill_name = $request->skill_name;
+            else if ($request->skill_name != null && $personal_information->tech_skill != null)
                 $skill_name = $request->skill_name;
 
-            if ($request->skill_duration == null && $personal_information->skill_duration != null)
-                $skill_duration = $personal_information->skill_duration;
-            else
+            if ($request->skill_duration != null && $personal_information->skill_duration == null)
+                $skill_duration = $request->skill_duration;
+            else if ($request->skill_duration != null && $personal_information->skill_duration != null)
                 $skill_duration = $request->skill_duration;
 
-            if ($request->organ_name == null && $personal_information->organ_name != null)
-                $organ_name = $personal_information->organ_name;
-            else
+            if ($request->organ_name != null && $personal_information->organ_name == null)
+                $organ_name = $request->organ_name;
+            else if ($request->organ_name != null && $personal_information->organ_name != null)
                 $organ_name = $request->organ_name;
 
             if ($request->job_profile != null) {
@@ -500,14 +509,14 @@ class UserManagementController extends Controller
             } else
                 $job_profile_img = null;
 
-            if ($request->job_profile == null && $personal_information->job_profile != null)
-                $job_profile_image = $personal_information->job_profile;
-            else
+            if ($request->job_profile != null && $personal_information->job_profile == null)
+                $job_profile_image = $job_profile_img;
+            else if ($request->job_profile != null && $personal_information->job_profile != null)
                 $job_profile_image = $job_profile_img;
 
-            if ($request->organ_type == null && $personal_information->organ_type != null)
-                $organ_type = $personal_information->organ_type;
-            else
+            if ($request->organ_type != null && $personal_information->organ_type == null)
+                $organ_type = $request->organ_type;
+            else if ($request->organ_type != null && $personal_information->organ_type == null)
                 $organ_type = $request->organ_type;
 
             if ($request->supp_doc_upload != null) {
@@ -516,29 +525,29 @@ class UserManagementController extends Controller
             } else
                 $supp_doc_img = null;
 
-            if ($request->supp_doc_upload == null && $personal_information->supp_doc_upload != null)
-                $supp_doc_image = $personal_information->supp_doc_upload;
-            else
+            if ($request->supp_doc_upload != null && $personal_information->supp_doc_upload == null)
+                $supp_doc_image = $supp_doc_img;
+            else if ($request->supp_doc_upload != null && $personal_information->supp_doc_upload != null)
                 $supp_doc_image = $supp_doc_img;
 
-            if ($request->eff_from_date == null && $personal_information->eff_from_date != null)
-                $eff_from_date = $personal_information->eff_from_date;
-            else
+            if ($request->eff_from_date != null && $personal_information->eff_from_date == null)
+                $eff_from_date = $request->eff_from_date;
+            else if ($request->eff_from_date != null && $personal_information->eff_from_date != null)
                 $eff_from_date = $request->eff_from_date;
 
-            if ($request->eff_to_date == null && $personal_information->eff_to_date != null)
-                $eff_to_date = $personal_information->eff_to_date;
-            else
+            if ($request->eff_to_date != null && $personal_information->eff_to_date == null)
+                $eff_to_date = $request->eff_to_date;
+            else if ($request->eff_to_date != null && $personal_information->eff_to_date != null)
                 $eff_to_date = $request->eff_to_date;
 
-            if ($request->fam_relation == null && $personal_information->fam_relation != null)
-                $fam_relation = $personal_information->fam_relation;
-            else
+            if ($request->fam_relation != null && $personal_information->fam_relation == null)
+                $fam_relation = $request->fam_relation;
+            else if ($request->fam_relation != null && $personal_information->fam_relation != null)
                 $fam_relation = $request->fam_relation;
 
-            if ($request->full_name == null && $personal_information->full_name != null)
-                $full_name = $personal_information->full_name;
-            else
+            if ($request->full_name != null && $personal_information->full_name == null)
+                $full_name = $request->full_name;
+            else if ($request->full_name != null && $personal_information->full_name != null)
                 $full_name = $request->full_name;
 
             $personal_information = PersonalInformation::where('user_id', request('user_id'))->first();

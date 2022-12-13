@@ -20,6 +20,7 @@ active
             <div class="row align-items-center">
                 <div class="col">
                     <h3 class="page-title">Complete Profile</h3>
+                    <h3 class="btn btn-warning mt-3 mt-md-0 margin-150"> Pogress bar</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Complete Profile</li>
@@ -59,10 +60,17 @@ active
                                     </a>
                                 </li>
                                 <!-- end nav item -->
+                                <li class="nav-item" data-target-form="#familyinformation">
+                                    <a href="#family-information" data-bs-toggle="tab" data-toggle="tab" class="nav-link icon-btn">
+                                        <i class="bx bxs-check-circle me-1"></i>
+                                        <span class="d-none d-sm-inline">Family Information</span>
+                                    </a>
+                                </li>
+
                                 <li class="nav-item">
                                     <a href="#finish" data-bs-toggle="tab" data-toggle="tab" class="nav-link icon-btn">
                                         <i class="bx bxs-check-circle me-1"></i>
-                                        <span class="d-none d-sm-inline">Family Information</span>
+                                        <span class="d-none d-sm-inline">Bank Details</span>
                                     </a>
                                 </li>
                                 <!-- end nav item -->
@@ -174,18 +182,34 @@ active
                                                 </select>
                                                 <div class="alert-danger">@error('present_state'){{ $message }}@enderror</div>
                                             </div>
+
                                             <div class="col-sm-4">
                                                 <label>City</label>
                                                 <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('present_city'){{ $message }}@enderror</div>
                                             </div>
+
                                             <div class="col-sm-4">
                                                 <label>PIN Code</label>
                                                 <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('present_pin'){{ $message }}@enderror</div>
                                             </div>
+
+
+
+                                            <div class="col-sm-4">
+                                                <label>Address Line 1</label>
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_address_one" value="{{ old('present_address_one') }}" placeholder="Enter Address" />
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <label>Address Line 2</label>
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_address_two" value="{{ old('present_address_two') }}" placeholder="Enter Address" />
+                                            </div>
                                         </div>
-                                        <br>
+
+                                        <br />
+
                                         <h4 class="mb-3 mt-0"><u>Permanent Address</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -220,6 +244,14 @@ active
                                                 <div>Alternative Contact Number</div>
                                                 <input class="form-control" type="text" id="" name="alternative_contact" placeholder="Enter Alternative Contact Number">
                                                 <div class="alert-danger">@error('alternative_contact'){{ $message }}@enderror</div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Address Line 1</label>
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="Permanent_address_one" value="{{ old('permanent_address_one') }}" placeholder="Enter Address" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Address Line 2</label>
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="Permanent_address_two" value="{{ old('permanent_address_two') }}" placeholder="Enter Address" />
                                             </div>
                                         </div>
                                         <br />
@@ -386,7 +418,7 @@ active
                                         <br />
                                     </div>
                                     <!-- end experience detail tab pane -->
-                                    <div class="tab-pane" id="finish">
+                                    <div class="tab-pane" id="family-information">
                                         <h4 class="mb-3 mt-0"><u>Family Information</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
@@ -399,8 +431,50 @@ active
                                                 <input class="form-control" type="text" id="" name="full_name" placeholder="Enter Full Name">
                                                 <div class="alert-danger">@error('full_name'){{ $message }}@enderror</div>
                                             </div>
+                                            <div class="col-sm-4">
+                                                <label>Age</label>
+                                                <input class="form-control" type="text" id="" name="fam_age" placeholder="Enter your Age">
+                                                <div class="alert-danger">@error('fam_age'){{ $message }}@enderror</div>
+                                            </div>
+
+                                           
+                                                <button type="button" class="btn btn-success add_item_btn " onclick="add()">Add More</button>
+                                                
+                                                <button type="button" class="btn btn-success add_item_btn " onclick="remove()">Reamove</button>
+                                            
                                         </div>
                                         <br />
+                                    </div>
+
+                                    <div class="tab-pane" id="finish">
+                                        <h4 class="mb-3 mt-0"><u>Bank Details</u></h4>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>Account Holder Name</label>
+                                                <input class="form-control" type="text" id="" name="account_holder_name" placeholder=" Enter Account Holder Name">
+                                                <div class="alert-danger">@error('fam_relation'){{ $message }}@enderror</div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Acount Type </label>
+                                                <input class="form-control" type="text" id="" name="account_type" placeholder="Enter Account Type">
+                                                <div class="alert-danger">@error('full_name'){{ $message }}@enderror</div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>IFSC</label>
+                                                <input class="form-control" type="text" id="" name="bank_ifsc" placeholder="Enter your IFSC">
+                                                <div class="alert-danger">@error('fam_age'){{ $message }}@enderror</div>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <label>Name of Bank </label>
+                                                <input class="form-control" type="text" id="" name="name_of_bank" placeholder="Enter your Bank Name">
+                                                <div class="alert-danger">@error('fam_age'){{ $message }}@enderror</div>
+                                            </div>
+                                            <br />
+                                        </div>
+
                                         <div class="submit-section">
                                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                                         </div>
@@ -453,7 +527,25 @@ active
 <!-- You need add bootstrap  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-
+<script>
+    function add() {
+        $("#family-information").append('<br><div class=row>'+
+            '<div class="col-sm-4">'+
+            '<label>Relation</label>'+
+            '<input class="form-control" type="text" id="" name="am_relation[]" placeholder="Enter relation">'+
+            ' </div>'+
+            '<div class="col-sm-4">'+
+                '<label>Full Name</label>'+
+                '<input class="form-control" type="text" id="" name="full_name[]" placeholder="Enter Full Name">'+
+            '</div>'+
+            '<div class="col-sm-4">'+
+                '<label>Age</label>'+
+                '<input class="form-control" type="text" id="" name="fam_age[]" placeholder="Enter your Age">'+
+            '</div>'+
+            '<div>'
+            );
+    }
+</script>
 
 <!--Import vanilla wizard here-->
 <script src="https://cdn.jsdelivr.net/npm/vanilla-wizard@0.0.5">

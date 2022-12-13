@@ -42,33 +42,33 @@
         <div class="container-login100 bg-success">
             <div class="wrap-login100">
                 <span class="login100-form-title p-b-6 font-bold">
-                    <h1>बिहार ग्राम स्वराज योजना सोसाइटी</h1>
+                    <h3>बिहार ग्राम स्वराज योजना सोसाइटी</h3>
                 </span>
                 <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
                     @csrf
-                    <span class="login100-form-title p-b-48">
-                        <img src="images/logo.png" class="img-fluid" />
+                    <span class="login100-form-title p-b-6">
+                        <img src="images/logo.png" class="img-fluid" height="200px" width="200px" />
                     </span>
-                    <span class="login100-form-title p-b-48">
-                        <p class="text-dark mt-1">Log in to continue to your BGSYS HRMS account</p>
+                    <span class="login100-form-title p-b-12">
+                        <p class="text-dark mt-1">Log in BGSYS HRMS account</p>
                     </span>
 
                     <div class="wrap-input100 validate-input" data-validate="Valid email is: a@b.c">
-                        <input class="input100 @error('email') is-invalid @enderror" type="email" id="email" name="email" value="{{ old('email') }}" />
+                        <input class="input100 @error('email') is-invalid @enderror" type="email" id="email" name="email" value="{{ old('email') }}" placeholder="Email" />
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
-                        <span class="focus-input100" data-placeholder="Email"></span>
+                        <!-- <span class="focus-input100" data-placeholder="Email"></span> -->
                     </div>
 
                     <div class="wrap-input100 validate-input" data-validate="Enter password">
                         <span class="btn-show-pass">
                             <i class="zmdi zmdi-eye"></i>
                         </span>
-                        <input class="input100 @error('password') is-invalid @enderror" type="password" name="password">
-                        <span class="focus-input100" data-placeholder="Password"></span>
+                        <input class="input100 @error('password') is-invalid @enderror" type="password" name="password" placeholder="password">
+                        <!-- <span class="focus-input100" data-placeholder="Password"></span> -->
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -76,7 +76,7 @@
                         @enderror
                     </div>
 
-                    <div class="container-login100-form-btn">
+                    <div class="container-login10-form-btn ">
                         <div class="wrap-login100-form-btn">
                             <div class="login100-form-bgbtn"></div>
                             <button type="submit" class="login100-form-btn">
@@ -84,7 +84,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="flex justify-between mt-4">
+                    <div class="flex justify-content-center mt-0">
                         <span class="text-sm ml-2 hover:text-blue-500 cursor-pointer hover:-translate-y-1 duration-500 transition-all"><a class="text-muted" href="{{ route('forget-password') }}">
                                 Forgot password ?
                             </a></span>

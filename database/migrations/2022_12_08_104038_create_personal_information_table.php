@@ -61,6 +61,15 @@ class CreatePersonalInformationTable extends Migration
             $table->string('eff_to_date')->nullable();
             $table->string('fam_relation')->nullable();
             $table->string('full_name')->nullable();
+            $table->string('present_address_one')->nullable();
+            $table->string('present_address_two')->nullable();
+            $table->string('permanent_address_one')->nullable();
+            $table->string('permanent_address_two')->nullable();
+            $table->string('fam_age')->nullable();
+            $table->string('account_holder_name')->nullable();
+            $table->string('account_type')->nullable();
+            $table->string('bank_ifsc')->nullable();
+            $table->string('name_of_bank')->nullable();
             $table->timestamps();
         });
     }
