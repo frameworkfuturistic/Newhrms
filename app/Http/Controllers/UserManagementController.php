@@ -775,11 +775,6 @@ class UserManagementController extends Controller
             ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
             ->get();
 
-        $employees = DB::table('users')
-            ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
-            ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
-            ->where('users.id', $profile)->first();
-
         $design_name = DB::select(
             "SELECT m.designation_name as design_name FROM users u 
                                     LEFT JOIN master_designations m ON m.designation_id = u.designation
@@ -793,35 +788,12 @@ class UserManagementController extends Controller
                                     WHERE u.id = $profile "
         );
 
-        if (empty($employees)) {
+        $information = DB::table('users')
+            ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
+            ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
+            ->where('users.id', $profile)->first();
 
-            $information = DB::table('users')
-                ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
-                ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
-                ->where('users.id', $profile)->first();
-
-            return view('usermanagement.profile_user', compact('information', 'reporting_auth_name', 'user', 'design_name', 'state_name'));
-        } else {
-            $id = $employees->id;
-
-            if ($id == $profile) {
-
-                $information = DB::table('users')
-                    ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
-                    ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
-                    ->where('users.id', $profile)->first();
-
-                return view('usermanagement.profile_user', compact('information', 'reporting_auth_name', 'user', 'design_name', 'state_name'));
-            } else {
-
-                $information = DB::table('users')
-                    ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
-                    ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
-                    ->where('users.id', $profile)->first();
-
-                return view('usermanagement.profile_user', compact('information', 'reporting_auth_name', 'user', 'design_name', 'state_name'));
-            }
-        }
+        return view('usermanagement.profile_user', compact('information', 'reporting_auth_name', 'user', 'design_name', 'state_name'));
     }
 
     // save profile information
