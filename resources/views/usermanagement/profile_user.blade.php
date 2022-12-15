@@ -74,15 +74,6 @@ noti-dot
                                                 @endif
                                             </li>
                                             <li>
-                                                @if(!empty($information->dob))
-                                                <div class="title">Birthday:</div>
-                                                <div class="text">{{date('d F, Y',strtotime($information->dob)) }}</div>
-                                                @else
-                                                <div class="title">Birthday:</div>
-                                                <div class="text">N/A</div>
-                                                @endif
-                                            </li>
-                                            <li>
                                                 @if(!empty($information->cug_no))
                                                 <div class="title">CUG No:</div>
                                                 <div class="text">{{ $information->cug_no }}</div>
