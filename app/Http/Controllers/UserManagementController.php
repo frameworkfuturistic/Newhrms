@@ -767,21 +767,7 @@ class UserManagementController extends Controller
         $reporting_auth = Auth::user()->reporting_authority;
         $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
 
-
-        // $design_name = DB::select(
-        //     "SELECT m.designation_name as design_name FROM users u 
-        //                             LEFT JOIN master_designations m ON m.designation_id = u.designation
-        //                             WHERE u.id = $profile "
-        // );
-
-        // $state_name = DB::select(
-        //     "SELECT s.state_name FROM users u 
-        //                             LEFT JOIN personal_information p ON p.user_id = u.id 
-        //                             LEFT JOIN master_states s ON s.state_id = p.present_state
-        //                             WHERE u.id = $profile "
-        // );
-
-        $information = DB::table('users')
+        $information = DB::table('users')->select('users.name', 'users.emp_id', 'users.join_date', 'users.gender', 'users.reporting_authority', 'users.email', 'users.department_email', 'users.dob', 'users.cug_no', 'personal_information.personal_contact', 'personal_information.alternative_contact', 'personal_information.aadhar_no', 'personal_information.emerg_con_per_name', 'personal_information.emerg_con_per_rel', 'personal_information.emerg_con_per_add', 'personal_information.name_of_bank', 'personal_information.account_holder_name', 'personal_information.bank_ifsc', 'personal_information.pan_no', 'personal_information.full_name', 'personal_information.fam_relation', 'personal_information.fam_age', 'personal_information.edu_qua_board', 'personal_information.edu_qua_stream', 'personal_information.edu_qua_course_name', 'personal_information.edu_qua_passing_year', 'personal_information.tech_skill', 'personal_information.organ_name', 'personal_information.skill_duration')
             ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
             ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
             ->where('users.id', $profile)->first();

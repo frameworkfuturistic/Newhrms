@@ -90,15 +90,6 @@ noti-dot
                                                 <div class="text">N/A</div>
                                                 @endif
                                             </li>
-                                            <li>
-                                                @if(!empty($information->emp_type))
-                                                <div class="title">Emp Type:</div>
-                                                <div class="text">{{ $information->emp_type }}</div>
-                                                @else
-                                                <div class="title">Emp Type:</div>
-                                                <div class="text">N/A</div>
-                                                @endif
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
