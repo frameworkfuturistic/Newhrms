@@ -40,21 +40,7 @@ noti-dot
                                 <div class="pro-edit"><a data-target="#profile_pic_change" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div>
                             </div>
 
-                            <div class="profile-basic">
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="profile-info-left">
-                                            <h3 class="user-name m-t-0 mb-0">{{ Auth::user()->name }}</h3>
-                                            <small class="text-muted">{{ $design_name[0]->design_name }}</small>
-                                            <div class="staff-id">Employee ID : {{ Auth::user()->emp_id }}</div><br />
-                                            <div class="small doj text-muted">Date of Join : {{ Auth::user()->join_date }}</div>
-                                            <small class="text-muted">Gender : {{ Auth::user()->gender }}</small><br />
-                                            <small class="text-muted">Reporting Authority : {{ $reporting_auth_name[0]->name }}({{ $reporting_auth_name[0]->emp_id }})</small>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
                             <!-- <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div> -->
                         </div>
                     </div>
