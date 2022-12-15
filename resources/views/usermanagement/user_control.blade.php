@@ -365,21 +365,7 @@ active
                                     <div class="alert-danger">@error('cug_no'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label>Role Type<span class="required">*</span></label>
-                                    <select class="select form-control" name="role_name" id="">
-                                        <option selected disabled> --Select --</option>
-                                        @foreach ($role_name as $rt )
-                                        <option value="{{ $rt->role_type }}">{{ $rt->role_type }}</option>
-                                        @endforeach
-                                    </select>
-                                    <div class="alert-danger">@error('role_name'){{ $message }}@enderror</div>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                         </div>

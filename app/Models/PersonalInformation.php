@@ -53,6 +53,8 @@ class PersonalInformation extends Model
         'eff_from_date',
         'eff_to_date',
         'fam_relation',
-        'full_name'
+        'full_name',
+        'present_address',
+        'permanent_address'
     ];
 }

@@ -244,16 +244,31 @@ noti-dot
                                 <h3 class="card-title">Bank information</h3>
                                 <ul class="personal-info">
                                     <li>
+                                    @if(!empty($information->name_of_bank))
+                                        <div class="title">Bank name</div>
+                                        <div class="text">{{ $information->name_of_bank }}</div>
+                                        @else
                                         <div class="title">Bank name</div>
                                         <div class="text">N/A</div>
+                                        @endif
                                     </li>
                                     <li>
-                                        <div class="title">Bank account No.</div>
+                                    @if(!empty($information->account_holder_name))
+                                        <div class="title">Bank Holder Name</div>
+                                        <div class="text">{{ $information->account_holder_name }}</div>
+                                        @else
+                                        <div class="title">Bank Holder Name</div>
                                         <div class="text">N/A</div>
+                                        @endif
                                     </li>
                                     <li>
+                                    @if(!empty($information->bank_ifsc))
+                                        <div class="title">IFSC Code</div>
+                                        <div class="text">{{ $information->bank_ifsc }}</div>
+                                        @else
                                         <div class="title">IFSC Code</div>
                                         <div class="text">N/A</div>
+                                        @endif
                                     </li>
                                     <li>
                                         @if(!empty($information->pan_no))
@@ -280,16 +295,32 @@ noti-dot
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Relationship</th>
-                                                <th>Date of Birth</th>
-                                                <th>Phone</th>
+                                                <th>Age</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>N/A</td>
-                                                <td>N/A</td>
-                                                <td>N/A</td>
-                                                <td>N/A</td>
+                                                <td>
+                                                    @if(!empty($information->full_name))
+                                                    {{ $information->full_name }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                </td>                                                
+                                                <td>
+                                                @if(!empty($information->fam_relation))
+                                                    {{ $information->fam_relation }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                </td>                                                
+                                                <td>
+                                                @if(!empty($information->fam_age))
+                                                    {{ $information->fam_age }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -302,7 +333,7 @@ noti-dot
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Education Informations
+                                <h3 class="card-title">Education Information
                                     <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#education_info"><i class="fa fa-pencil"></i></a> -->
                                 </h3>
                                 <div class="experience-box">
@@ -313,21 +344,35 @@ noti-dot
                                             </div>
                                             <div class="experience-content">
                                                 <div class="timeline-content">
-                                                    <a href="#/" class="name">International College of Arts and Science (UG)</a>
-                                                    <div>Bsc Computer Science</div>
-                                                    <span class="time">2020 - 2022</span>
+                                                    <a href="#/" class="name">
+                                                    @if(!empty($information->edu_qua_board))
+                                                    {{ $information->edu_qua_board }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                    </a>
+                                                    <div>
+                                                        <br />
+                                                    @if(!empty($information->edu_qua_stream))
+                                                    {{ $information->edu_qua_stream }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                    @if(!empty($information->edu_qua_course_name))
+                                                    {{ $information->edu_qua_course_name }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                    <br />
                                                 </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="experience-user">
-                                                <div class="before-circle"></div>
-                                            </div>
-                                            <div class="experience-content">
-                                                <div class="timeline-content">
-                                                    <a href="#/" class="name">International College of Arts and Science (PG)</a>
-                                                    <div>Msc Computer Science</div>
-                                                    <span class="time">2020 - 2022</span>
+                                                <br />
+                                                    <span class="time">
+                                                        
+                                                    @if(!empty($information->edu_qua_passing_year))
+                                                    {{ $information->edu_qua_passing_year }}
+                                                    @else
+                                                    N/A
+                                                    @endif</span>
                                                 </div>
                                             </div>
                                         </li>
@@ -350,30 +395,25 @@ noti-dot
                                             </div>
                                             <div class="experience-content">
                                                 <div class="timeline-content">
-                                                    <a href="#/" class="name">Web Designer at Nath Corporation</a>
-                                                    <span class="time">Jan 2017 - Present (5 years 2 months)</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="experience-user">
-                                                <div class="before-circle"></div>
-                                            </div>
-                                            <div class="experience-content">
-                                                <div class="timeline-content">
-                                                    <a href="#/" class="name">Web Designer at Hi-tech</a>
-                                                    <span class="time">Jan 2017 - Present (5 years 2 months)</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="experience-user">
-                                                <div class="before-circle"></div>
-                                            </div>
-                                            <div class="experience-content">
-                                                <div class="timeline-content">
-                                                    <a href="#/" class="name">Web Designer at Amrit Technology</a>
-                                                    <span class="time">Jan 2017 - Present (5 years 2 months)</span>
+                                                    <a href="#/" class="name">
+                                                        @if(!empty($information->tech_skill))
+                                                    {{ $information->tech_skill }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                </a>
+                                                    <span class="time">
+                                                        @if(!empty($information->organ_name))
+                                                    {{ $information->organ_name }}
+                                                    @else
+                                                    N/A
+                                                    @endif - 
+                                                    @if(!empty($information->skill_duration))
+                                                    {{ $information->skill_duration }}
+                                                    @else
+                                                    N/A
+                                                    @endif
+                                                </span>
                                                 </div>
                                             </div>
                                         </li>

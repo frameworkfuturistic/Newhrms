@@ -20,7 +20,7 @@ active
             <div class="row align-items-center">
                 <div class="col">
                     <h3 class="page-title">Complete Profile</h3>
-                    <h3 class="btn btn-warning mt-3 mt-md-0 margin-150"> Pogress bar</h3>
+                  
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Complete Profile</li>
@@ -142,7 +142,7 @@ active
                                             </div>
                                             <div class="col-sm-6">
                                                 <label>UAN Document</label>
-                                                <input class="form-control" type="file" id="" name="uan">
+                                                <input class="form-control" type="file" id="" name="uan_no">
                                             </div>
                                         </div>
                                         <br>
@@ -185,28 +185,28 @@ active
 
                                             <div class="col-sm-4">
                                                 <label>City</label>
-                                                <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" />
+                                                <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="present_city" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('present_city'){{ $message }}@enderror</div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <label>PIN Code</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" />
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="present_pin" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('present_pin'){{ $message }}@enderror</div>
                                             </div>
-
-
-
+                                        </div>
+                                        <br />
+                                        <div class="row">
                                             <div class="col-sm-4">
-                                                <label>Address Line 1</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_address_one" value="{{ old('present_address_one') }}" placeholder="Enter Address" />
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <label>Address Line 2</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="present_address_two" value="{{ old('present_address_two') }}" placeholder="Enter Address" />
+                                                <label>Present Address</label>
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="present_address" name="present_address" value="{{ old('present_address_one')}}" placeholder="Enter present address" />
                                             </div>
                                         </div>
+                                        <br />
+                                        <input type="checkbox" id="same" name="same" onchange="addressFunction()" />
+                                        <label for="same">
+                                        If address are same select this box.
+                                        </label>
 
                                         <br />
 
@@ -214,7 +214,7 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>State</label>
-                                                <select class="select" name="permanent_state" id="">
+                                                <select class="select" name="permanent_state" id="permanent_state">
                                                     <option selected disabled> --Select --</option>
                                                     @foreach($state['data'] as $st)
                                                     <option value="{{ $st->state_id }}">{{ $st->state_name }}</option>
@@ -224,34 +224,30 @@ active
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>City</label>
-                                                <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="" name="permanent_city" value="{{ old('permanent_city') }}" placeholder="Enter City" />
+                                                <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="permanent_city" name="permanent_city" value="{{ old('permanent_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('permanent_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>PIN Code</label>
-                                                <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="" name="permanent_pin" value="{{ old('permanent_pin') }}" placeholder="Enter Pin" />
+                                                <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="permanent_pin" name="permanent_pin" value="{{ old('permanent_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('permanent_pin'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
-                                                <div>Personal Contact Number</div>
-                                                <input class="form-control" type="text" id="" name="personal_contact" placeholder="Enter Personal Contact Number">
+                                                <label>Permanent Address</label>
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="permanent_address" name="permanent_address" value="{{ old('permanent_address') }}" placeholder="Enter permanent address" />
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <label>Personal Contact Number</label>
+                                                <input class="form-control" type="text" id="personal_contact" name="personal_contact" placeholder="Enter Personal Contact Number">
                                                 <div class="alert-danger">@error('personal_contact'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <div>Alternative Contact Number</div>
+                                                <label>Alternative Contact Number</label>
                                                 <input class="form-control" type="text" id="" name="alternative_contact" placeholder="Enter Alternative Contact Number">
                                                 <div class="alert-danger">@error('alternative_contact'){{ $message }}@enderror</div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label>Address Line 1</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="Permanent_address_one" value="{{ old('permanent_address_one') }}" placeholder="Enter Address" />
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label>Address Line 2</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="" name="Permanent_address_two" value="{{ old('permanent_address_two') }}" placeholder="Enter Address" />
                                             </div>
                                         </div>
                                         <br />
@@ -420,7 +416,7 @@ active
                                     <!-- end experience detail tab pane -->
                                     <div class="tab-pane" id="family-information">
                                         <h4 class="mb-3 mt-0"><u>Family Information</u></h4>
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Relation</label>
                                                 <input class="form-control" type="text" id="" name="fam_relation" placeholder="Enter relation">
@@ -436,12 +432,46 @@ active
                                                 <input class="form-control" type="text" id="" name="fam_age" placeholder="Enter your Age">
                                                 <div class="alert-danger">@error('fam_age'){{ $message }}@enderror</div>
                                             </div>
-
-                                           
-                                                <button type="button" class="btn btn-success add_item_btn " onclick="add()">Add More</button>
-                                                
-                                                <button type="button" class="btn btn-success add_item_btn " onclick="remove()">Reamove</button>
-                                            
+                                        </div>
+                                        <br />
+                                        <div class="row">     
+                                            <div class="col-sm-4">
+                                                <span>
+                                                    <button type="button" class="btn btn-success add_item_btn " onclick="add()">Add More</button>
+                                                </span>
+                                                <span>
+                                                    <button type="button" class="btn btn-success add_item_btn " onclick="remove()">Remove</button> 
+                                                </span> 
+                                            </div>                                        
+                                        </div> -->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered table-review review-table mb-0" id="table_achievements">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:30px;">#</th>
+                                                                <th>Relation</th>
+                                                                <th>Full Name</th>
+                                                                <th>Age</th>
+                                                                
+                                                                <th style="width: 64px;"><button type="button" class="btn btn-primary btn-add-row"><i class="fa fa-plus"></i></button></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="table_achievements_tbody">
+                                                            <tr>
+                                                                <td>1</td>
+                                                                <td><input type="text" class="form-control" name="fam_relation"></td>
+                                                                <td><input type="text" class="form-control" name="full_name"></td>
+                                                                <td><input type="text" class="form-control" name="fam_age"></td>
+                                                            
+                                                                <td></td>
+                                                                
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                         <br />
                                     </div>
@@ -527,9 +557,9 @@ active
 <!-- You need add bootstrap  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<script>
+<!-- <script>
     function add() {
-        $("#family-information").append('<br><div class=row>'+
+        $("#family-information").append('<br><div class="row add_more">'+
             '<div class="col-sm-4">'+
             '<label>Relation</label>'+
             '<input class="form-control" type="text" id="" name="am_relation[]" placeholder="Enter relation">'+
@@ -543,8 +573,60 @@ active
                 '<input class="form-control" type="text" id="" name="fam_age[]" placeholder="Enter your Age">'+
             '</div>'+
             '<div>'
-            );
+        );
     }
+    function remove(){
+      $(document).ready(function(){
+        $("button").click(function(){
+            $("div").remove(".add_more");
+        });
+      });
+
+     
+    }
+
+</script> -->
+
+<script>
+		$(function () {
+			$(document).on("click", '.btn-add-row', function () {
+				var id = $(this).closest("table.table-review").attr('id');  // Id of particular table
+				console.log(id);
+				var div = $("<tr />");
+				div.html(GetDynamicTextBox(id));
+				$("#"+id+"_tbody").append(div);
+			});
+			$(document).on("click", "#comments_remove", function () {
+				$(this).closest("tr").prev().find('td:last-child').html('<button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button>');
+				$(this).closest("tr").remove();
+			});
+			function GetDynamicTextBox(table_id) {
+				$('#comments_remove').remove();
+				var rowsLength = document.getElementById(table_id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length+1;
+				return '<td>'+rowsLength+'</td>' + '<td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>'
+			}
+		});
+
+            function addressFunction() {
+                if (document.getElementById("same").checked) {
+                    document.getElementById("permanent_state").value = document.getElementById("present_state").value;
+
+                    document.getElementById("permanent_city").value = document.getElementById("present_city").value;
+
+                    document.getElementById("permanent_pin").value = document.getElementById("present_pin").value;
+
+                    document.getElementById("permanent_address").value = document.getElementById("present_address").value;
+                } else {
+                    document.getElementById("permanent_state").value = '';
+
+                    document.getElementById("permanent_city").value = '';
+
+                    document.getElementById("permanent_pin").value = '';
+
+                    document.getElementById("permanent_address").value = '';
+                }
+            }
+
 </script>
 
 <!--Import vanilla wizard here-->

@@ -359,7 +359,7 @@ audio,
 iframe,
 embed,
 object {
-    display: block; /* 1 */
+    //display: block; /* 1 */
     vertical-align: middle; /* 2 */
 }
 
@@ -370,6 +370,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 img,
 video {
     max-width: 100%;
+    min-width: 35%;
     height: auto;
 }
 
