@@ -763,9 +763,10 @@ class UserManagementController extends Controller
 
     public function profile()
     {
-        // $profile = Auth::User()->id;
-        // $reporting_auth = Auth::user()->reporting_authority;
-        // $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
+        $profile = Auth::User()->id;
+        $reporting_auth = Auth::user()->reporting_authority;
+        $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
+
 
         // $design_name = DB::select(
         //     "SELECT m.designation_name as design_name FROM users u 
@@ -780,13 +781,12 @@ class UserManagementController extends Controller
         //                             WHERE u.id = $profile "
         // );
 
-        // $information = DB::table('users')
-        //     ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
-        //     ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
-        //     ->where('users.id', $profile)->first();
+        $information = DB::table('users')
+            ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
+            ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
+            ->where('users.id', $profile)->first();
 
-            
-        return view('usermanagement.profile_user');
+        return view('usermanagement.profile_user', compact('information', 'reporting_auth_name'));
     }
 
     // save profile information
