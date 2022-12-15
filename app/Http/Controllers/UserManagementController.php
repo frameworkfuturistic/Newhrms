@@ -772,7 +772,6 @@ class UserManagementController extends Controller
                                     LEFT JOIN master_designations m ON m.designation_id = u.designation
                                     WHERE u.id = $profile "
         );
-        // dd($design_name);
 
         $state_name = DB::select(
             "SELECT s.state_name FROM users u 
@@ -780,14 +779,13 @@ class UserManagementController extends Controller
                                     LEFT JOIN master_states s ON s.state_id = p.present_state
                                     WHERE u.id = $profile "
         );
-        // dd($state_name);
 
         $information = DB::table('users')
             ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
             ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
             ->where('users.id', $profile)->first();
 
-        dd($information);
+            
         return view('usermanagement.profile_user', compact('information', 'reporting_auth_name', 'design_name', 'state_name'));
     }
 
