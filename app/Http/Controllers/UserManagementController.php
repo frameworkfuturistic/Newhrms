@@ -765,17 +765,17 @@ class UserManagementController extends Controller
     {
         // return 'Hii';
         $profile = Auth::User()->id;
-        $reporting_auth = 10;
-        $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
+        // return $reporting_auth = Auth::user()->reporting_authority;
+        // $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
 
         $information = DB::table('users')->select('users.name', 'users.emp_id', 'users.join_date', 'users.gender', 'users.reporting_authority', 'users.email', 'users.department_email', 'users.dob', 'users.cug_no', 'personal_information.personal_contact', 'personal_information.alternative_contact', 'personal_information.aadhar_no', 'personal_information.emerg_con_per_name', 'personal_information.emerg_con_per_rel', 'personal_information.emerg_con_per_add', 'personal_information.name_of_bank', 'personal_information.account_holder_name', 'personal_information.bank_ifsc', 'personal_information.pan_no', 'personal_information.full_name', 'personal_information.fam_relation', 'personal_information.fam_age', 'personal_information.edu_qua_board', 'personal_information.edu_qua_stream', 'personal_information.edu_qua_course_name', 'personal_information.edu_qua_passing_year', 'personal_information.tech_skill', 'personal_information.organ_name', 'personal_information.skill_duration')
             ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
             ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
             ->where('users.id', $profile)->first();
 
-            return $reporting_auth_name;
+            // return $reporting_auth_name;
 
-        // return view('usermanagement.profile_user', compact('information', 'reporting_auth_name'));
+        return view('usermanagement.profile_user', compact('information'));
     }
 
     // save profile information
