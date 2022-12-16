@@ -48,6 +48,8 @@ noti-dot
                                             <div class="staff-id">Employee ID : {{ Auth::user()->emp_id }}</div><br />
                                             <div class="small doj text-muted">Date of Join : {{ Auth::user()->join_date }}</div>
                                             <small class="text-muted">Gender : {{ Auth::user()->gender }}</small><br />
+                                            <small class="text-muted">Reporting Authority : {{ $reporting_auth_name[0]->name }}({{ $reporting_auth_name[0]->emp_id }})</small>
+
                                         </div>
                                     </div>
                                     <div class="col-md-7">
