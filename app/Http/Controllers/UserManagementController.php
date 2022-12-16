@@ -763,8 +763,6 @@ class UserManagementController extends Controller
 
     public function profile()
     {
-        set_time_limit(8000000);
-
         $profile = Auth::User()->id;
         $reporting_auth = Auth::user()->reporting_authority;
         $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
