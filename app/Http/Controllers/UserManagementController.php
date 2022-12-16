@@ -773,7 +773,7 @@ class UserManagementController extends Controller
             ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
             ->where('users.id', $profile)->first();
 
-            return $information;
+            return $reporting_auth_name;
 
         // return view('usermanagement.profile_user', compact('information', 'reporting_auth_name'));
     }
