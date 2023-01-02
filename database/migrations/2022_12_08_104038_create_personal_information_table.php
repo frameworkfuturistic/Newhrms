@@ -68,7 +68,7 @@ class CreatePersonalInformationTable extends Migration
 
 
             $table->string('account_holder_name')->nullable();
-            $table->string('account_type')->nullable();
+            $table->string('account_number')->nullable();
             $table->string('bank_ifsc')->nullable();
             $table->string('name_of_bank')->nullable();
             $table->timestamps();

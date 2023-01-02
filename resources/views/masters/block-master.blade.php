@@ -52,6 +52,7 @@ active
                         <label>District Name<span class="required">*</span></label>
                         <select class="select form-control" name="district_search" id="district_search">
                             <option selected disabled> --Select --</option>
+                            <option value="" selected></option>
                         </select>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ active
         <!-- /Page Header -->
 
         <!-- Search Filter -->
-        <div class="row filter-row mb-4">
+        <!-- <div class="row filter-row mb-4">
             <div class="col-sm-6 col-md-3">
                 <div class="form-group form-focus">
                     <input class="form-control floating" type="text">
@@ -61,7 +61,7 @@ active
             <div class="col-sm-6 col-md-3">
                 <a href="#" class="btn btn-success btn-block"> Search </a>
             </div>
-        </div>
+        </div> -->
         <!-- /Search Filter -->
 
         <div class="row">
@@ -117,5 +117,68 @@ active
     <!-- /Page Content -->
 </div>
 <!-- /Page Wrapper -->
+<!-- script for datatabel  -->
+<script type='text/javascript'>
+    $(document).ready(function() {
+        $('#datatable').DataTable({
+            searchable: 'false',
+            dom: 'Bftrip',
+            buttons: {
+                buttons: [{
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-android-print"></i> Export PDF',
+                        className: 'pdfButton btn-padding'
+                    },
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-android-print"></i> copy',
+                        className: 'cpyButton btn-padding'
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class ="icon-android-print"></i> CSV',
+                        className: 'csvButton btn-padding'
+
+
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-document-text"></i> Excel',
+                        className: 'excelButton btn-padding'
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-android-print"></i> Print',
+                        className: 'printButton btn-padding'
+                    }
+
+                ]
+            }
+        });
+        $('.js-example-basic-single').select2();
+    });
+</script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
 
 @endsection

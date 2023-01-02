@@ -47,11 +47,17 @@ noti-dot
                                     <div class="col-md-5">
                                         <div class="profile-info-left">
                                             <h3 class="user-name m-t-0 mb-0">{{ $user[0]->name }}</h3>
-                                            <h6 class="text-muted"> {{ $user[0]->department }}</h6>
-                                            <small class="text-muted">{{ $user[0]->position }}</small>
+                                            <!-- <h6 class="text-muted"> {{ $user[0]->department }}</h6> -->
+                                            <!-- <small class="text-muted">{{ $user[0]->position }}</small> -->
                                             <div class="staff-id">Employee ID : {{ $user[0]->rec_id }}</div>
+                                            <br>
                                             <div class="small doj text-muted">Date of Join : {{ $user[0]->join_date }}</div>
-                                            <div class="staff-msg"><a class="btn btn-custom" href="#">Send Message</a></div>
+
+                                            <div class="small doj text-muted">Gender : {{ $user[0]->gender }}</div>
+
+                                            <div class="small doj text-muted">Reporting Authority : </div>
+
+                                            <!-- <div class="staff-msg"><a class="btn btn-custom" href="#">Send Message</a></div> -->
                                         </div>
                                     </div>
                                     <div class="col-md-7">
@@ -63,6 +69,21 @@ noti-dot
                                             <li>
                                                 <div class="title">Email:</div>
                                                 <div class="text">{{ $user[0]->email }}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Dept. Email:</div>
+                                                <div class="text">{{
+                                                    $user[0]->department_email }}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">Birthday:</div>
+                                                <div class="text">{{
+                                                    $user[0]->dob}}</div>
+                                            </li>
+                                            <li>
+                                                <div class="title">CUG No:</div>
+                                                <div class="text">{{
+                                                    $user[0]->cug_no}}</div>
                                             </li>
                                             <!-- <li>
                                                 <div class="title">Birthday:</div>
@@ -106,7 +127,7 @@ noti-dot
             </div>
         </div>
 
-        <div class="card tab-box">
+        <!-- <div class="card tab-box">
             <div class="row user-tabs">
                 <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
                     <ul class="nav nav-tabs nav-tabs-bottom">
@@ -116,7 +137,7 @@ noti-dot
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="tab-content">
             <!-- Profile Info Tab -->
@@ -125,10 +146,10 @@ noti-dot
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Personal Informations <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
+                                <h3 class="card-title">Identification Details :<a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a></h3>
                                 <ul class="personal-info">
                                     <li>
-                                        <div class="title">Passport No.</div>
+                                        <div class="title">Personal Contact</div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
@@ -359,7 +380,7 @@ noti-dot
             <!-- /Projects Tab -->
 
             <!-- Bank Statutory Tab -->
-            <div class="tab-pane fade" id="bank_statutory">
+            <!-- <div class="tab-pane fade" id="bank_statutory">
                 <div class="card">
                     <div class="card-body">
                         <h3 class="card-title"> Basic Salary Information</h3>
@@ -508,7 +529,7 @@ noti-dot
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- /Bank Statutory Tab -->
         </div>
     </div>

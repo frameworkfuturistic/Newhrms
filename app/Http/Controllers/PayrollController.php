@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\StaffSalary;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -28,17 +28,17 @@ class PayrollController extends Controller
         $request->validate([
             'name'         => 'required|string|max:255',
             'salary'       => 'required|string|max:255',
-            'basic' => 'required|string|max:255',
-            'da'    => 'required|string|max:255',
-            'hra'    => 'required|string|max:255',
-            'conveyance' => 'required|string|max:255',
-            'allowance'  => 'required|string|max:255',
+            'basic'        => 'required|string|max:255',
+            'da'           => 'required|string|max:255',
+            'hra'          => 'required|string|max:255',
+            'conveyance'   => 'required|string|max:255',
+            'allowance'    => 'required|string|max:255',
             'medical_allowance' => 'required|string|max:255',
-            'tds' => 'required|string|max:255',
-            'esi' => 'required|string|max:255',
-            'pf'  => 'required|string|max:255',
-            'leave'    => 'required|string|max:255',
-            'prof_tax' => 'required|string|max:255',
+            'tds'          => 'required|string|max:255',
+            'esi'         => 'required|string|max:255',
+            'pf'          => 'required|string|max:255',
+            'leave'       => 'required|string|max:255',
+            'prof_tax'    => 'required|string|max:255',
             'labour_welfare' => 'required|string|max:255',
         ]);
 

@@ -37,8 +37,9 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
+
 Route::group(['middleware' => 'auth'], function () {
-  
+
     Route::get('home', function () {
         $category = auth()->user()->role_name;
 
@@ -111,6 +112,7 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::get('activity/login/logout', 'activityLogInLogOut')->middleware('can:isAdmin')->name('activity/login/logout');
     Route::post('userManagement/status', 'updateStatus')->middleware('auth');
     Route::get('/getOfficeNames/{org_idd}', 'searchOfficeName')->middleware('can:isAdmin');
+    Route::get('/user_control', 'view');
 
     // ----------------------------- search user management ------------------------------//
     // Route::post('search/user/list', 'searchUser')->name('search/user/list');
@@ -130,7 +132,7 @@ Route::controller(EmployeeController::class)->group(function () {
     Route::post('all/employee/search', 'employeeSearch')->middleware('auth')->name('all/employee/search');
 
     // ----------------------------- profile employee ------------------------------//
-    Route::get('employee/profile/{rec_id}', 'profileEmployee')->middleware('auth');
+    Route::get('employee/profile/{id}', 'profileEmployee')->middleware('auth');
 });
 
 

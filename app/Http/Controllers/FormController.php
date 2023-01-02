@@ -7,7 +7,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Staff;
 use App\Models\User;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class FormController extends Controller
 {
@@ -21,21 +21,20 @@ class FormController extends Controller
     public function viewRecord()
     {
         $data = DB::table('staff')->get();
-        return view('view_record.viewrecord',compact('data'));
+        return view('view_record.viewrecord', compact('data'));
     }
 
     // view detail
     public function viewDetail($id)
     {
-        $data = DB::table('staff')->where('id',$id)->get();
-        return view('view_record.viewdetail',compact('data'));
-
+        $data = DB::table('staff')->where('id', $id)->get();
+        return view('view_record.viewdetail', compact('data'));
     }
 
     // view update
     public function viewUpdate(Request $request)
     {
-        try{
+        try {
             $id           = $request->id;
             $rec_id       = $request->rec_id;
             $fullName     = $request->fullName;
@@ -58,12 +57,12 @@ class FormController extends Controller
                 'department'    => $department,
                 'salary'        => $salary,
             ];
-            Staff::where('id',$request->id)->update($update);
-            Toastr::success('Data updated successfully :)','Success');
+            Staff::where('id', $request->id)->update($update);
+            Toastr::success('Data updated successfully :)', 'Success');
             return redirect()->route('form/view/detail');
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
 
-            Toastr::error('Data updated fail :)','Error');
+            Toastr::error('Data updated fail :)', 'Error');
             return redirect()->route('form/view/detail');
         }
     }
@@ -80,7 +79,7 @@ class FormController extends Controller
             'department'   => 'required|string|max:255',
             'salary'       => 'required|string|max:255',
         ]);
-        try{
+        try {
             $fullName     = $request->fullName;
             $sex          = $request->sex;
             $emailAddress = $request->emailAddress;
@@ -99,12 +98,11 @@ class FormController extends Controller
             $Staff->salary        = $salary;
             $Staff->save();
 
-            Toastr::success('Data added successfully :)','Success');
+            Toastr::success('Data added successfully :)', 'Success');
             return redirect()->back();
+        } catch (\Exception $e) {
 
-        }catch(\Exception $e){
-
-            Toastr::error('Data added fail :)','Error');
+            Toastr::error('Data added fail :)', 'Error');
             return redirect()->back();
         }
     }
@@ -114,7 +112,7 @@ class FormController extends Controller
     {
         $delete = Staff::find($id);
         $delete->delete();
-        Toastr::success('Data deleted successfully :)','Success');
+        Toastr::success('Data deleted successfully :)', 'Success');
         return redirect()->route('form/view/detail');
     }
 }

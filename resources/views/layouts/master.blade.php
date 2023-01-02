@@ -28,8 +28,19 @@
 	<link rel="stylesheet" href="{{ URL::to('assets/plugins/morris/morris.css') }}">
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="{{ URL::to('assets/css/style.css') }}">
-
-
+	<!-- icons css  -->
+	<link rel="apple-touch-icon" sizes="60x60" href="admin_dash/app-assets/images/ico/apple-icon-60.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="admin_dash/app-assets/images/ico/apple-icon-76.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="admin_dash/app-assets/images/ico/apple-icon-120.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="admin_dash/app-assets/images/ico/apple-icon-152.png">
+	<!-- datatable cdn -->
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+	<!--datatable css  -->
+	<link rel="stylesheet" type="text/css" href="css/dataTables.min.css">
+	<!-- font icons -->
+	<link rel="stylesheet" type="text/css" href="admin_dash/app-assets/fonts/icomoon.css">
+	<link rel="stylesheet" type="text/css" href="admin_dash/app-assets/fonts/flag-icon-css/css/flag-icon.min.css">
+	<link rel="stylesheet" type="text/css" href="admin_dash/app-assets/vendors/css/extensions/pace.css">
 
 	@yield('css_cdn')
 
@@ -73,20 +84,7 @@
 				<li class="nav-item dropdown">
 					<div class="float-right mt-200">
 						<!-- <a href="#" class="btn add-btn" data-toggle="modal" data-target="#view_levelwise"><i class="fa fa-eye"></i> View Levelwise</a> -->
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								View Levelwise
-							</button>
-							<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-								<form action="/change-levelwise-data" method="POST">
-									@csrf
-									<button type="submit" class="dropdown-item" name="level_type" value="1">All Level</button>
-									<button type="submit" class="dropdown-item" name="level_type" value="2">SPRC</button>
-									<button type="submit" class="dropdown-item" name="level_type" value="3">DPRC</button>
-									<button type="submit" class="dropdown-item" name="level_type" value="4">Block Level</button>
-								</form>
-							</div>
-						</div>
+
 					</div>
 				</li>
 				<!-- Notifications -->

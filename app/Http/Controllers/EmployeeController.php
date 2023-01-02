@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Employee;
 use App\Models\User;
@@ -170,5 +170,13 @@ class EmployeeController extends Controller
     {
         $user = DB::table('users')->where('rec_id', $rec_id)->get();
         return view('form.employeeprofile', compact('user'));
+    }
+
+    public function getDetailsById($profile)
+    {
+        $information = DB::table('users')
+            ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
+            ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
+            ->where('users.id', $profile)->first();
     }
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Carbon\Carbon;
-use Session;
+use Illuminate\Support\Facades\Session;
 use Brian2694\Toastr\Facades\Toastr;
 
 class LoginController extends Controller

@@ -20,7 +20,7 @@ active
             <div class="row align-items-center">
                 <div class="col">
                     <h3 class="page-title">Complete Profile</h3>
-                  
+
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Complete Profile</li>
@@ -96,14 +96,14 @@ active
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Aadhar No.</label>
-                                                    <input class="form-control @error('aadhar_no') is-invalid @enderror" type="text" id="" name="aadhar_no" value="{{ old('aadhar_no') }}" placeholder="Enter Aadhar Number">
+                                                    <input class="form-control" type="text" id="" name="aadhar_no" @if($personal_info->aadhar_no) value="{{ $personal_info->aadhar_no }}" @else value="{{ old('aadhar_no') }}" @endif placeholder="Enter Aadhar Number">
                                                 </div>
                                                 <div class="alert-danger">@error('aadhar_no'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Aadhar Card</label>
-                                                    <input class="form-control @error('aadhar_card') is-invalid @enderror" type="file" id="" name="aadhar_card" value="{{ old('aadhar_card') }}">
+                                                    <input class="form-control @error('aadhar_card') is-invalid @enderror" type="file" id="" name="aadhar_card" @if($personal_info->aadhar_card) value="{{ $personal_info->aadhar_card }}" @else value="{{ old('aadhar_card') }}" @endif >
                                                 </div>
                                                 <div class="alert-danger">@error('aadhar_card'){{ $message }}@enderror</div>
                                             </div>
@@ -112,7 +112,9 @@ active
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>PAN No.</label>
-                                                    <input class="form-control @error('pan_no') is-invalid @enderror" type="text" id="" name="pan_no" value="{{ old('pan_no') }}" placeholder="Enter PAN Number">
+
+                                                    <input class="form-control" type="text" id="" name="pan_no" @if($personal_info->pan_no) value="{{ $personal_info->pan_no }}" @else value="{{ old('pan_no') }}" @endif placeholder="Enter PAN Number">
+
                                                 </div>
                                                 <div class="alert-danger">@error('pan_no'){{ $message }}@enderror</div>
                                             </div>
@@ -148,8 +150,10 @@ active
                                         <br>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label>UAN No.</label>
-                                                <input class="form-control" type="text" id="" name="uan_no_of_emp" value="{{ old('uan_no_of_emp') }}" placeholder="Enter UAN Number">
+                                                <div class="form-group">
+                                                    <label>UAN No.</label>
+                                                    <input class="form-control" type="text" id="" name="uan_no_of_emp" @if($personal_info->uan_no_of_emp) value="{{ $personal_info->uan_no_of_emp }}" @else value="{{ old('uan_no_of_emp') }}" @endif placeholder="Enter UAN Number">
+                                                </div>
                                                 <div class="alert-danger">@error('uan_no_of_emp'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-6">
@@ -185,13 +189,13 @@ active
 
                                             <div class="col-sm-4">
                                                 <label>City</label>
-                                                <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="present_city" name="present_city" value="{{ old('present_city') }}" placeholder="Enter City" />
+                                                <input class="form-control @error('present_city') is-invalid @enderror" type="text" id="present_city" name="present_city" @if($personal_info->present_city) value="{{ $personal_info->present_city }}" @else value="{{ old('present_city') }}" @endif value="{{ old('present_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('present_city'){{ $message }}@enderror</div>
                                             </div>
 
                                             <div class="col-sm-4">
                                                 <label>PIN Code</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="present_pin" name="present_pin" value="{{ old('present_pin') }}" placeholder="Enter Pin" />
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="present_pin" name="present_pin" @if($personal_info->present_pin) value="{{ $personal_info->present_pin }}" @else value="{{ old('present_pin') }}" @endif value="{{ old('present_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('present_pin'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -199,13 +203,13 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Present Address</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="present_address" name="present_address" value="{{ old('present_address_one')}}" placeholder="Enter present address" />
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="present_address" name="present_address" @if($personal_info->present_address) value="{{ $personal_info->present_address }}" @else value="{{ old('present_address') }}" @endif value="{{ old('present_address')}}" placeholder="Enter present address" />
                                             </div>
                                         </div>
                                         <br />
                                         <input type="checkbox" id="same" name="same" onchange="addressFunction()" />
                                         <label for="same">
-                                        If address are same select this box.
+                                            If address are same select this box.
                                         </label>
 
                                         <br />
@@ -224,12 +228,12 @@ active
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>City</label>
-                                                <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="permanent_city" name="permanent_city" value="{{ old('permanent_city') }}" placeholder="Enter City" />
+                                                <input class="form-control @error('permanent_city') is-invalid @enderror" type="text" id="permanent_city" name="permanent_city" @if($personal_info->permanent_city) value="{{ $personal_info->permanent_city }}" @else value="{{ old('permanent_city') }}" @endif value="{{ old('permanent_city') }}" placeholder="Enter City" />
                                                 <div class="alert-danger">@error('permanent_city'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>PIN Code</label>
-                                                <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="permanent_pin" name="permanent_pin" value="{{ old('permanent_pin') }}" placeholder="Enter Pin" />
+                                                <input class="form-control @error('permanent_pin') is-invalid @enderror" type="text" id="permanent_pin" name="permanent_pin" @if($personal_info->permanent_pin) value="{{ $personal_info->permanent_pin }}" @else value="{{ old('permanent_pin') }}" @endif value="{{ old('permanent_pin') }}" placeholder="Enter Pin" />
                                                 <div class="alert-danger">@error('permanent_pin'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -237,16 +241,16 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Permanent Address</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="permanent_address" name="permanent_address" value="{{ old('permanent_address') }}" placeholder="Enter permanent address" />
+                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="permanent_address" name="permanent_address" @if($personal_info->permanent_address) value="{{ $personal_info->permanent_address }}" @else value="{{ old('permanent_address') }}" @endif value="{{ old('permanent_address') }}" placeholder="Enter permanent address" />
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Personal Contact Number</label>
-                                                <input class="form-control" type="text" id="personal_contact" name="personal_contact" placeholder="Enter Personal Contact Number">
+                                                <input class="form-control" type="text" id="personal_contact" name="personal_contact" @if($personal_info->personal_contact) value="{{ $personal_info->personal_contact }}" @else value="{{ old('personal_contact') }}" @endif placeholder="Enter Personal Contact Number">
                                                 <div class="alert-danger">@error('personal_contact'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Alternative Contact Number</label>
-                                                <input class="form-control" type="text" id="" name="alternative_contact" placeholder="Enter Alternative Contact Number">
+                                                <input class="form-control" type="text" id="" name="alternative_contact" @if($personal_info->alternative_contact) value="{{ $personal_info->alternative_contact }}" @else value="{{ old('alternative_contact') }}" @endif placeholder="Enter Alternative Contact Number">
                                                 <div class="alert-danger">@error('alternative_contact'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -255,17 +259,17 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Number</div>
-                                                <input class="form-control" type="text" id="" name="emergency_contact" placeholder="Enter Emergency Contact Number">
+                                                <input class="form-control" type="text" id="" name="emergency_contact" @if($personal_info->alternative_contact) value="{{ $personal_info->alternative_contact }}" @else value="{{ old('alternative_contact') }}" @endif placeholder="Enter Emergency Contact Number">
                                                 <div class="alert-danger">@error('emergency_contact'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Name</div>
-                                                <input class="form-control" type="text" id="" name="emerg_con_per_name" placeholder="Enter Emergency Contact Person Name">
+                                                <input class="form-control" type="text" id="" name="emerg_con_per_name" @if($personal_info->emerg_con_per_name) value="{{ $personal_info->emerg_con_per_name }}" @else value="{{ old('emerg_con_per_name') }}" @endif placeholder="Enter Emergency Contact Person Name">
                                                 <div class="alert-danger">@error('emerg_con_per_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Relation</div>
-                                                <input class="form-control" type="text" id="" name="emerg_con_per_rel" placeholder="Enter Emergency Contact Person Relation">
+                                                <input class="form-control" type="text" id="" name="emerg_con_per_rel" @if($personal_info->emerg_con_per_rel) value="{{ $personal_info->emerg_con_per_rel }}" @else value="{{ old('emerg_con_per_rel') }}" @endif placeholder="Enter Emergency Contact Person Relation">
                                                 <div class="alert-danger">@error('emerg_con_per_rel'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -273,7 +277,7 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <div>Emergency Contact Person Address</div>
-                                                <input class="form-control" type="text" id="" name="emerg_con_per_add" placeholder="Enter Emergency Contact Person Address">
+                                                <input class="form-control" type="text" id="" name="emerg_con_per_add" @if($personal_info->emerg_con_per_add) value="{{ $personal_info->emerg_con_per_add }}" @else value="{{ old('emerg_con_per_add') }}" @endif placeholder="Enter Emergency Contact Person Address">
                                                 <div class="alert-danger">@error('emerg_con_per_add'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -284,17 +288,17 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Course Name</label>
-                                                <input class="form-control" type="text" id="" name="edu_qua_course_name" placeholder="Enter Course Name">
+                                                <input class="form-control" type="text" id="" name="edu_qua_course_name" @if($personal_info->edu_qua_course_name) value="{{ $personal_info->edu_qua_course_name }}" @else value="{{ old('edu_qua_course_name') }}" @endif placeholder="Enter Course Name">
                                                 <div class="alert-danger">@error('edu_qua_course_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Stream</label>
-                                                <input class="form-control" type="text" id="stream" name="edu_qua_stream" placeholder="Enter Stream">
+                                                <input class="form-control" type="text" id="stream" name="edu_qua_stream" @if($personal_info->edu_qua_stream) value="{{ $personal_info->edu_qua_stream }}" @else value="{{ old('edu_qua_stream') }}" @endif placeholder="Enter Stream">
                                                 <div class="alert-danger">@error('edu_qua_stream'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Board</label>
-                                                <input class="form-control" type="text" id="" name="edu_qua_board" placeholder="Enter Board Name">
+                                                <input class="form-control" type="text" id="" name="edu_qua_board" @if($personal_info->edu_qua_board) value="{{ $personal_info->edu_qua_board }}" @else value="{{ old('edu_qua_board') }}" @endif placeholder="Enter Board Name">
                                                 <div class="alert-danger">@error('edu_qua_board'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -302,12 +306,12 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Passing Year</label>
-                                                <input class="form-control" type="number" id="" name="edu_qua_passing_year" placeholder="YYYY" min="1940" max="2060">
+                                                <input class="form-control" type="number" id="" name="edu_qua_passing_year" @if($personal_info->edu_qua_passing_year) value="{{ $personal_info->edu_qua_passing_year }}" @else value="{{ old('edu_qua_passing_year') }}" @endif placeholder="YYYY" min="1940" max="2060">
                                                 <div class="alert-danger">@error('edu_qua_passing_year'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Percentage/ GPA</label>
-                                                <input class="form-control" type="text" id="" name="edu_qua_percentage" placeholder="Enter Percentage/ GPA">
+                                                <input class="form-control" type="text" id="" name="edu_qua_percentage" @if($personal_info->edu_qua_percentage) value="{{ $personal_info->edu_qua_percentage }}" @else value="{{ old('edu_qua_percentage') }}" @endif placeholder="Enter Percentage/ GPA">
                                                 <div class="alert-danger">@error('edu_qua_percentage'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
@@ -316,22 +320,25 @@ active
                                                 <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
+
+
+                                        <br />
                                         <br />
                                         <h4 class="mb-3 mt-0"><u>Professional Qualification Details</u></h4>
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Institution/ University Name</label>
-                                                <input class="form-control" type="text" id="" name="pro_qua_university_name" placeholder="Enter University Name">
+                                                <input class="form-control" type="text" id="" name="pro_qua_university_name" @if($personal_info->pro_qua_university_name) value="{{ $personal_info->pro_qua_university_name }}" @else value="{{ old('pro_qua_university_name') }}" @endif placeholder="Enter University Name">
                                                 <div class="alert-danger">@error('pro_qua_university_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Degree/ Diploma</label>
-                                                <input class="form-control" type="text" id="" name="pro_qua_degree" placeholder="Enter degree/ Diploma">
+                                                <input class="form-control" type="text" id="" name="pro_qua_degree" @if($personal_info->pro_qua_degree) value="{{ $personal_info->pro_qua_degree }}" @else value="{{ old('pro_qua_degree') }}" @endif placeholder="Enter degree/ Diploma">
                                                 <div class="alert-danger">@error('pro_qua_degree'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Subject/ Courses</label>
-                                                <input class="form-control" type="text" id="" name="pro_qua_subject" placeholder="Enter Subject/ Courses">
+                                                <input class="form-control" type="text" id="" name="pro_qua_subject" @if($personal_info->pro_qua_subject) value="{{ $personal_info->pro_qua_subject }}" @else value="{{ old('pro_qua_subject') }}" @endif placeholder="Enter Subject/ Courses">
                                                 <div class="alert-danger">@error('pro_qua_subject'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -340,7 +347,7 @@ active
 
                                             <div class="col-sm-4">
                                                 <label>Duration</label>
-                                                <input class="form-control" type="text" id="" name="pro_qua_duration" placeholder="Enter Course Duration">
+                                                <input class="form-control" type="text" id="" name="pro_qua_duration" @if($personal_info->pro_qua_duration) value="{{ $personal_info->pro_qua_duration }}" @else value="{{ old('pro_qua_duration') }}" @endif placeholder="Enter Course Duration">
                                                 <div class="alert-danger">@error('pro_qua_duration'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
@@ -350,7 +357,7 @@ active
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Year Of Passing</label>
-                                                <input class="form-control" type="number" id="" name="pro_qua_year" placeholder="YYYY" min="1940" max="2060">
+                                                <input class="form-control" type="number" id="" name="pro_qua_year" @if($personal_info->pro_qua_year) value="{{ $personal_info->pro_qua_year }}" @else value="{{ old('pro_qua_year') }}" @endif placeholder="YYYY" min="1940" max="2060">
                                                 <div class="alert-danger">@error('pro_qua_year'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -360,12 +367,12 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Skill Name</label>
-                                                <input class="form-control" type="text" id="" name="skill_name" placeholder="Enter Skills Name" />
+                                                <input class="form-control" type="text" id="" name="skill_name" @if($personal_info->pro_qua_subject) value="{{ $personal_info->pro_qua_subject }}" @else value="{{ old('pro_qua_subject') }}" @endif placeholder="Enter Skills Name" />
                                                 <div class="alert-danger">@error('skill_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Duration</label>
-                                                <input class="form-control" type="text" id="" name="skill_duration" placeholder="Enter Duration" />
+                                                <input class="form-control" type="text" id="" name="skill_duration" @if($personal_info->skill_duration) value="{{ $personal_info->skill_duration }}" @else value="{{ old('skill_duration') }}" @endif placeholder="Enter Duration" />
                                                 <div class="alert-danger">@error('skill_duration'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -375,7 +382,7 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Organisation Name</label>
-                                                <input class="form-control" type="text" id="" name="organ_name" placeholder="Enter Organisation Name" />
+                                                <input class="form-control" type="text" id="" name="organ_name" @if($personal_info->organ_name) value="{{ $personal_info->organ_name }}" @else value="{{ old('organ_name') }}" @endif placeholder="Enter Organisation Name" />
                                                 <div class="alert-danger">@error('organ_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
@@ -385,7 +392,7 @@ active
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Organisation Type</label>
-                                                <select class="select" name="organ_type" id="">
+                                                <select class="select" id="" name="organ_type" @if($personal_info->organ_type) value="{{ $personal_info->organ_type }}" @else value="{{ old('organ_type') }}" @endif >
                                                     <option selected disabled> --Select --</option>
                                                     <option value="Government">Government</option>
                                                     <option value="private">Private</option>
@@ -402,12 +409,12 @@ active
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Effective From Date</label>
-                                                <input class="form-control" type="date" id="" name="eff_from_date" />
+                                                <input class="form-control" type="date" id="" name="eff_from_date" @if($personal_info->eff_from_date) value="{{ $personal_info->eff_from_date }}" @else value="{{ old('eff_from_date') }}" @endif />
                                                 <div class="alert-danger">@error('eff_from_date'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Effective To Date</label>
-                                                <input class="form-control" type="date" id="" name="eff_to_date" />
+                                                <input class="form-control" type="date" id="" name="eff_to_date" @if($personal_info->eff_to_date) value="{{ $personal_info->eff_to_date }}" @else value="{{ old('eff_to_date') }}" @endif />
                                                 <div class="alert-danger">@error('eff_to_date'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
@@ -454,19 +461,18 @@ active
                                                                 <th>Relation</th>
                                                                 <th>Full Name</th>
                                                                 <th>Age</th>
-                                                                
+
                                                                 <th style="width: 64px;"><button type="button" class="btn btn-primary btn-add-row"><i class="fa fa-plus"></i></button></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="table_achievements_tbody">
                                                             <tr>
                                                                 <td>1</td>
-                                                                <td><input type="text" class="form-control" name="fam_relation"></td>
-                                                                <td><input type="text" class="form-control" name="full_name"></td>
-                                                                <td><input type="text" class="form-control" name="fam_age"></td>
-                                                            
+                                                                <td><input type="text" class="form-control" name="fam_relation[]" @if($personal_info->fam_relation) value="{{ $personal_info->fam_relation }}" @else value="{{ old('fam_relation') }}" @endif ></td>
+                                                                <td><input type="text" class="form-control" name="full_name[]" @if($personal_info->full_name) value="{{ $personal_info->full_name }}" @else value="{{ old('full_name') }}" @endif ></td>
+                                                                <td><input type="text" class="form-control" name="fam_age[]" @if($personal_info->fam_age) value="{{ $personal_info->fam_age }}" @else value="{{ old('fam_age') }}" @endif ></td>
                                                                 <td></td>
-                                                                
+
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -481,26 +487,26 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Account Holder Name</label>
-                                                <input class="form-control" type="text" id="" name="account_holder_name" placeholder=" Enter Account Holder Name">
-                                                <div class="alert-danger">@error('fam_relation'){{ $message }}@enderror</div>
+                                                <input class="form-control" type="text" id="" name="account_holder_name" @if($personal_info->account_holder_name) value="{{ $personal_info->account_holder_name }}" @else value="{{ old('account_holder_name') }}" @endif placeholder=" Enter Account Holder Name">
+                                                <div class="alert-danger">@error('account_holder_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Acount Type </label>
-                                                <input class="form-control" type="text" id="" name="account_type" placeholder="Enter Account Type">
-                                                <div class="alert-danger">@error('full_name'){{ $message }}@enderror</div>
+                                                <label>Acount Number </label>
+                                                <input class="form-control" type="text" id="" name="account_number" @if($personal_info->account_number) value="{{ $personal_info->account_number }}" @else value="{{ old('account_number') }}" @endif placeholder="Enter Account Number">
+                                                <div class="alert-danger">@error('account_type'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>IFSC</label>
-                                                <input class="form-control" type="text" id="" name="bank_ifsc" placeholder="Enter your IFSC">
-                                                <div class="alert-danger">@error('fam_age'){{ $message }}@enderror</div>
+                                                <input class="form-control" type="text" id="" name="bank_ifsc" @if($personal_info->bank_ifsc) value="{{ $personal_info->bank_ifsc }}" @else value="{{ old('bank_ifsc') }}" @endif placeholder="Enter your IFSC">
+                                                <div class="alert-danger">@error('bank_ifsc'){{ $message }}@enderror</div>
                                             </div>
                                         </div>
                                         <br />
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Name of Bank </label>
-                                                <input class="form-control" type="text" id="" name="name_of_bank" placeholder="Enter your Bank Name">
-                                                <div class="alert-danger">@error('fam_age'){{ $message }}@enderror</div>
+                                                <input class="form-control" type="text" id="" name="name_of_bank" @if($personal_info->name_of_bank) value="{{ $personal_info->name_of_bank }}" @else value="{{ old('name_of_bank') }}" @endif placeholder="Enter your Bank Name">
+                                                <div class="alert-danger">@error('name_of_bank '){{ $message }}@enderror</div>
                                             </div>
                                             <br />
                                         </div>
@@ -588,45 +594,49 @@ active
 </script> -->
 
 <script>
-		$(function () {
-			$(document).on("click", '.btn-add-row', function () {
-				var id = $(this).closest("table.table-review").attr('id');  // Id of particular table
-				console.log(id);
-				var div = $("<tr />");
-				div.html(GetDynamicTextBox(id));
-				$("#"+id+"_tbody").append(div);
-			});
-			$(document).on("click", "#comments_remove", function () {
-				$(this).closest("tr").prev().find('td:last-child').html('<button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button>');
-				$(this).closest("tr").remove();
-			});
-			function GetDynamicTextBox(table_id) {
-				$('#comments_remove').remove();
-				var rowsLength = document.getElementById(table_id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length+1;
-				return '<td>'+rowsLength+'</td>' + '<td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><input type="text" name = "DynamicTextBox" class="form-control" value = "" ></td>' + '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>'
-			}
-		});
+    $(function() {
+        $(document).on("click", '.btn-add-row', function() {
+            var id = $(this).closest("table.table-review").attr('id'); // Id of particular table
+            console.log(id);
+            var div = $("<tr />");
+            div.html(GetDynamicTextBox(id));
+            $("#" + id + "_tbody").append(div);
+        });
+        $(document).on("click", "#comments_remove", function() {
+            $(this).closest("tr").prev().find('td:last-child').html('<button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button>');
+            $(this).closest("tr").remove();
+        });
 
-            function addressFunction() {
-                if (document.getElementById("same").checked) {
-                    document.getElementById("permanent_state").value = document.getElementById("present_state").value;
+        function GetDynamicTextBox(table_id) {
+            $('#comments_remove').remove();
+            var rowsLength = document.getElementById(table_id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length + 1;
+            return '<td>' + rowsLength + '</td>' +
+                '<td><input type="text" name = "fam_relation[]" class="form-control" value = "" ></td>' +
+                '<td><input type="text" name = "full_name[]" class="form-control" value = "" ></td>' +
+                '<td><input type="text" name = "fam_age[]" class="form-control" value = "" ></td>' +
+                '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>'
+        }
+    });
 
-                    document.getElementById("permanent_city").value = document.getElementById("present_city").value;
+    function addressFunction() {
+        if (document.getElementById("same").checked) {
+            document.getElementById("permanent_state").value = document.getElementById("present_state").value;
 
-                    document.getElementById("permanent_pin").value = document.getElementById("present_pin").value;
+            document.getElementById("permanent_city").value = document.getElementById("present_city").value;
 
-                    document.getElementById("permanent_address").value = document.getElementById("present_address").value;
-                } else {
-                    document.getElementById("permanent_state").value = '';
+            document.getElementById("permanent_pin").value = document.getElementById("present_pin").value;
 
-                    document.getElementById("permanent_city").value = '';
+            document.getElementById("permanent_address").value = document.getElementById("present_address").value;
+        } else {
+            document.getElementById("permanent_state").value = '';
 
-                    document.getElementById("permanent_pin").value = '';
+            document.getElementById("permanent_city").value = '';
 
-                    document.getElementById("permanent_address").value = '';
-                }
-            }
+            document.getElementById("permanent_pin").value = '';
 
+            document.getElementById("permanent_address").value = '';
+        }
+    }
 </script>
 
 <!--Import vanilla wizard here-->

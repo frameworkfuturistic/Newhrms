@@ -164,7 +164,7 @@ return [
         Brian2694\Toastr\ToastrServiceProvider::class,
         LaravelDaily\Invoices\InvoiceServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
-        
+
 
         /*
          * Package Service Providers...
@@ -179,6 +179,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\TelescopeServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
 
     ],
 
@@ -234,6 +236,7 @@ return [
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
         'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 
     ],
 

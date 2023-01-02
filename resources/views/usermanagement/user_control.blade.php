@@ -1,5 +1,6 @@
 @extends('layouts.master')
 
+
 @section('emp_noti')
 noti-dot
 @endsection
@@ -15,6 +16,7 @@ active
     <div class="content container-fluid">
         <!-- Page Header -->
         <div class="page-header">
+
             <div class="row align-items-center">
                 <div class="col">
                     <h3 class="page-title">Employee Management</h3>
@@ -23,45 +25,36 @@ active
                         <li class="breadcrumb-item active">Employee</li>
                     </ul>
                 </div>
+
                 <div class="col-auto float-right ml-auto">
                     <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Employee</a>
                 </div>
             </div>
         </div>
-        <!-- /Page Header -->
 
-        <!-- Search Filter -->
-        <form action="{{ route('search/user/list') }}" method="POST">
-            @csrf
-            <div class="row filter-row">
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating" id="name" name="name">
-                        <label class="focus-label">User Name</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating" id="name" name="role_name">
-                        <label class="focus-label">Role Name</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="form-group form-focus">
-                        <input type="text" class="form-control floating" id="name" name="status">
-                        <label class="focus-label">Status</label>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <button type="submit" class="btn btn-success btn-block"> Search </button>
-                </div>
-            </div>
-        </form>
-        <!-- /Search Filter -->
+        <!-- /Page Header -->
         {{-- message --}}
         {!! Toastr::message() !!}
         <div class="row">
             <div class="col-md-12">
+                <div class=" row ">
+                    <div class="col-md-12">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            View Levelwise
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <form action="/change-levelwise-data" method="POST">
+                                @csrf
+                                <button type="submit" class="dropdown-item" name="level_type" value="1">All Level</button>
+                                <button type="submit" class="dropdown-item" name="level_type" value="2">SPRC</button>
+                                <button type="submit" class="dropdown-item" name="level_type" value="3">DPRC</button>
+                                <button type="submit" class="dropdown-item" name="level_type" value="4">Block Level</button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
                 <div class="table-responsive">
                     <table class="table table-striped custom-table" id="datatable">
                         <thead>
@@ -86,11 +79,11 @@ active
                                         <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="name">{{ $user->name }}</span></a>
                                     </h2>
                                 </td>
-                                <td hidden class="ids">{{ $user->id }}</td>
+                                <!-- <td hidden class="ids">{{ $user->id }}</td>
                                 <td hidden class="dobs">{{ $user->dob }}</td>
                                 <td hidden class="join_date">{{ $user->join_date }}</td>
                                 <td hidden class="d_email">{{ $user->department_email }}</td>
-                                <td hidden class="id">{{ $user->rec_id }}</td>
+                                <td hidden class="id">{{ $user->rec_id }}</td> -->
                                 <td class="email">{{ $user->email }}</td>
                                 <td class="position">
                                     {{ $user->post_title }}
@@ -111,22 +104,24 @@ active
                                             <i class="fa fa-dot-circle-o text-success"></i>Active
                                             @elseif ($user->status=='Inactive')
                                             <i class="fa fa-dot-circle-o text-info"></i>Inactive
-                                            @elseif ($user->status=='Disable')
-                                            <i class="fa fa-dot-circle-o text-danger"></i>Disable
+                                            @elseif ($user->status=='Resign')
+                                            <i class="fa fa-dot-circle-o text-danger"></i>Resign
                                             @elseif ($user->status=='')
                                             <i class="fa fa-dot-circle-o text-dark"></i>N/A
                                             @endif
                                         </a>
 
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item activeSubmit" href="#" data-toggle="modal" data-id="'.$user->id.'" data-target="#active_modal">
+                                            <a class="dropdown-item activeSubmit" href="#" data-toggle="modal" data-id="
+                                              {{ $user->id }}" data-target="#active_modal">
                                                 <i class="fa fa-dot-circle-o text-success"></i> Active
                                             </a>
                                             <a class="dropdown-item inactiveSubmit" href="#" data-toggle="modal" data-id="'.$user->id.'" data-target="#inactive_modal">
                                                 <i class="fa fa-dot-circle-o text-warning"></i> Inactive
                                             </a>
-                                            <a class="dropdown-item disableSubmit" href="#" data-toggle="modal" data-id="'.$user->id.'" data-target="#disable_modal">
-                                                <i class="fa fa-dot-circle-o text-danger"></i> Disable
+                                            <a class="dropdown-item ResignSubmit" href="#" data-toggle="modal" data-id="'.$user->id.'" data-target="#resign_modal">
+                                                <i class="fa fa-dot-circle-o 
+                                                text-danger"></i> Resign
                                             </a>
                                         </div>
                                     </div>
@@ -137,6 +132,7 @@ active
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$user->id.'" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                             <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="'.$user->id.'" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+
                                         </div>
                                     </div>
                                 </td>
@@ -365,7 +361,7 @@ active
                                     <div class="alert-danger">@error('cug_no'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                        </div>                        
+                        </div>
                         <div class="submit-section">
                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                         </div>
@@ -401,13 +397,13 @@ active
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>CUG Number</label>
-                                    <input class="form-control" type="text" id="cug_no" name="cug_no" placeholder="Enter Phone">
+                                    <input class="form-control" type="text" id="cug_no" name="cug_no" placeholder="Enter Phone" />
                                 </div>
                             </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Date of birth</label>
-                                    <input class="form-control" type="date" name="dob" id="dob" value="" />
+                                    <input class="form-control" type="date" name="dob" value="" />
                                 </div>
                             </div>
                         </div>
@@ -428,6 +424,7 @@ active
                                 <div class="form-group">
                                     <label>Role Name</label>
                                     <select class="select form-control role_name" name="role_name" id="e_role_name">
+                                        <option value="">-- Select --</option>
                                         @foreach ($role_name as $role )
                                         <option value="{{ $role->role_type }}">{{ $role->role_type }}</option>
                                         @endforeach
@@ -440,9 +437,9 @@ active
                                 <div class="form-group">
                                     <label>Employee Type</label>
                                     <select class="select form-control" name="emp_type" id="emp_type">
-                                        <option disabled selected value="">----Select----</option>
+                                        <option value="">-- Select --</option>
                                         @foreach ($employee_types as $et )
-                                        <option value="{{ $et->emp_type_id }}">{{ $et->emp_type }}</option>
+                                        <option value="{{ $et->emp_type }}" selected>{{ $et->emp_type }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -450,8 +447,8 @@ active
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Organization Level</label>
-                                    <select class="select form-control" name="organ_level" id="org_level">
-                                        <option disabled selected value="">----Select----</option>
+                                    <select class="select form-control" name="organ_level_upd" id="organ_level_upd">
+                                        <option value="">-- Select --</option>
                                         @foreach ($organisation['data'] as $org )
                                         <option value="{{ $org->org_id }}">{{ $org->org_level }}</option>
                                         @endforeach
@@ -461,7 +458,7 @@ active
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Office</label>
-                                    <select class="select form-control" name="office_name" id="office_name">
+                                    <select class="select form-control" name="office_name_upd" id="office_name_upd">
                                         <option disabled selected value="">----Select----</option>
                                     </select>
                                 </div>
@@ -471,7 +468,7 @@ active
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Post</label>
-                                    <select class="select form-control" name="position" id="positions">
+                                    <select class="select form-control" name="position_upd" id="position_upd">
                                         <option disabled selected value="">----Select----</option>
                                     </select>
                                 </div>
@@ -479,7 +476,7 @@ active
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Designation</label>
-                                    <select class="select form-control" name="designation" id="designation">
+                                    <select class="select form-control" name="designation_upd" id="designation_upd">
                                         <option disabled selected value="">----Select----</option>
                                     </select>
                                 </div>
@@ -501,7 +498,7 @@ active
                                 <div class="form-group">
                                     <label>Attendance Type</label>
                                     <select class="select form-control" name="attend_type" id="attend_type">
-                                        <option disabled selected value="">----Select----</option>
+
                                         @foreach ($attendance_type as $at )
                                         <option value="{{ $at->attendance_type_id }}">{{ $at->attendance_type }}</option>
                                         @endforeach
@@ -512,7 +509,7 @@ active
                                 <div class="form-group">
                                     <label>Reporting Authority</label>
                                     <select class="select form-control" name="report_auth" id="report_auth">
-                                        <option disabled selected value="">----Select----</option>
+
                                         @foreach($result as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
@@ -606,22 +603,22 @@ active
     <!-- /Inactive Modal -->
 
     <!-- Disable Modal -->
-    <div class="modal custom-modal fade" id="disable_modal" role="dialog">
+    <div class="modal custom-modal fade" id="resign_modal" role="dialog">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="form-header">
                         <h3>Change Status</h3>
-                        <p>Are you sure want to disable the status?</p>
+                        <p>Are you sure want to Resign the status?</p>
                     </div>
                     <div class="modal-btn delete-action">
                         <form action="/userManagement/status" method="POST">
                             @csrf
                             <input type="hidden" name="id" class="e_id" value="">
-                            <input type="hidden" name="status" class="status" value="Disable">
+                            <input type="hidden" name="status" class="status" value="Resign">
                             <div class="row">
                                 <div class="col-6">
-                                    <button type="submit" class="btn btn-primary continue-btn">Disable</button>
+                                    <button type="submit" class="btn btn-primary continue-btn">Resign</button>
                                 </div>
                                 <div class="col-6">
                                     <a href="javascript:void(0);" data-dismiss="modal" class="btn btn-primary cancel-btn">Cancel</a>
@@ -667,6 +664,7 @@ active
 </div>
 <!-- /Page Wrapper -->
 @section('script')
+<script src="custom_js/user_control.js"></script>
 {{-- update js --}}
 <script>
     $(document).on('click', '.userUpdate', function() {
@@ -674,19 +672,21 @@ active
         $('#e_id').val(_this.find('.id').text());
         $('#e_name').val(_this.find('.name').text());
         $('#email').val(_this.find('.email').text());
+        $('#d_email').val(_this.find('.d_email').text());
         $('#cug_no').val(_this.find('.phone_number').text());
-        $('#dob').val(_this.find('.dobs').text());
+        $('#dob').val(_this.find('.dob').text());
         $('#d_email').val(_this.find('.d_email').text());
         $('#join_date').val(_this.find('.join_date').text());
 
         var name_role = (_this.find(".role_name").text());
-        var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'
-        $(_option).appendTo("#e_role_name");
+        // var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'
+        // $(_option).appendTo("#e_role_name");
+        document.getElementById("#e_role_name").value = e_name_role;
 
 
         var position = (_this.find(".position").text());
         var _option = '<option selected value="' + position + '">' + _this.find('.position').text() + '</option>'
-        $(_option).appendTo("#e_position");
+        $(_option).appendTo("#position_upd");
 
         var department = (_this.find(".department").text());
         var _option = '<option selected value="' + department + '">' + _this.find('.department').text() + '</option>'
@@ -712,7 +712,7 @@ active
         $('.e_id').val(_this.find('.ids').text());
     });
 
-    $(document).on('click', '.disableSubmit', function() {
+    $(document).on('click', '.ResignSubmit', function() {
         var _this = $(this).parents('tr');
         $('.e_id').val(_this.find('.ids').text());
     });
@@ -898,9 +898,73 @@ active
     });
 
     $(document).ready(function() {
+        $('#datatable').DataTable({
+            searchable: 'false',
+            dom: 'Bftrip',
+            buttons: {
+                buttons: [{
+                        extend: 'pdf',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-android-print"></i> Export PDF',
+                        className: 'pdfButton btn-padding'
+                    },
+                    {
+                        extend: 'copy',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-android-print"></i> copy',
+                        className: 'cpyButton btn-padding'
+                    },
+                    {
+                        extend: 'csv',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class ="icon-android-print"></i> CSV',
+                        className: 'csvButton btn-padding'
+
+
+                    },
+                    {
+                        extend: 'excel',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-document-text"></i> Excel',
+                        className: 'excelButton btn-padding'
+                    },
+                    {
+                        extend: 'print',
+                        exportOptions: {
+                            columns: [0, 1, 2, 3, 4, 5]
+                        },
+                        text: '<i class="icon-android-print"></i> Print',
+                        className: 'printButton btn-padding'
+                    }
+
+                ]
+            }
+        });
         $('.js-example-basic-single').select2();
     });
 </script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+
+<script src="js/datatable_buttons/dataTables.buttons.min.js"></script>
+<script src="js/datatable_buttons/jszip.min.js"></script>
+<script src="js/datatable_buttons/pdfmake.min.js"></script>
+<script src="js/datatable_buttons/vfs_fonts.js"></script>
+<script src="js/datatable_buttons/buttons.html5.min.js"></script>
+<script src="js/datatable_buttons/buttons.print.min.js"></script>
 
 @endsection
 

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use illuminate\Support\Facades\DB;
 
 class CreateUserTypesTable extends Migration
 {
@@ -22,7 +23,7 @@ class CreateUserTypesTable extends Migration
         DB::table('user_types')->insert([
             ['type_name' => 'Active'],
             ['type_name' => 'Inactive'],
-            ['type_name' => 'Disable']
+            ['type_name' => 'Resign']
         ]);
     }
 

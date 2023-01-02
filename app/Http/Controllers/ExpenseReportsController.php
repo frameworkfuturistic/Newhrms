@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseReportsController extends Controller
 {
@@ -29,9 +29,9 @@ class ExpenseReportsController extends Controller
     public function leaveReport()
     {
         $leaves = DB::table('leaves_admins')
-                    ->join('users', 'users.rec_id', '=', 'leaves_admins.rec_id')
-                    ->select('leaves_admins.*', 'users.*')
-                    ->get();
-        return view('reports.leavereports',compact('leaves'));
+            ->join('users', 'users.rec_id', '=', 'leaves_admins.rec_id')
+            ->select('leaves_admins.*', 'users.*')
+            ->get();
+        return view('reports.leavereports', compact('leaves'));
     }
 }

@@ -10,10 +10,11 @@ noti-dot
 
 <div class="page-wrapper">
     <!-- Page Content -->
-    <div class="content container-fluid">
+    <div class="content container-fluid" id="mydiv">
         <!-- Page Header -->
         <div class="page-header">
             <div class="row">
+
                 <div class="col-sm-12">
                     <h3 class="page-title">Profile</h3>
                     <ul class="breadcrumb">
@@ -22,6 +23,8 @@ noti-dot
                     </ul>
                 </div>
             </div>
+            <br>
+            <buttonn type="button" oclick="myfunc('mydiv')"> print</button>
         </div>
         {{-- message --}}
         {!! Toastr::message() !!}
@@ -63,6 +66,7 @@ noti-dot
                                                 <div class="text">N/A</div>
                                                 @endif
                                             </li>
+
                                             <li>
                                                 @if(!empty($information->department_email))
                                                 <div class="title">Dept. Email:</div>
@@ -72,6 +76,7 @@ noti-dot
                                                 <div class="text">N/A</div>
                                                 @endif
                                             </li>
+
                                             <li>
                                                 @if(!empty($information->dob))
                                                 <div class="title">Birthday:</div>
@@ -81,6 +86,7 @@ noti-dot
                                                 <div class="text">N/A</div>
                                                 @endif
                                             </li>
+
                                             <li>
                                                 @if(!empty($information->cug_no))
                                                 <div class="title">CUG No:</div>
@@ -94,24 +100,13 @@ noti-dot
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="pro-edit"><a data-target="#profile_info" data-toggle="modal" class="edit-icon" href="#"><i class="fa fa-pencil"></i></a></div> -->
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- <div class="card tab-box">
-            <div class="row user-tabs">
-                <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
-                    <ul class="nav nav-tabs nav-tabs-bottom">
-                        <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Profile</a></li>
-                        <li class="nav-item"><a href="#emp_projects" data-toggle="tab" class="nav-link">Projects</a></li>
-                        <li class="nav-item"><a href="#bank_statutory" data-toggle="tab" class="nav-link">Bank & Statutory <small class="text-danger">(Admin Only)</small></a></li>
-                    </ul>
-                </div>
-            </div>
-        </div> -->
 
         <div class="tab-content">
             <!-- Profile Info Tab -->
@@ -121,8 +116,8 @@ noti-dot
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
                                 <h3 class="card-title">
-                                    Personal Informations
-                                    <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a> -->
+                                    Identification Details :
+                                    <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a>
                                 </h3>
                                 <ul class="personal-info">
                                     @if(!empty($information))
@@ -135,6 +130,7 @@ noti-dot
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
+
                                     <li>
                                         @if(!empty($information->personal_contact))
                                         <div class="title">Alternative Contact</div>
@@ -144,6 +140,7 @@ noti-dot
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
+
                                     <li>
                                         @if(!empty($information->aadhar_no))
                                         <div class="title">Aadhar Number</div>
@@ -153,6 +150,39 @@ noti-dot
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
+
+                                    <li>
+                                        @if(!empty($information->pan_no))
+                                        <div class="title">Pan Number</div>
+                                        <div class="text">{{ $information->pan_no }}</div>
+                                        @else
+                                        <div class="title">Pan Number</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->uan_no_of_emp))
+                                        <div class="title">UAN Number</div>
+                                        <div class="text">{{ $information->uan_no_of_emp }}</div>
+                                        @else
+                                        <div class="title">UAN Number</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->blood_group))
+                                        <div class="title">Blood Group</div>
+                                        <div class="text">{{ $information->blood_group }}</div>
+                                        @else
+                                        <div class="title">Blood Group</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+
+
                                     @else
                                     <li>
                                         <div class="title">Personal Contact</div>
@@ -166,6 +196,18 @@ noti-dot
                                         <div class="title">Aadhar Number</div>
                                         <div class="text">N/A</div>
                                     </li>
+                                    <li>
+                                        <div class="title">Pan Number</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">UAN Number</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Blood Group</div>
+                                        <div class="text">N/A</div>
+                                    </li>
                                     @endif
                                 </ul>
                             </div>
@@ -174,11 +216,94 @@ noti-dot
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Emergency Contact
+                                <h3 class="card-title">Contact Details :
                                     <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a> -->
                                 </h3>
-                                <h5 class="section-title">Primary</h5>
-                                <hr>
+                                <ul class="personal-info">
+                                    <li>
+                                        @if(!empty($information->present_state))
+                                        <div class="title">present State</div>
+                                        <div class="text">{{ $information->present_state }}</div>
+                                        @else
+                                        <div class="title">Present State</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->present_city))
+                                        <div class="title">present City</div>
+                                        <div class="text">{{ $information->present_city }}</div>
+                                        @else
+                                        <div class="title">Present CIty</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->present_address))
+                                        <div class="title">Present Address</div>
+                                        <div class="text">{{ $information->present_address }}</div>
+                                        @else
+                                        <div class="title">Present Address</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->present_pin))
+                                        <div class="title">Present Pin</div>
+                                        <div class="text">{{ $information->present_pin }}</div>
+                                        @else
+                                        <div class="title">Present Pin</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->permanent_state))
+                                        <div class="title">Present State</div>
+                                        <div class="text">{{ $information->permanent_state }}</div>
+                                        @else
+                                        <div class="title">Present State</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->permanent_city))
+                                        <div class="title">Permanent City</div>
+                                        <div class="text">{{ $information->permanent_city }}</div>
+                                        @else
+                                        <div class="title">Permanent City</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->permanent_address))
+                                        <div class="title">Permanent Address</div>
+                                        <div class="text">{{ $information->present_address }}</div>
+                                        @else
+                                        <div class="title">Permanent Address</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+
+                                    <li>
+                                        @if(!empty($information->permanent_pin))
+                                        <div class="title">Permanent Pin</div>
+                                        <div class="text">{{ $information->permanent_pin }}</div>
+                                        @else
+                                        <div class="title">Permanent Pin</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                </ul>
+                                <h4 class="card-title">Emergency Contact Details : </h4>
+
                                 <ul class="personal-info">
                                     @if(!empty($information))
                                     <li>
@@ -208,6 +333,17 @@ noti-dot
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
+
+                                    <li>
+                                        @if(!empty($information->emergency_contact))
+                                        <div class="title">contact </div>
+                                        <div class="text">{{ $information->emergency_contact }}</div>
+                                        @else
+                                        <div class="title">Contact</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
                                     @else
                                     <li>
                                         <div class="title">Name</div>
@@ -221,6 +357,52 @@ noti-dot
                                         <div class="title">Address </div>
                                         <div class="text">N/A</div>
                                     </li>
+
+                                    <li>
+                                        <div class="title">Contact </div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Present State </div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Present City </div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Present Pin</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Present Address</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Permanent State</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Permanent city</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Permanent Address</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
+                                    <li>
+                                        <div class="title">Permanent Pin</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+
                                     @endif
                                 </ul>
                             </div>
@@ -231,10 +413,10 @@ noti-dot
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Bank information</h3>
+                                <h3 class="card-title">Bank information :</h3>
                                 <ul class="personal-info">
                                     <li>
-                                    @if(!empty($information->name_of_bank))
+                                        @if(!empty($information->name_of_bank))
                                         <div class="title">Bank name</div>
                                         <div class="text">{{ $information->name_of_bank }}</div>
                                         @else
@@ -242,8 +424,9 @@ noti-dot
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
+
                                     <li>
-                                    @if(!empty($information->account_holder_name))
+                                        @if(!empty($information->account_holder_name))
                                         <div class="title">Bank Holder Name</div>
                                         <div class="text">{{ $information->account_holder_name }}</div>
                                         @else
@@ -251,8 +434,9 @@ noti-dot
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
+
                                     <li>
-                                    @if(!empty($information->bank_ifsc))
+                                        @if(!empty($information->bank_ifsc))
                                         <div class="title">IFSC Code</div>
                                         <div class="text">{{ $information->bank_ifsc }}</div>
                                         @else
@@ -260,15 +444,7 @@ noti-dot
                                         <div class="text">N/A</div>
                                         @endif
                                     </li>
-                                    <li>
-                                        @if(!empty($information->pan_no))
-                                        <div class="title">PAN No</div>
-                                        <div class="text">{{ $information->pan_no }}</div>
-                                        @else
-                                        <div class="title">PAN No</div>
-                                        <div class="text">N/A</div>
-                                        @endif
-                                    </li>
+
                                 </ul>
                             </div>
                         </div>
@@ -276,7 +452,7 @@ noti-dot
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Family Informations
+                                <h3 class="card-title">Family Informations :
                                     <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a> -->
                                 </h3>
                                 <div class="table-responsive">
@@ -296,16 +472,16 @@ noti-dot
                                                     @else
                                                     N/A
                                                     @endif
-                                                </td>                                                
+                                                </td>
                                                 <td>
-                                                @if(!empty($information->fam_relation))
+                                                    @if(!empty($information->fam_relation))
                                                     {{ $information->fam_relation }}
                                                     @else
                                                     N/A
                                                     @endif
-                                                </td>                                                
+                                                </td>
                                                 <td>
-                                                @if(!empty($information->fam_age))
+                                                    @if(!empty($information->fam_age))
                                                     {{ $information->fam_age }}
                                                     @else
                                                     N/A
@@ -323,143 +499,274 @@ noti-dot
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Education Information
+                                <h3 class="card-title">Education Information :
                                     <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#education_info"><i class="fa fa-pencil"></i></a> -->
                                 </h3>
-                                <div class="experience-box">
-                                    <ul class="experience-list">
-                                        <li>
-                                            <div class="experience-user">
-                                                <div class="before-circle"></div>
-                                            </div>
-                                            <div class="experience-content">
-                                                <div class="timeline-content">
-                                                    <a href="#/" class="name">
-                                                    @if(!empty($information->edu_qua_board))
-                                                    {{ $information->edu_qua_board }}
-                                                    @else
-                                                    N/A
-                                                    @endif
-                                                    </a>
-                                                    <div>
-                                                        <br />
-                                                    @if(!empty($information->edu_qua_stream))
-                                                    {{ $information->edu_qua_stream }}
-                                                    @else
-                                                    N/A
-                                                    @endif
-                                                    @if(!empty($information->edu_qua_course_name))
-                                                    {{ $information->edu_qua_course_name }}
-                                                    @else
-                                                    N/A
-                                                    @endif
-                                                    <br />
-                                                </div>
-                                                <br />
-                                                    <span class="time">
-                                                        
-                                                    @if(!empty($information->edu_qua_passing_year))
-                                                    {{ $information->edu_qua_passing_year }}
-                                                    @else
-                                                    N/A
-                                                    @endif</span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <ul class="personal-info">
+                                    @if(!empty($information))
+                                    <li>
+                                        @if(!empty($information->edu_qua_course_name))
+                                        <div class="title">Course Name</div>
+                                        <div class="text">{{ $information->edu_qua_course_name }}</div>
+                                        @else
+                                        <div class="title">Course Name</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->edu_qua_stream))
+                                        <div class="title">Stream</div>
+                                        <div class="text">{{ $information->edu_qua_stream }}</div>
+                                        @else
+                                        <div class="title">Stream</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->edu_qua_board))
+                                        <div class="title">Board</div>
+                                        <div class="text">{{ $information->edu_qua_board }}</div>
+                                        @else
+                                        <div class="title">Board</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->edu_qua_passing_year))
+                                        <div class="title">Passing Year</div>
+                                        <div class="text">{{ $information->edu_qua_passing_year }}</div>
+                                        @else
+                                        <div class="title">Passing Year</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    <li>
+                                        @if(!empty($information->edu_qua_percentage))
+                                        <div class="title">Percentage/ GPA</div>
+                                        <div class="text">{{ $information->edu_qua_percentage }}</div>
+                                        @else
+                                        <div class="title">Percentage/ GPA</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+
+                                    @else
+                                    <li>
+                                        <div class="title">Course Name</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Stream</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Board</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Passing Year</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Percentage/ GPA
+                                        </div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    @endif
+                                </ul>
+                                <h4 class="card-title">Professional Qualification Details : </h4>
+
+                                <ul class="personal-info">
+                                    @if(!empty($information))
+                                    <li>
+                                        @if(!empty($information->pro_qua_university_name))
+                                        <div class="title">Institution/ University Name</div>
+                                        <div class="text">{{ $information->pro_qua_university_name }}</div>
+                                        @else
+                                        <div class="title">Institution/ University Name</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->pro_qua_degree))
+                                        <div class="title">Degree/ Diploma</div>
+                                        <div class="text">{{ $information->pro_qua_degree }}</div>
+                                        @else
+                                        <div class="title">Degree/ Diploma</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->pro_qua_subject))
+                                        <div class="title">Subject/ Courses</div>
+                                        <div class="text">{{ $information->pro_qua_subject }}</div>
+                                        @else
+                                        <div class="title">Subject/ Courses</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    @else
+                                    <li>
+                                        <div class="title">Institution/ University Name</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Degree/ Diploma</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    @endif
+                                </ul>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Experience
+                                <h3 class="card-title">Experience :
                                     <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a> -->
                                 </h3>
-                                <div class="experience-box">
-                                    <ul class="experience-list">
-                                        <li>
-                                            <div class="experience-user">
-                                                <div class="before-circle"></div>
-                                            </div>
-                                            <div class="experience-content">
-                                                <div class="timeline-content">
-                                                    <a href="#/" class="name">
-                                                        @if(!empty($information->tech_skill))
-                                                    {{ $information->tech_skill }}
-                                                    @else
-                                                    N/A
-                                                    @endif
-                                                </a>
-                                                    <span class="time">
-                                                        @if(!empty($information->organ_name))
-                                                    {{ $information->organ_name }}
-                                                    @else
-                                                    N/A
-                                                    @endif - 
-                                                    @if(!empty($information->skill_duration))
-                                                    {{ $information->skill_duration }}
-                                                    @else
-                                                    N/A
-                                                    @endif
-                                                </span>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <ul class="personal-info">
+                                    @if(!empty($information))
+                                    <li>
+                                        @if(!empty($information->organ_name))
+                                        <div class="title">Organisation Name</div>
+                                        <div class="text">{{ $information->organ_name }}</div>
+                                        @else
+                                        <div class="title">Organisation Name</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->job_profile))
+                                        <div class="title">Job Profile</div>
+                                        <div class="text">{{ $information->job_profile }}</div>
+                                        @else
+                                        <div class="title">Job profile</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->organ_type))
+                                        <div class="title">Organisation Type</div>
+                                        <div class="text">{{ $information->organ_type }}</div>
+                                        @else
+                                        <div class="title">Organisation Type</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    @else
+                                    <li>
+                                        <div class="title">Organisation Name</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">job profile</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Organisation Type</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    @endif
+                                </ul>
+                                <h4 class="card-title">Technical Skills :</h4>
+                                <ul class="personal-info">
+                                    @if(!empty($information))
+                                    <li>
+                                        @if(!empty($information->pro_qua_university_name))
+                                        <div class="title">Institution/ University Name</div>
+                                        <div class="text">{{ $information->pro_qua_university_name }}</div>
+                                        @else
+                                        <div class="title">Institution/ University Name</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    <li>
+                                        @if(!empty($information->pro_qua_duration))
+                                        <div class="title">Duration</div>
+                                        <div class="text">{{ $information->pro_qua_duration }}</div>
+                                        @else
+                                        <div class="title">Duration</div>
+                                        <div class="text">N/A</div>
+                                        @endif
+                                    </li>
+                                    @else
+                                    <li>
+                                        <div class="title">Course Name</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Duration</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    @endif
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- /Profile Info Tab -->
-
         </div>
+        <!-- /Profile Info Tab -->
+
     </div>
-    <!-- Change Profile Pic Modal -->
-    <div id="profile_pic_change" class="modal custom-modal fade" role="dialog">
-        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Change Profile Picture</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/profile/change-pic" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="profile-img-wrap edit-img">
-                                    <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
-                                    <div class="fileupload btn">
-                                        <span class="btn-text">edit</span>
-                                        <input class="upload" type="file" id="upload" name="upload">
-                                    </div>
+</div>
+<!-- Change Profile Pic Modal -->
+<div id="profile_pic_change" class="modal custom-modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change Profile Picture</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/profile/change-pic" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-img-wrap edit-img">
+                                <img class="inline-block" src="{{ URL::to('/assets/employee_image/'. Auth::user()->avatar) }}" alt="images/default.png">
+                                <div class="fileupload btn">
+                                    <span class="btn-text">edit</span>
+                                    <input class="upload" type="file" id="upload" name="upload">
                                 </div>
                             </div>
                         </div>
-                        <div hidden class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" id="id" name="id" value="{{ Auth::user()->id }}">
-                                </div>
+                    </div>
+                    <div hidden class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="hidden" class="form-control" id="id" name="id" value="{{ Auth::user()->id }}">
                             </div>
                         </div>
-                        <div class="submit-section">
-                            <button type="submit" class="btn btn-primary submit-btn">Submit</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="submit-section">
+                        <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-    <!-- /Change Profile Pic Modal -->
-
-kk
-    <!-- /Page Content -->
 </div>
+<!-- /Change Profile Pic Modal -->
+<!-- /Page Content -->
+</div>
+
+<script type="text/javascript">
+    function myfunc(paravalue) {
+        var backup = document.body.innerHTML;
+        var divcontent = document.getElementByid(paravalue).innerHTML;
+        document.body.innerHTML = divcontent;
+        javascript: window.print();
+
+    }
+</script>
 @endsection

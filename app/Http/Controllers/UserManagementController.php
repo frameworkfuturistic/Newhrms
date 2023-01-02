@@ -28,8 +28,13 @@ use Illuminate\Support\Str;
 
 class UserManagementController extends Controller
 {
+    public function view()
+    {
+        return view('usermanagement.profile_user');
+    }
     public function index()
     {
+
         if (Auth::user()->role_name == 'Admin') {
             $result      = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->get();
             $role_name   = DB::table('role_type_users')->get();
@@ -121,7 +126,6 @@ class UserManagementController extends Controller
     // Fetch office list through Ajax
     public function getOfficeLists($org_idd = 0)
     {
-
         // Fetch office name by organisation level
         $officeListData['data'] = MasterOfficeList::orderby("office_id", "asc")
             ->select('office_id', 'office_name')
@@ -181,7 +185,7 @@ class UserManagementController extends Controller
     public function saveProfileData(Request $request)
     {
         $request->validate([
-            'aadhar_no' => 'nullable|unique:personal_information',
+            'aadhar_no' => 'nullable',
             'aadhar_card' => 'nullable',
             'pan_no' => 'nullable',
             'pan_card' => 'nullable',
@@ -229,7 +233,7 @@ class UserManagementController extends Controller
             'full_name' => 'nullable',
             'fam_age ' => 'nullable',
             'account_holder_name' => 'nullable',
-            'account_type' => 'nullable',
+            'account_number' => 'nullable',
             'bank_ifsc' => 'nullable',
             'name_of_bank' => 'nullable'
         ]);
@@ -237,20 +241,6 @@ class UserManagementController extends Controller
         DB::beginTransaction();
         try {
             $personal_info = new PersonalInformation;
-
-            // if ($request->dl != null) {
-            //     $update_dl = ['driving_licence' => $driving_licence_image];
-            //     User::where('id', $id)->update($update_dl);
-            // } elseif ($request->passport != null) {
-            //     $update_pass = ['passport' => $passport_image];
-            //     User::where('id', $id)->update($update_pass);
-            // } elseif ($request->voter_id != null) {
-            //     $update_voter_card = ['voter_card' => $voter_id_image];
-            //     User::where('id', $id)->update($update_voter_card);
-            // } elseif ($request->uan != null) {
-            //     $update_uan = ['uan_no' => $uan_image];
-            //     User::where('id', $id)->update($update_uan);
-            // }
 
             $personal_information = PersonalInformation::where("user_id", Auth::user()->id)->first();
 
@@ -393,7 +383,7 @@ class UserManagementController extends Controller
 
             $account_holder_name = $request->account_holder_name;
 
-            $account_type = $request->account_type;
+            $account_number = $request->account_number;
 
             $bank_ifsc = $request->bank_ifsc;
 
@@ -596,8 +586,8 @@ class UserManagementController extends Controller
                     $personal_information->account_holder_name = $account_holder_name;
                 }
 
-                if (!is_null($account_type)) {
-                    $personal_information->account_type = $account_type;
+                if (!is_null($account_number)) {
+                    $personal_information->account_number = $account_number;
                 }
 
                 if (!is_null($bank_ifsc)) {
@@ -609,61 +599,6 @@ class UserManagementController extends Controller
                 }
 
                 $personal_information->save();
-
-                // $personal_information->update([
-                //     'aadhar_no' => $aadhar_no,
-                //     'aadhar_card' => $aadhar_card_img,
-                //     'pan_no' => $pan_no,
-                //     'pan_card' => $pan_card_img,
-                //     'driving_licence' => $driving_licence_img,
-                //     'passport' => $passport_img,
-                //     'voter_card' => $voter_id_img,
-                //     'uan_no' => $uan_img,
-                //     'uan_no_of_emp' => $uan_no_of_emp,
-                //     'blood_group' => $blood_group,
-                //     'present_state' => $present_state,
-                //     'present_city' => $present_city,
-                //     'present_pin' => $present_pin,
-                //     'present_address' => $present_address,
-                //     'permanent_state' => $permanent_state,
-                //     'permanent_city' => $permanent_city,
-                //     'permanent_pin' => $permanent_pin,
-                //     'permanent_address' => $permanent_address,
-                //     'personal_contact' => $personal_contact,
-                //     'alternative_contact' => $alternative_contact,
-                //     'emergency_contact' => $emergency_contact,
-                //     'emerg_con_per_name' => $emerg_con_per_name,
-                //     'emerg_con_per_rel' => $emerg_con_per_rel,
-                //     'emerg_con_per_add' => $emerg_con_per_add,
-                //     'edu_qua_course_name' => $edu_qua_course_name,
-                //     'edu_qua_stream' => $edu_qua_stream,
-                //     'edu_qua_board' => $edu_qua_board,
-                //     'edu_qua_passing_year' => $edu_qua_passing_year,
-                //     'edu_qua_percentage' => $edu_qua_percentage,
-
-                //     'edu_qua_certi_upload' => $edu_qua_certi_img,
-                //     'pro_qua_university_name' => $pro_qua_university_name,
-                //     'pro_qua_degree' => $pro_qua_degree,
-                //     'pro_qua_subject' => $pro_qua_subject,
-                //     'pro_qua_duration' => $pro_qua_duration,
-                //     'pro_qua_ind_certi' => $pro_qua_ind_certi_img,
-                //     'pro_qua_year' => $pro_qua_year,
-                //     'tech_skill' => $skill_name,
-                //     'skill_duration' => $skill_duration,
-                //     'organ_name' => $organ_name,
-                //     'job_profile' => $job_profile_img,
-                //     'organ_type' => $organ_type,
-                //     'supp_doc_upload' => $supp_doc_img,
-                //     'eff_from_date' => $eff_from_date,
-                //     'eff_to_date' => $eff_to_date,
-                //     'fam_relation' => $fam_relation,
-                //     'full_name' => $full_name,
-                //     'fam_age' => $fam_age,
-                //     'account_holder_name' => $account_holder_name,
-                //     'account_type' => $account_type,
-                //     'bank_ifsc' => $bank_ifsc,
-                //     'name_of_bank' => $name_of_bank
-                // ]);
             } else {
                 $user = PersonalInformation::create([
                     'user_id' => $id,
@@ -716,10 +651,9 @@ class UserManagementController extends Controller
                     'full_name' => $full_name,
                     'fam_age' => $fam_age,
                     'account_holder_name' => $account_holder_name,
-                    'account_type' => $account_type,
+                    'account_number' => $account_number,
                     'bank_ifsc' => $bank_ifsc,
                     'name_of_bank' => $name_of_bank
-
                 ]);
             }
 
@@ -743,8 +677,6 @@ class UserManagementController extends Controller
         return response()->json($orgData);
     }
 
-
-
     // use activity log
     public function activityLog()
     {
@@ -767,38 +699,8 @@ class UserManagementController extends Controller
         $reporting_auth = Auth::user()->reporting_authority;
         $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
 
+
         $information = DB::table('users')
-            ->select(
-                'users.name',
-                'users.emp_id',
-                'users.join_date',
-                'users.gender',
-                'users.reporting_authority',
-                'users.email',
-                'users.department_email',
-                'users.dob',
-                'users.cug_no',
-                'personal_information.personal_contact',
-                'personal_information.alternative_contact',
-                'personal_information.aadhar_no',
-                'personal_information.emerg_con_per_name',
-                'personal_information.emerg_con_per_rel',
-                'personal_information.emerg_con_per_add',
-                'personal_information.name_of_bank',
-                'personal_information.account_holder_name',
-                'personal_information.bank_ifsc',
-                'personal_information.pan_no',
-                'personal_information.full_name',
-                'personal_information.fam_relation',
-                'personal_information.fam_age',
-                'personal_information.edu_qua_board',
-                'personal_information.edu_qua_stream',
-                'personal_information.edu_qua_course_name',
-                'personal_information.edu_qua_passing_year',
-                'personal_information.tech_skill',
-                'personal_information.organ_name',
-                'personal_information.skill_duration'
-            )
             ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
             ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
             ->where('users.id', $profile)->first();
@@ -983,7 +885,6 @@ class UserManagementController extends Controller
     // update
     public function update(Request $request)
     {
-        DB::beginTransaction();
         try {
             $rec_id       = $request->rec_id;
             $name         = $request->name;
@@ -1033,7 +934,7 @@ class UserManagementController extends Controller
                 'modify_user'  => 'Update',
                 'date_time'    => $todayDate,
             ];
-
+            DB::beginTransaction();
             DB::table('user_activity_logs')->insert($activityLog);
             User::where('rec_id', $request->rec_id)->update($update);
             DB::commit();

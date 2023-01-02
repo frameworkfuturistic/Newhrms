@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use DB;
 use Carbon\Carbon;
-use Mail;
+use Illuminate\Support\Facades\Mail;
 use Brian2694\Toastr\Facades\Toastr;
 
 // Check github
@@ -32,7 +32,7 @@ class ForgotPasswordController extends Controller
         );
 
         Mail::send('auth.verify', ['token' => $token], function ($message) use ($request) {
-            $message->from('aniketkumarstu2000@gmail.com','HRMS');
+            $message->from('swarajlinda2017@gmail.com', 'HRMS');
             $message->to($request->email);
             $message->subject('Reset Password Notification');
         });
