@@ -83,8 +83,13 @@
 			<ul class="nav user-menu">
 				<li class="nav-item dropdown">
 					<div class="float-right mt-200">
-						<!-- <a href="#" class="btn add-btn" data-toggle="modal" data-target="#view_levelwise"><i class="fa fa-eye"></i> View Levelwise</a> -->
-
+						<a href="#" class="btn add-btn" data-toggle="modal" data-target="#view_levelwise"><i class="fa fa-eye"></i> View Levelwise</a>
+					</div>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						<form action="/change-levelwise-data" method="POST">
+							@csrf
+							<button type="submit" class="dropdown-item" name="level_type" value="1">All Level</button>
+						</form>
 					</div>
 				</li>
 				<!-- Notifications -->
