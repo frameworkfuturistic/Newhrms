@@ -153,33 +153,33 @@ noti-dot
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Passport Exp Date.</div>
+                                        <div class="title">Alternative Contact</div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Tel</div>
+                                        <div class="title">Aadhar Number</div>
                                         <div class="text"><a href="">N/A</a></div>
                                     </li>
                                     <li>
-                                        <div class="title">Nationality</div>
+                                        <div class="title">Pan Number</div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Religion</div>
+                                        <div class="title">UAN Number</div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Marital status</div>
+                                        <div class="title">Blood Group</div>
                                         <div class="text">N/A</div>
                                     </li>
-                                    <li>
+                                    <!-- <li>
                                         <div class="title">Employment of spouse</div>
                                         <div class="text">No</div>
-                                    </li>
-                                    <li>
+                                    </li> -->
+                                    <!-- <li>
                                         <div class="title">No. of children</div>
                                         <div class="text">N/A</div>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                         </div>
@@ -187,35 +187,41 @@ noti-dot
                     <div class="col-md-6 d-flex">
                         <div class="card profile-box flex-fill">
                             <div class="card-body">
-                                <h3 class="card-title">Emergency Contact <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a></h3>
-                                <h5 class="section-title">Primary</h5>
+                                <h3 class="card-title">Contact Details :<a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a></h3>
+                                <h5 class="section-title"></h5>
                                 <ul class="personal-info">
                                     <li>
-                                        <div class="title">Name</div>
+                                        <div class="title">Present State</div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Relationship</div>
+                                        <div class="title">present City</div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Phone </div>
+                                        <div class="title">Present Address</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Present Pin </div>
                                         <div class="text">N/A</div>
                                     </li>
                                 </ul>
-                                <hr>
-                                <h5 class="section-title">Secondary</h5>
                                 <ul class="personal-info">
                                     <li>
-                                        <div class="title">Name</div>
+                                        <div class="title">Permanent state </div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Relationship</div>
+                                        <div class="title">Permanent City </div>
                                         <div class="text">N/A</div>
                                     </li>
                                     <li>
-                                        <div class="title">Phone </div>
+                                        <div class="title">Permanent Address</div>
+                                        <div class="text">N/A</div>
+                                    </li>
+                                    <li>
+                                        <div class="title">Permanent Pin</div>
                                         <div class="text">N/A</div>
                                     </li>
                                 </ul>

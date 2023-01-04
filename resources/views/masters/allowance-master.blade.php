@@ -126,7 +126,7 @@ active
                 </div>
                 <br>
                 <div class="modal-body">
-                    <form action="{{ route('masters/allowanceMaster/update') }}" method="POST">
+                    <form action="{{ route('masters/allowanceMaster/update')}}" method="POST">
                         @csrf
                         <div class="row">
                             <div class="col-sm-1"></div>

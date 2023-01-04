@@ -15,3 +15,9 @@ yarn-error.log
 /.vscode
 public/images/
 public/assets/employee_image/
+public/assets/User_aadhar_card/
+public/assets/User_driving_licence/
+public/assets/User_pan_card/
+public/assets/User_voter_id/
+public/assets/User_passport/
+public/assets/User_uan/

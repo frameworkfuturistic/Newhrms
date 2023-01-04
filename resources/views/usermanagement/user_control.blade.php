@@ -37,7 +37,7 @@ active
         {!! Toastr::message() !!}
         <div class="row">
             <div class="col-md-12">
-                <div class=" row ">
+                <!-- <div class=" row ">
                     <div class="col-md-12">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             View Levelwise
@@ -54,26 +54,38 @@ active
                     </div>
 
                 </div>
-                <br>
+                <br> -->
                 <div class="table-responsive">
                     <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
+                                <th class="text-right">Action</th>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Post</th>
-                                <th>Phone</th>
+                                <th>CUG</th>
                                 <th>Join Date</th>
+                                <th>Organisation level </th>
                                 <th>Role</th>
                                 <th>Status</th>
-                                <th class="text-right">Action</th>
+
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($result as $key=>$user )
                             <tr>
+                                <td class="text-right">
+                                    <div class="dropdown dropdown-action">
+                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <!-- <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$user->id.'" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a> -->
+                                            <a class="dropdown-item userUpdate" href="edit-user/{{$user->id}}" target="_blank"><i class="fa fa-pencil m-r-5"></i> Edit</a>
+                                            <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="'.$user->id.'" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
+                                        </div>
+                                    </div>
+                                </td>
                                 <td>
-                                    <span hidden class="image">{{ $user->avatar}}</span>
+                                    <!-- <span hidden class="image">{{ $user->avatar}}</span> -->
                                     <h2 class="table-avatar">
                                         <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/employee_image/'. $user->avatar) }}" alt="images/default.png"></a>
                                         <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="name">{{ $user->name }}</span></a>
@@ -88,8 +100,9 @@ active
                                 <td class="position">
                                     {{ $user->post_title }}
                                 </td>
-                                <td class="phone_number">{{ $user->cug_no }}</td>
+                                <td class="CUG">{{ $user->cug_no }}</td>
                                 <td>{{ $user->join_date }}</td>
+                                <td>{{$user->org_id}}</td>
                                 <td>
                                     @if ($user->role_name=='Admin')
                                     <span class="badge bg-inverse-danger role_name">{{ $user->role_name }}</span>
@@ -123,15 +136,6 @@ active
                                                 <i class="fa fa-dot-circle-o 
                                                 text-danger"></i> Resign
                                             </a>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="text-right">
-                                    <div class="dropdown dropdown-action">
-                                        <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$user->id.'" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a>
-                                            <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="'.$user->id.'" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                 </td>
@@ -666,32 +670,32 @@ active
 <script src="custom_js/user_control.js"></script>
 {{-- update js --}}
 <script>
-    $(document).on('click', '.userUpdate', function() {
-        var _this = $(this).parents('tr');
-        $('#e_id').val(_this.find('.id').text());
-        $('#e_name').val(_this.find('.name').text());
-        $('#email').val(_this.find('.email').text());
-        $('#d_email').val(_this.find('.d_email').text());
-        $('#cug_no').val(_this.find('.phone_number').text());
-        $('#dob').val(_this.find('.dob').text());
-        $('#d_email').val(_this.find('.d_email').text());
-        $('#join_date').val(_this.find('.join_date').text());
+    // $(document).on('click', '.userUpdate', function() {
+    //     var _this = $(this).parents('tr');
+    //     $('#e_id').val(_this.find('.id').text());
+    //     $('#e_name').val(_this.find('.name').text());
+    //     $('#email').val(_this.find('.email').text());
+    //     $('#d_email').val(_this.find('.d_email').text());
+    //     $('#cug_no').val(_this.find('.phone_number').text());
+    //     $('#dob').val(_this.find('.dob').text());
+    //     $('#d_email').val(_this.find('.d_email').text());
+    //     $('#join_date').val(_this.find('.join_date').text());
 
-        var name_role = (_this.find(".role_name").text());
-        // var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'
-        // $(_option).appendTo("#e_role_name");
-        document.getElementById("#e_role_name").value = e_name_role;
+    //     var name_role = (_this.find(".role_name").text());
+    //     // var _option = '<option selected value="' + name_role + '">' + _this.find('.role_name').text() + '</option>'
+    //     // $(_option).appendTo("#e_role_name");
+    //     document.getElementById("#e_role_name").value = e_name_role;
 
 
-        var position = (_this.find(".position").text());
-        var _option = '<option selected value="' + position + '">' + _this.find('.position').text() + '</option>'
-        $(_option).appendTo("#position_upd");
+    //     var position = (_this.find(".position").text());
+    //     var _option = '<option selected value="' + position + '">' + _this.find('.position').text() + '</option>'
+    //     $(_option).appendTo("#position_upd");
 
-        var department = (_this.find(".department").text());
-        var _option = '<option selected value="' + department + '">' + _this.find('.department').text() + '</option>'
-        $(_option).appendTo("#e_department");
+    //     var department = (_this.find(".department").text());
+    //     var _option = '<option selected value="' + department + '">' + _this.find('.department').text() + '</option>'
+    //     $(_option).appendTo("#e_department");
 
-    });
+    // });
 </script>
 {{-- delete js --}}
 <script>
@@ -904,7 +908,7 @@ active
                 buttons: [{
                         extend: 'pdf',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 6]
                         },
                         text: '<i class="icon-android-print"></i> Export PDF',
                         className: 'pdfButton btn-padding'
@@ -912,7 +916,7 @@ active
                     {
                         extend: 'copy',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 6]
                         },
                         text: '<i class="icon-android-print"></i> copy',
                         className: 'cpyButton btn-padding'
@@ -920,7 +924,7 @@ active
                     {
                         extend: 'csv',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 6]
                         },
                         text: '<i class ="icon-android-print"></i> CSV',
                         className: 'csvButton btn-padding'
@@ -930,7 +934,7 @@ active
                     {
                         extend: 'excel',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 6]
                         },
                         text: '<i class="icon-document-text"></i> Excel',
                         className: 'excelButton btn-padding'
@@ -938,7 +942,7 @@ active
                     {
                         extend: 'print',
                         exportOptions: {
-                            columns: [0, 1, 2, 3, 4, 5]
+                            columns: [0, 1, 2, 3, 4, 6]
                         },
                         text: '<i class="icon-android-print"></i> Print',
                         className: 'printButton btn-padding'

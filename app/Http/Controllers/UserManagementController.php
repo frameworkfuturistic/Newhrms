@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveProfile;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\DB;
@@ -57,71 +58,71 @@ class UserManagementController extends Controller
     }
 
     // search user
-    public function searchUser(Request $request)
-    {
-        if (Auth::user()->role_name == 'Admin') {
-            // $result     = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->get();
-            $position   = DB::table('position_types')->get();
-            $department = DB::table('departments')->get();
-            $status_user = DB::table('user_types')->get();
-            $employee_types = DB::table('master_employee_types')->get();
-            $designation = DB::table('master_designations')->get();
-            $post = DB::table('master_posts')->get();
-            $role_name = DB::table('role_type_users')->get();
-            $attendance_type = DB::table('master_attendance_types')->get();
-            $organisation['data'] = Master_organisation::orderby("org_id", "asc")->select('org_id', 'org_level')->get();
-            $post['pd'] = MasterPost::orderby("org_id", "asc")->select('org_id', 'post_title')->get();
-            $designation['de'] = MasterDesignation::orderby("designation_id", "asc")->select('designation_id', 'designation_code', 'post_id')->get();
+    // public function searchUser(Request $request)
+    // {
+    //     if (Auth::user()->role_name == 'Admin') {
+    //         // $result     = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->get();
+    //         $position   = DB::table('position_types')->get();
+    //         $department = DB::table('departments')->get();
+    //         $status_user = DB::table('user_types')->get();
+    //         $employee_types = DB::table('master_employee_types')->get();
+    //         $designation = DB::table('master_designations')->get();
+    //         $post = DB::table('master_posts')->get();
+    //         $role_name = DB::table('role_type_users')->get();
+    //         $attendance_type = DB::table('master_attendance_types')->get();
+    //         $organisation['data'] = Master_organisation::orderby("org_id", "asc")->select('org_id', 'org_level')->get();
+    //         $post['pd'] = MasterPost::orderby("org_id", "asc")->select('org_id', 'post_title')->get();
+    //         $designation['de'] = MasterDesignation::orderby("designation_id", "asc")->select('designation_id', 'designation_code', 'post_id')->get();
 
-            // search by name
-            if ($request->name) {
-                $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')->get();
-            }
+    //         // search by name
+    //         if ($request->name) {
+    //             $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')->get();
+    //         }
 
-            // search by role name
-            if ($request->role_name) {
-                $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')->get();
-            }
+    //         // search by role name
+    //         if ($request->role_name) {
+    //             $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')->get();
+    //         }
 
-            // search by status
-            if ($request->status) {
-                $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.status', 'LIKE', '%' . $request->status . '%')->get();
-            }
+    //         // search by status
+    //         if ($request->status) {
+    //             $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.status', 'LIKE', '%' . $request->status . '%')->get();
+    //         }
 
-            // search by name and role name
-            if ($request->name && $request->role_name) {
-                $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')
-                    ->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')
-                    ->get();
-            }
+    //         // search by name and role name
+    //         if ($request->name && $request->role_name) {
+    //             $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')
+    //                 ->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')
+    //                 ->get();
+    //         }
 
-            // search by role name and status
-            if ($request->role_name && $request->status) {
-                $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')
-                    ->where('u.status', 'LIKE', '%' . $request->status . '%')
-                    ->get();
-            }
+    //         // search by role name and status
+    //         if ($request->role_name && $request->status) {
+    //             $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')
+    //                 ->where('u.status', 'LIKE', '%' . $request->status . '%')
+    //                 ->get();
+    //         }
 
-            // search by name and status
-            if ($request->name && $request->status) {
-                $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')
-                    ->where('u.status', 'LIKE', '%' . $request->status . '%')
-                    ->get();
-            }
+    //         // search by name and status
+    //         if ($request->name && $request->status) {
+    //             $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')
+    //                 ->where('u.status', 'LIKE', '%' . $request->status . '%')
+    //                 ->get();
+    //         }
 
-            // search by name and role name and status
-            if ($request->name && $request->role_name && $request->status) {
-                $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')
-                    ->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')
-                    ->where('u.status', 'LIKE', '%' . $request->status . '%')
-                    ->get();
-            }
+    //         // search by name and role name and status
+    //         if ($request->name && $request->role_name && $request->status) {
+    //             $result = DB::table('users as u')->select('u.*', 'mp.post_title')->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')->where('u.name', 'LIKE', '%' . $request->name . '%')
+    //                 ->where('u.role_name', 'LIKE', '%' . $request->role_name . '%')
+    //                 ->where('u.status', 'LIKE', '%' . $request->status . '%')
+    //                 ->get();
+    //         }
 
-            return view('usermanagement.user_control', compact('result', 'role_name', 'position', 'department', 'status_user', 'employee_types', 'designation', 'post', 'attendance_type', 'organisation'));
-        } else {
-            return redirect()->route('home');
-        }
-    }
+    //         return view('usermanagement.user_control', compact('result', 'role_name', 'position', 'department', 'status_user', 'employee_types', 'designation', 'post', 'attendance_type', 'organisation'));
+    //     } else {
+    //         return redirect()->route('home');
+    //     }
+    // }
 
     // Fetch office list through Ajax
     public function getOfficeLists($org_idd = 0)
@@ -182,481 +183,15 @@ class UserManagementController extends Controller
         return response()->json($design_name);
     }
 
-    public function saveProfileData(Request $request)
+    public function saveProfileData(SaveProfile $request)
     {
-        $request->validate([
-            'aadhar_no' => 'nullable',
-            'aadhar_card' => 'nullable',
-            'pan_no' => 'nullable',
-            'pan_card' => 'nullable',
-            'dl' => 'nullable',
-            'passport' => 'nullable',
-            'voter_id' => 'nullable',
-            'uan_no' => 'nullable',
-            'uan_no_of_emp' => 'nullable|numeric',
-            'blood_group' => 'nullable',
-            'present_state' => 'nullable',
-            'present_city' => 'nullable',
-            'present_pin' => 'nullable',
-            'present_address' => 'nullable',
-            'permanent_state' => 'nullable',
-            'permanent_city' => 'nullable',
-            'permanent_pin' => 'nullable',
-            'permanent_address' => 'nullable',
-            'personal_contact' => 'nullable',
-            'alternative_contact' => 'nullable',
-            'emergency_contact' => 'nullable',
-            'emerg_con_per_name' => 'nullable',
-            'emerg_con_per_rel' => 'nullable',
-            'emerg_con_per_add' => 'nullable',
-            'edu_qua_course_name' => 'nullable',
-            'edu_qua_stream' => 'nullable',
-            'edu_qua_board' => 'nullable',
-            'edu_qua_passing_year' => 'nullable',
-            'edu_qua_percentage' => 'nullable',
-            'edu_qua_certi_upload' => 'nullable',
-            'pro_qua_university_name' => 'nullable',
-            'pro_qua_degree' => 'nullable',
-            'pro_qua_subject' => 'nullable',
-            'pro_qua_duration' => 'nullable',
-            'pro_qua_ind_certi' => 'nullable',
-            'pro_qua_year' => 'nullable',
-            'skill_name' => 'nullable',
-            'skill_duration' => 'nullable',
-            'organ_name' => 'nullable',
-            'job_profile' => 'nullable',
-            'organ_type' => 'nullable',
-            'supp_doc_upload' => 'nullable',
-            'eff_from_date' => 'nullable',
-            'eff_to_date' => 'nullable',
-            'fam_relation' => 'nullable',
-            'full_name' => 'nullable',
-            'fam_age ' => 'nullable',
-            'account_holder_name' => 'nullable',
-            'account_number' => 'nullable',
-            'bank_ifsc' => 'nullable',
-            'name_of_bank' => 'nullable'
-        ]);
-
         DB::beginTransaction();
         try {
-            $personal_info = new PersonalInformation;
-
-            $personal_information = PersonalInformation::where("user_id", Auth::user()->id)->first();
-
-            $id = $request->user_id;
-
-            $aadhar_no = $request->aadhar_no;
-
-            if ($request->aadhar_card) {
-                $aadhar_card_img = $id . '.' . $request->aadhar_card->extension();
-                $request->aadhar_card->move(public_path('assets/User_aadhar_card'), $aadhar_card_img);
-            } else
-                $aadhar_card_img = null;
-
-            $pan_no = $request->pan_no;
-
-            if ($request->pan_card) {
-                $pan_card_img = $id . '.' . $request->pan_card->extension();
-                $request->pan_card->move(public_path('assets/User_pan_card'), $pan_card_img);
-            } else
-                $pan_card_img = null;
-
-            if ($request->dl) {
-                $driving_licence_img = $id . '.' . $request->dl->extension();
-                $request->dl->move(public_path('assets/User_driving_licence'), $driving_licence_img);
-            } else
-                $driving_licence_img = null;
-
-            if ($request->passport) {
-                $passport_img = $id . '.' . $request->passport->extension();
-                $request->passport->move(public_path('assets/User_passport'), $passport_img);
-            } else
-                $passport_img = null;
-
-            if ($request->voter_id) {
-                $voter_id_img = $id . '.' . $request->voter_id->extension();
-                $request->voter_id->move(public_path('assets/User_voter_id'), $voter_id_img);
-            } else
-                $voter_id_img = null;
-
-            if ($request->uan_no) {
-                $uan_img = $id . '.' . $request->uan_no->extension();
-                $request->uan_no->move(public_path('assets/User_uan'), $uan_img);
-            } else
-                $uan_img = null;
-
-            $uan_no_of_emp = $request->uan_no_of_emp;
-
-            $blood_group = $request->blood_group;
-
-            $present_state = $request->present_state;
-
-            $present_city = $request->present_city;
-
-            $present_pin = $request->present_pin;
-
-            $present_address = $request->present_address;
-
-            $permanent_state = $request->permanent_state;
-
-            $permanent_city = $request->permanent_city;
-
-            $permanent_pin = $request->permanent_pin;
-
-            $permanent_address = $request->permanent_address;
-
-            $personal_contact = $request->personal_contact;
-
-            $alternative_contact = $request->alternative_contact;
-
-            $emergency_contact = $request->emergency_contact;
-
-            $emerg_con_per_name = $request->emerg_con_per_name;
-
-            $emerg_con_per_rel = $request->emerg_con_per_rel;
-
-            $emerg_con_per_add = $request->emerg_con_per_add;
-
-            $edu_qua_course_name = $request->edu_qua_course_name;
-
-            $edu_qua_stream = $request->edu_qua_stream;
-
-            $edu_qua_board = $request->edu_qua_board;
-
-            $edu_qua_passing_year = $request->edu_qua_passing_year;
-
-            $edu_qua_percentage = $request->edu_qua_percentage;
-
-
-            if ($request->edu_qua_certi_upload) {
-                $edu_qua_certi_img = $id . '.' . $request->edu_qua_certi_upload->extension();
-                $request->edu_qua_certi_upload->move(public_path('assets/User_edu_qua_certi'), $edu_qua_certi_img);
-            } else
-                $edu_qua_certi_img = null;
-
-            $pro_qua_university_name = $request->pro_qua_university_name;
-
-            $pro_qua_degree = $request->pro_qua_degree;
-
-            $pro_qua_subject = $request->pro_qua_subject;
-
-            $pro_qua_duration = $request->pro_qua_duration;
-
-            if ($request->pro_qua_ind_certi) {
-                $pro_qua_ind_certi_img = $id . '.' . $request->pro_qua_ind_certi->extension();
-                $request->pro_qua_ind_certi->move(public_path('assets/User_pro_qua_ind'), $pro_qua_ind_certi_img);
-            } else
-                $pro_qua_ind_certi_img = null;
-
-            $pro_qua_year = $request->pro_qua_year;
-
-            $skill_name = $request->skill_name;
-
-            $skill_duration = $request->skill_duration;
-
-            $organ_name = $request->organ_name;
-
-            if ($request->job_profile) {
-                $job_profile_img = $id . '.' . $request->job_profile->extension();
-                $request->job_profile->move(public_path('assets/User_job_profile'), $job_profile_img);
-            } else
-                $job_profile_img = null;
-
-            $organ_type = $request->organ_type;
-
-            if ($request->supp_doc_upload) {
-                $supp_doc_img = $id . '.' . $request->supp_doc_upload->extension();
-                $request->supp_doc_upload->move(public_path('assets/User_supp_doc'), $supp_doc_img);
-            } else
-                $supp_doc_img = null;
-
-            $eff_from_date = $request->eff_from_date;
-
-            $eff_to_date = $request->eff_to_date;
-
-            $fam_relation = $request->fam_relation;
-
-            $full_name = $request->full_name;
-
-            $fam_age = $request->fam_age;
-
-            $account_holder_name = $request->account_holder_name;
-
-            $account_number = $request->account_number;
-
-            $bank_ifsc = $request->bank_ifsc;
-
-            $name_of_bank = $request->name_of_bank;
-
-
-            $personal_information = PersonalInformation::where('user_id', auth()->user()->id)->first();
-
-            if ($personal_information != null) {
-
-                if (!is_null($aadhar_no)) {
-                    $personal_information->aadhar_no = $aadhar_no;
-                }
-
-                if (!is_null($aadhar_card_img)) {
-                    $personal_information->aadhar_card = $aadhar_card_img;
-                }
-
-                if (!is_null($pan_no)) {
-                    $personal_information->pan_no = $pan_no;
-                }
-
-                if (!is_null($pan_card_img)) {
-                    $personal_information->pan_card = $pan_card_img;
-                }
-
-                if (!is_null($driving_licence_img)) {
-                    $personal_information->driving_licence = $driving_licence_img;
-                }
-
-                if (!is_null($passport_img)) {
-                    $personal_information->passport = $passport_img;
-                }
-
-                if (!is_null($voter_id_img)) {
-                    $personal_information->voter_card = $voter_id_img;
-                }
-
-                if (!is_null($uan_img)) {
-                    $personal_information->uan_no = $uan_img;
-                }
-
-                if (!is_null($uan_no_of_emp)) {
-                    $personal_information->uan_no_of_emp = $uan_no_of_emp;
-                }
-
-                if (!is_null($blood_group)) {
-                    $personal_information->blood_group = $blood_group;
-                }
-
-                if (!is_null($present_state)) {
-                    $personal_information->present_state = $present_state;
-                }
-
-                if (!is_null($present_city)) {
-                    $personal_information->present_city = $present_city;
-                }
-
-                if (!is_null($present_pin)) {
-                    $personal_information->present_pin = $present_pin;
-                }
-
-                if (!is_null($present_address)) {
-                    $personal_information->present_address = $present_address;
-                }
-
-                if (!is_null($permanent_state)) {
-                    $personal_information->permanent_state = $permanent_state;
-                }
-
-                if (!is_null($permanent_city)) {
-                    $personal_information->permanent_city = $permanent_city;
-                }
-
-                if (!is_null($permanent_pin)) {
-                    $personal_information->permanent_pin = $permanent_pin;
-                }
-
-                if (!is_null($permanent_address)) {
-                    $personal_information->permanent_address = $permanent_address;
-                }
-
-                if (!is_null($personal_contact)) {
-                    $personal_information->personal_contact = $personal_contact;
-                }
-
-                if (!is_null($alternative_contact)) {
-                    $personal_information->alternative_contact = $alternative_contact;
-                }
-
-                if (!is_null($emergency_contact)) {
-                    $personal_information->emergency_contact = $emergency_contact;
-                }
-
-                if (!is_null($emerg_con_per_name)) {
-                    $personal_information->emerg_con_per_name = $emerg_con_per_name;
-                }
-
-                if (!is_null($emerg_con_per_rel)) {
-                    $personal_information->emerg_con_per_rel = $emerg_con_per_rel;
-                }
-
-                if (!is_null($emerg_con_per_add)) {
-                    $personal_information->emerg_con_per_add = $emerg_con_per_add;
-                }
-
-                if (!is_null($edu_qua_course_name)) {
-                    $personal_information->edu_qua_course_name = $edu_qua_course_name;
-                }
-
-                if (!is_null($edu_qua_stream)) {
-                    $personal_information->edu_qua_stream = $edu_qua_stream;
-                }
-
-                if (!is_null($edu_qua_board)) {
-                    $personal_information->edu_qua_board = $edu_qua_board;
-                }
-
-                if (!is_null($edu_qua_passing_year)) {
-                    $personal_information->edu_qua_passing_year = $edu_qua_passing_year;
-                }
-
-                if (!is_null($edu_qua_percentage)) {
-                    $personal_information->edu_qua_percentage = $edu_qua_percentage;
-                }
-
-                if (!is_null($edu_qua_certi_img)) {
-                    $personal_information->edu_qua_certi_upload = $edu_qua_certi_img;
-                }
-
-                if (!is_null($pro_qua_university_name)) {
-                    $personal_information->pro_qua_university_name = $pro_qua_university_name;
-                }
-
-                if (!is_null($pro_qua_degree)) {
-                    $personal_information->pro_qua_degree = $pro_qua_degree;
-                }
-
-                if (!is_null($pro_qua_subject)) {
-                    $personal_information->pro_qua_subject = $pro_qua_subject;
-                }
-
-                if (!is_null($pro_qua_duration)) {
-                    $personal_information->pro_qua_duration = $pro_qua_duration;
-                }
-
-                if (!is_null($pro_qua_ind_certi_img)) {
-                    $personal_information->pro_qua_ind_certi = $pro_qua_ind_certi_img;
-                }
-
-                if (!is_null($pro_qua_year)) {
-                    $personal_information->pro_qua_year = $pro_qua_year;
-                }
-
-                if (!is_null($skill_name)) {
-                    $personal_information->tech_skill = $skill_name;
-                }
-
-                if (!is_null($skill_duration)) {
-                    $personal_information->skill_duration = $skill_duration;
-                }
-
-                if (!is_null($organ_name)) {
-                    $personal_information->organ_name = $organ_name;
-                }
-
-                if (!is_null($job_profile_img)) {
-                    $personal_information->job_profile = $job_profile_img;
-                }
-
-                if (!is_null($organ_type)) {
-                    $personal_information->organ_type = $organ_type;
-                }
-
-                if (!is_null($supp_doc_img)) {
-                    $personal_information->supp_doc_upload = $supp_doc_img;
-                }
-
-                if (!is_null($eff_from_date)) {
-                    $personal_information->eff_from_date = $eff_from_date;
-                }
-
-                if (!is_null($eff_to_date)) {
-                    $personal_information->eff_to_date = $eff_to_date;
-                }
-
-                if (!is_null($fam_relation)) {
-                    $personal_information->fam_relation = $fam_relation;
-                }
-
-                if (!is_null($full_name)) {
-                    $personal_information->full_name = $full_name;
-                }
-
-                if (!is_null($fam_age)) {
-                    $personal_information->fam_age = $fam_age;
-                }
-
-                if (!is_null($account_holder_name)) {
-                    $personal_information->account_holder_name = $account_holder_name;
-                }
-
-                if (!is_null($account_number)) {
-                    $personal_information->account_number = $account_number;
-                }
-
-                if (!is_null($bank_ifsc)) {
-                    $personal_information->bank_ifsc = $bank_ifsc;
-                }
-
-                if (!is_null($name_of_bank)) {
-                    $personal_information->name_of_bank = $name_of_bank;
-                }
-
-                $personal_information->save();
-            } else {
-                $user = PersonalInformation::create([
-                    'user_id' => $id,
-                    'aadhar_no' => $aadhar_no,
-                    'aadhar_card' => $aadhar_card_img,
-                    'pan_no' => $pan_no,
-                    'pan_card' => $pan_card_img,
-                    'driving_licence' => $driving_licence_img,
-                    'passport' => $passport_img,
-                    'voter_card' => $voter_id_img,
-                    'uan_no' => $uan_img,
-                    'uan_no_of_emp' => $uan_no_of_emp,
-                    'blood_group' => $blood_group,
-                    'present_state' => $present_state,
-                    'present_city' => $present_city,
-                    'present_pin' => $present_pin,
-                    'present_address' => $present_address,
-                    'permanent_state' => $permanent_state,
-                    'permanent_city' => $permanent_city,
-                    'permanent_pin' => $permanent_pin,
-                    'permanent_address' => $permanent_address,
-                    'personal_contact' => $personal_contact,
-                    'alternative_contact' => $alternative_contact,
-                    'emergency_contact' => $emergency_contact,
-                    'emerg_con_per_name' => $emerg_con_per_name,
-                    'emerg_con_per_rel' => $emerg_con_per_rel,
-                    'emerg_con_per_add' => $emerg_con_per_add,
-                    'edu_qua_course_name' => $edu_qua_course_name,
-                    'edu_qua_stream' => $edu_qua_stream,
-                    'edu_qua_board' => $edu_qua_board,
-                    'edu_qua_passing_year' => $edu_qua_passing_year,
-                    'edu_qua_percentage' => $edu_qua_percentage,
-
-                    'edu_qua_certi_upload' => $edu_qua_certi_img,
-                    'pro_qua_university_name' => $pro_qua_university_name,
-                    'pro_qua_degree' => $pro_qua_degree,
-                    'pro_qua_subject' => $pro_qua_subject,
-                    'pro_qua_duration' => $pro_qua_duration,
-                    'pro_qua_ind_certi' => $pro_qua_ind_certi_img,
-                    'pro_qua_year' => $pro_qua_year,
-                    'tech_skill' => $skill_name,
-                    'skill_duration' => $skill_duration,
-                    'organ_name' => $organ_name,
-                    'job_profile' => $job_profile_img,
-                    'organ_type' => $organ_type,
-                    'supp_doc_upload' => $supp_doc_img,
-                    'eff_from_date' => $eff_from_date,
-                    'eff_to_date' => $eff_to_date,
-                    'fam_relation' => $fam_relation,
-                    'full_name' => $full_name,
-                    'fam_age' => $fam_age,
-                    'account_holder_name' => $account_holder_name,
-                    'account_number' => $account_number,
-                    'bank_ifsc' => $bank_ifsc,
-                    'name_of_bank' => $name_of_bank
-                ]);
-            }
-
+            $personalInfo = PersonalInformation::where('user_id', $request->user_id);
+            $metaReqs = [
+                'aadhar_no' => $request->aadhar_no
+            ];
+            $personalInfo->update($metaReqs);
             DB::commit();
             return back()->with(Toastr::success('Profile Information Saved successfully :)', 'Success'));
         } catch (\Exception $e) {
@@ -785,7 +320,7 @@ class UserManagementController extends Controller
         }
     }
 
-    // save new user
+    // save new user form modal 
     public function addNewUserSave(Request $request)
     {
         $request->validate([
@@ -859,8 +394,6 @@ class UserManagementController extends Controller
             $user->cug_no       = $request->cug_no;
             $password = Str::random(6);
             $user->password     = Hash::make($password);
-
-
             $user->save();
             DB::commit();
             $data = [
@@ -890,6 +423,7 @@ class UserManagementController extends Controller
             $name         = $request->name;
             $email        = $request->email;
             $role_name    = $request->role_name;
+
             $position     = $request->position;
             $phone        = $request->phone;
             $department   = $request->department;
@@ -1048,5 +582,28 @@ class UserManagementController extends Controller
             ->get();
 
         return response()->json($officeListData);
+    }
+
+    public function editUser($id)
+    {
+        $user = User::find($id);
+
+        return view('usermanagement.edit_user', ['user' => $user]);
+    }
+    public function updateUser(Request $req, $id)
+    {
+        $user = User::find($id);
+        $user->update([
+            'first_name' => $req->first_name,
+            'middle_name' => $req->middle_name,
+            'last_name'  => $req->last_name,
+            'gender'  => $req->gender,
+            'category'  => $req->category,
+            'dob'  => $req->dob,
+            'email'  => $req->email,
+            'cug_no' => $req->cug_no,
+            'join_date' => $req->join_date
+        ]);
+        return back();
     }
 }

@@ -94,6 +94,9 @@ Route::controller(UserManagementController::class)->group(function () {
     Route::post('profile/change-pic', 'changeProfilePic');
     Route::post('profile/information/save', 'profileInformation')->name('profile/information/save');
 
+    Route::get('edit-user/{id}', 'editUser')->name('user.edit');
+    Route::post('update-User/{id}', 'updateUser');
+
     // ----------------------------- user userManagement -----------------------//
     Route::get('userManagement', 'index')->middleware('can:isAdmin')->name('userManagement');
     Route::get('/getOfficeLists/{org_idd}', 'getOfficeLists');
