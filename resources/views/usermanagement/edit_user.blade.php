@@ -108,12 +108,9 @@ active
                         <div class="form-group">
                             <label>Organization Level</label>
                             <select class="select form-control" name="organ_level" id="org_level">
-                                <option selected disabled> --Select --</option>
-
-                                <option value="General">State level staff</option>
-                                <option value="OBC">District level staff</option>
-                                <option value="ST">Block level staff</option>
-
+                                @foreach($organLevels as $key=>$organLevel)
+                                <option value="{{$organLevel->org_id}}" @if($organLevel->org_id==$user->org_id) selected @endif>{{$organLevel->org_level}}</option>
+                                @endforeach
                             </select>
                             <div class="alert-danger">@error('organ_level'){{ $message }}@enderror</div>
                         </div>
@@ -132,8 +129,11 @@ active
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Employee Type</label>
-                            <select class="select form-control" name="emp_type" id="">
-                                <option selected disabled> --Select --</option>
+                            <select class="select form-control" name="emp_type" id="emp_type">
+                                <option disabled> --Select --</option>
+                                @foreach($employeeTypes as $employeeType)
+                                <option value="{{$employeeType->emp_type_id}}" @if($user->emp_type_id==$employeeType->emp_type_id) selected @endif>{{$employeeType->emp_type}}</option>
+                                @endforeach
                             </select>
                             <div class="alert-danger">@error('emp_type'){{ $message }}@enderror</div>
                         </div>
@@ -192,7 +192,7 @@ active
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Reporting Authority's Designation</label>
+                            <label>Reporting Authority's Level</label>
                             <select class="select form-control" id="ra_designation">
                             </select>
                         </div>

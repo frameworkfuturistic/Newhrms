@@ -350,13 +350,13 @@ active
                                     <div class="alert-danger">@error('report_auth'){{ $message }}@enderror</div>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <!-- <div class="col-sm-4">
                                 <div class="form-group">
-                                    <label>Reporting Authority's Designation</label>
+                                    <label>Reporting Authority's Level</label>
                                     <select class="select form-control" id="ra_designation">
                                     </select>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>CUG Number<span class="required">*</span></label>
