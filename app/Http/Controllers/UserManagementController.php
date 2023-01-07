@@ -23,6 +23,7 @@ use App\Models\MasterOfficeList;
 use App\Models\MasterPost;
 use App\Models\MasterStates;
 use App\Models\PersonalInformation;
+use App\Models\Users\FamilyInfo;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -81,62 +82,26 @@ class UserManagementController extends Controller
     {
         $state['data'] = MasterStates::orderby("state_id", "asc")->select('state_id', 'state_name')->get();
         $personal_info = PersonalInformation::where("user_id", Auth::user()->id)->first();
-        return view('usermanagement.add_user', compact('state', 'personal_info'));
+        $familyInfos = FamilyInfo::where('user_id', Auth::user()->id)
+            ->get();
+        return view('usermanagement.add_user', compact('state', 'personal_info', 'familyInfos'));
     }
 
     public function saveProfileData(SaveProfile $request)
     {
+        // dd($request->all());
         DB::beginTransaction();
         try {
-            $personalInfo = PersonalInformation::where('user_id', $request->user_id);
-            $metaReqs = [
-                'aadhar_no' => $request->aadhar_no,
-                'pan_no' => $request->pan_no,
-                'uan_no_of_emp' => $request->uan_no_of_emp,
-                'blood_group' => $request->blood_group,
-                'present_state' => $request->present_state,
-                'present_city' => $request->present_city,
-                'present_pin' => $request->present_pin,
-                'present_address' => $request->present_address,
-                'permanent_state' => $request->permanent_state,
-                'permanent_city' => $request->permanent_city,
-                'permanent_pin' => $request->permanent_pin,
-                'permanent_address' => $request->permanent_address,
-                'personal_contact' => $request->personal_contact,
-                'alternative_contact' => $request->alternative_contact,
-                'emergency_contact' => $request->emergency_contact,
-                'emerg_con_per_name' => $request->emerg_con_per_name,
-                'emerg_con_per_rel' => $request->emerg_con_per_rel,
-                'emerg_con_per_add' => $request->emerg_con_per_add,
-                'edu_qua_course_name' => $request->edu_qua_course_name,
-                'edu_qua_stream' => $request->edu_qua_stream,
-                'edu_qua_board' => $request->edu_qua_board,
-                'edu_qua_passing_year' => $request->edu_qua_passing_year,
-                'edu_qua_percentage' => $request->edu_qua_percentage,
-                'pro_qua_university_name' => $request->pro_qua_university_name,
-                'pro_qua_degree' => $request->pro_qua_degree,
-                'pro_qua_subject' => $request->pro_qua_subject,
-                'pro_qua_year' => $request->pro_qua_year,
-                'skill_name' => $request->skill_name,
-                'skill_duration' => $request->skill_duration,
-                'organ_name' => $request->organ_name,
-                'organ_type' => $request->organ_type,
-                'eff_from_date' => $request->eff_from_date,
-                'eff_to_date' => $request->eff_to_date,
-                'relation' => $request->fam_relation,
-                'age' => $request->full_name,
-                'account_holder_name' > $request->account_holder_name,
-                'account_number' => $request->account_number,
-                'bank_ifsc' => $request->bank_ifsc,
-                'name_of_bank' => $request->name_of_bank
-            ];
-            $personalInfo->update($metaReqs);
+            $personalInfo = new PersonalInformation();
+            $familyInfo = new FamilyInfo();
+            $personalInfo->edit($request);
+            $familyInfo->edit($request);
             DB::commit();
             return back()->with(Toastr::success('Profile Information Saved successfully :)', 'Success'));
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Add Profile Information fail :)', 'Error');
-            return redirect()->back();
+            // return redirect()->back();
         }
     }
 

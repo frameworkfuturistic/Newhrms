@@ -2,6 +2,24 @@
 
 @section('css_cdn')
 <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+<style>
+    .iframe-container {
+        padding-bottom: 60%;
+        padding-top: 30px;
+        height: 0;
+        overflow: hidden;
+    }
+
+    .iframe-container iframe,
+    .iframe-container object,
+    .iframe-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
 @endsection
 
 @section('editemp_noti_dot')
@@ -19,6 +37,7 @@ active
 <div class="page-wrapper">
     <!-- Page Content -->
     <div class="content container-fluid">
+        <div id="dialog" style="display: none"></div>
         <!-- Page Header -->
         <div class="page-header">
             <div class="row align-items-center">
@@ -77,6 +96,13 @@ active
                                         <span class="d-none d-sm-inline">Bank Details</span>
                                     </a>
                                 </li>
+
+                                <li class="nav-item">
+                                    <a href="#documents" data-bs-toggle="tab" data-toggle="tab" class="nav-link icon-btn">
+                                        <i class="bx bxs-check-circle me-1"></i>
+                                        <span class="d-none d-sm-inline">Documents</span>
+                                    </a>
+                                </li>
                                 <!-- end nav item -->
                             </ul>
                             <!-- nav pills -->
@@ -106,15 +132,6 @@ active
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group">
-                                                    <label>Aadhar Card</label>
-                                                    <input class="form-control @error('aadhar_card') is-invalid @enderror" type="file" id="" name="aadhar_card" @if($personal_info->aadhar_card) value="{{ $personal_info->aadhar_card }}" @else value="{{ old('aadhar_card') }}" @endif >
-                                                </div>
-                                                <div class="alert-danger">@error('aadhar_card'){{ $message }}@enderror</div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
                                                     <label>PAN No.</label>
 
                                                     <input class="form-control" type="text" id="" name="pan_no" @if($personal_info->pan_no) value="{{ $personal_info->pan_no }}" @else value="{{ old('pan_no') }}" @endif placeholder="Enter PAN Number">
@@ -122,36 +139,7 @@ active
                                                 </div>
                                                 <div class="alert-danger">@error('pan_no'){{ $message }}@enderror</div>
                                             </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label>PAN Card</label>
-                                                    <input class="form-control @error('pan_card') is-invalid @enderror" type="file" id="" name="pan_card">
-                                                </div>
-                                                <div class="alert-danger">@error('pan_card'){{ $message }}@enderror</div>
-                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Driving License</label>
-                                                <input class="form-control" type="file" id="" name="dl">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label>Passport</label>
-                                                <input class="form-control" type="file" id="" name="passport">
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Voter ID Card</label>
-                                                <input class="form-control" type="file" id="" name="voter_id">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <label>UAN Document</label>
-                                                <input class="form-control" type="file" id="" name="uan_no">
-                                            </div>
-                                        </div>
-                                        <br>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <div class="form-group">
@@ -163,7 +151,9 @@ active
                                             <div class="col-sm-6">
                                                 <label>Blood Group</label>
                                                 <select class="select" name="blood_group" id="blood_group">
-                                                    <option selected disabled> --Select --</option>
+                                                    <option selected value="{{$personal_info->blood_group}}"> {{$personal_info->blood_group}}
+                                                    </option>
+                                                    <option disabled> --Select --</option>
                                                     <option value="A-">A-</option>
                                                     <option value="A+">A+</option>
                                                     <option value="B-">B-</option>
@@ -183,9 +173,9 @@ active
                                             <div class="col-sm-4">
                                                 <label>State</label>
                                                 <select class="select" name="present_state" id="present_state">
-                                                    <option selected disabled> --Select --</option>
+                                                    <option disabled> --Select --</option>
                                                     @foreach($state['data'] as $st)
-                                                    <option value="{{ $st->state_id }}">{{ $st->state_name }}</option>
+                                                    <option value="{{ $st->state_id }}" @if($personal_info->present_state==$st->state_id) selected @endif>{{ $st->state_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="alert-danger">@error('present_state'){{ $message }}@enderror</div>
@@ -223,9 +213,9 @@ active
                                             <div class="col-sm-4">
                                                 <label>State</label>
                                                 <select class="select" name="permanent_state" id="permanent_state">
-                                                    <option selected disabled> --Select --</option>
+                                                    <option disabled> --Select --</option>
                                                     @foreach($state['data'] as $st)
-                                                    <option value="{{ $st->state_id }}">{{ $st->state_name }}</option>
+                                                    <option value="{{ $st->state_id }}" @if($personal_info->permanent_state==$st->state_id) selected @endif>{{ $st->state_name }}</option>
                                                     @endforeach
                                                 </select>
                                                 <div class="alert-danger">@error('permanent_state'){{ $message }}@enderror</div>
@@ -318,11 +308,6 @@ active
                                                 <input class="form-control" type="text" id="" name="edu_qua_percentage" @if($personal_info->edu_qua_percentage) value="{{ $personal_info->edu_qua_percentage }}" @else value="{{ old('edu_qua_percentage') }}" @endif placeholder="Enter Percentage/ GPA">
                                                 <div class="alert-danger">@error('edu_qua_percentage'){{ $message }}@enderror</div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label>Certificate Upload</label>
-                                                <input class="form-control" type="file" id="" name="edu_qua_certi_upload" placeholder="Enter Percentage/ GPA">
-                                                <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
-                                            </div>
                                         </div>
 
 
@@ -355,11 +340,6 @@ active
                                                 <div class="alert-danger">@error('pro_qua_duration'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Industry Certification</label>
-                                                <input class="form-control" type="file" id="" name="pro_qua_ind_certi" />
-                                                <div class="alert-danger">@error('pro_qua_ind_certi'){{ $message }}@enderror</div>
-                                            </div>
-                                            <div class="col-sm-4">
                                                 <label>Year Of Passing</label>
                                                 <input class="form-control" type="number" id="" name="pro_qua_year" @if($personal_info->pro_qua_year) value="{{ $personal_info->pro_qua_year }}" @else value="{{ old('pro_qua_year') }}" @endif placeholder="YYYY" min="1940" max="2060">
                                                 <div class="alert-danger">@error('pro_qua_year'){{ $message }}@enderror</div>
@@ -390,37 +370,26 @@ active
                                                 <div class="alert-danger">@error('organ_name'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <label>Job Profile</label>
-                                                <input class="form-control" type="file" id="" name="job_profile" />
-                                                <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
-                                            </div>
-                                            <div class="col-sm-4">
                                                 <label>Organisation Type</label>
                                                 <select class="select" id="" name="organ_type" @if($personal_info->organ_type) value="{{ $personal_info->organ_type }}" @else value="{{ old('organ_type') }}" @endif >
-                                                    <option selected disabled> --Select --</option>
+                                                    <option selected value="{{$personal_info->organ_type}}">{{$personal_info->organ_type}}</option>
+                                                    <option disabled> --Select --</option>
                                                     <option value="Government">Government</option>
                                                     <option value="private">Private</option>
                                                 </select>
                                                 <div class="alert-danger">@error('organ_type'){{ $message }}@enderror</div>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row">
-                                            <div class="col-sm-4">
-                                                <label>Supporting Document Upload</label>
-                                                <input class="form-control" type="file" id="" name="supp_doc_upload" />
-                                                <div class="alert-danger">@error('supp_doc_upload'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
                                                 <label>Effective From Date</label>
                                                 <input class="form-control" type="date" id="" name="eff_from_date" @if($personal_info->eff_from_date) value="{{ $personal_info->eff_from_date }}" @else value="{{ old('eff_from_date') }}" @endif />
                                                 <div class="alert-danger">@error('eff_from_date'){{ $message }}@enderror</div>
                                             </div>
-                                            <div class="col-sm-4">
-                                                <label>Effective To Date</label>
-                                                <input class="form-control" type="date" id="" name="eff_to_date" @if($personal_info->eff_to_date) value="{{ $personal_info->eff_to_date }}" @else value="{{ old('eff_to_date') }}" @endif />
-                                                <div class="alert-danger">@error('eff_to_date'){{ $message }}@enderror</div>
-                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="col-sm-4">
+                                            <label>Effective To Date</label>
+                                            <input class="form-control" type="date" id="" name="eff_to_date" @if($personal_info->eff_to_date) value="{{ $personal_info->eff_to_date }}" @else value="{{ old('eff_to_date') }}" @endif />
+                                            <div class="alert-danger">@error('eff_to_date'){{ $message }}@enderror</div>
                                         </div>
                                         <br />
                                     </div>
@@ -443,14 +412,17 @@ active
                                                             </tr>
                                                         </thead>
                                                         <tbody id="table_achievements_tbody">
+                                                            @foreach($familyInfos as $key=>$familyInfo)
                                                             <tr>
-                                                                <td>1</td>
-                                                                <td><input type="text" class="form-control" name="fam_relation[]" @if($personal_info->fam_relation) value="{{ $personal_info->fam_relation }}" @else value="{{ old('fam_relation') }}" @endif ></td>
-                                                                <td><input type="text" class="form-control" name="full_name[]" @if($personal_info->full_name) value="{{ $personal_info->full_name }}" @else value="{{ old('full_name') }}" @endif ></td>
-                                                                <td><input type="text" class="form-control" name="fam_age[]" @if($personal_info->fam_age) value="{{ $personal_info->fam_age }}" @else value="{{ old('fam_age') }}" @endif ></td>
-                                                                <td></td>
-
+                                                                <td>{{$key+1}}</td>
+                                                                <td><input type="text" class="form-control" name="fam_relation[]" value="{{$familyInfo->relation}}"></td>
+                                                                <td><input type="text" class="form-control" name="fam_name[]" value="{{$familyInfo->name}}"></td>
+                                                                <td><input type="text" class="form-control" name="fam_age[]" value="{{$familyInfo->age}}"></td>
+                                                                <td>
+                                                                    <button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button>
+                                                                </td>
                                                             </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -492,6 +464,71 @@ active
                                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
                                         </div>
                                         <!-- end row -->
+                                    </div>
+
+                                    <!-- Documents Uploads -->
+                                    <div class="tab-pane" id="documents">
+                                        <h4 class="mb-3 mt-0"><u>Identification Details</u></h4>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Aadhar Card</label>
+                                                    <input class="form-control @error('aadhar_card') is-invalid @enderror" type="file" id="" name="aadhar_card" @if($personal_info->aadhar_card) value="{{ $personal_info->aadhar_card }}" @else value="{{ old('aadhar_card') }}" @endif >
+                                                </div>
+                                                <div class="alert-danger">@error('aadhar_card'){{ $message }}@enderror</div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->aadhar_card}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>PAN Card</label>
+                                                    <input class="form-control @error('pan_card') is-invalid @enderror" type="file" id="" name="pan_card">
+                                                </div>
+                                                <div class="alert-danger">@error('pan_card'){{ $message }}@enderror</div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->pan_card}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <label>Voter ID Card</label>
+                                            <input class="form-control" type="file" id="" name="voter_id">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>UAN Document</label>
+                                            <input class="form-control" type="file" id="" name="uan_no">
+                                        </div>
+                                        <h4 class="mb-3 mt-0"><u>Experience & Qualifications</u></h4>
+                                        <div class="col-sm-6">
+                                            <label>Qualification Certificate Upload</label>
+                                            <input class="form-control" type="file" id="" name="edu_qua_certi_upload" placeholder="Enter Percentage/ GPA">
+                                            <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Industry Certification</label>
+                                            <input class="form-control" type="file" id="" name="pro_qua_ind_certi" />
+                                            <div class="alert-danger">@error('pro_qua_ind_certi'){{ $message }}@enderror</div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Job Profile</label>
+                                            <input class="form-control" type="file" id="" name="job_profile" />
+                                            <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Supporting Document Upload</label>
+                                            <input class="form-control" type="file" id="" name="supp_doc_upload" />
+                                            <div class="alert-danger">@error('supp_doc_upload'){{ $message }}@enderror</div>
+                                        </div>
                                     </div>
 
                                     <!-- END: Define your tab pans here -->
@@ -559,7 +596,7 @@ active
             var rowsLength = document.getElementById(table_id).getElementsByTagName("tbody")[0].getElementsByTagName("tr").length + 1;
             return '<td>' + rowsLength + '</td>' +
                 '<td><input type="text" name = "fam_relation[]" class="form-control" value = "" ></td>' +
-                '<td><input type="text" name = "full_name[]" class="form-control" value = "" ></td>' +
+                '<td><input type="text" name = "fam_name[]" class="form-control" value = "" ></td>' +
                 '<td><input type="text" name = "fam_age[]" class="form-control" value = "" ></td>' +
                 '<td><button type="button" class="btn btn-danger" id="comments_remove"><i class="fa fa-trash-o"></i></button></td>'
         }
@@ -598,6 +635,7 @@ active
 
 @section('script')
 <script src="/custom_js/add_user_validation.js"></script>
+<script src="/custom_js/view-pdf.js"></script>
 @endsection
 
 @endsection

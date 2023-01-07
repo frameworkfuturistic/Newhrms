@@ -8803,3 +8803,13 @@ ul.comment-list li ul.children {
 .required {
     color: red;
 }
+
+.mt-25 {
+    margin-top: 25px !important;
+}
+
+.fa-lg {
+    font-size: 3.33333333em !important;
+    line-height: 0.75em;
+    vertical-align: -15%;
+}
