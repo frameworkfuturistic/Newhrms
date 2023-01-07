@@ -83,12 +83,20 @@ active
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
+                            <label>Profile Photo</label>
+                            <input class="form-control" type="file" id="image" name="image" />
+                            <div class="alert-danger">@error('image'){{ $message }}@enderror</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <label>Personal E-mail</label>
                             <input class="form-control" type="email" id="" name="email" placeholder="Enter Your Personal Email" value="{{ $user->email}}" />
                             <div class="alert-danger">@error('email'){{ $message }}@enderror</div>
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">

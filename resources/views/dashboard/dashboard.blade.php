@@ -69,7 +69,9 @@ active
                 <div class="card dash-widget">
                     <div class="card-body"> <span class="dash-widget-icon"><i class="fa fa-address-book"></i></span>
                         <div class="dash-widget-info">
-                            <h3>{{ $totalStaff }}</h3> <span>Total Staff</span>
+                            <h3>{{ $totalStaff }}</h3> <span>
+                                <a href="{{route('userManagement')}}">Total Staff</a>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -133,7 +135,7 @@ active
     </div>
     <!-- /Page Content -->
 
-    
+
 
 </div>
 

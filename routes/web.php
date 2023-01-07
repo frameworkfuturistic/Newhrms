@@ -34,6 +34,9 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
+    if (auth()->user()) {
+        return redirect()->route('home');
+    }
     return view('auth.login');
 });
 

@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('css_cdn')
+<link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+@endsection
+
 @section('editemp_noti_dot')
 noti-dot
 @endsection
@@ -77,7 +81,7 @@ active
                             </ul>
                             <!-- nav pills -->
 
-                            <form action="user-profile/save" method="POST" enctype="multipart/form-data">
+                            <form name="validateForm" onsubmit="return validation()" action="user-profile/save" method="POST" enctype="multipart/form-data">
                                 @method('POST')
                                 @csrf
 
@@ -96,7 +100,7 @@ active
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Aadhar No.</label>
-                                                    <input class="form-control" type="text" id="" name="aadhar_no" @if($personal_info->aadhar_no) value="{{ $personal_info->aadhar_no }}" @else value="{{ old('aadhar_no') }}" @endif placeholder="Enter Aadhar Number">
+                                                    <input class="form-control" type="text" id="aadhar_no" name="aadhar_no" @if($personal_info->aadhar_no) value="{{ $personal_info->aadhar_no }}" @else value="{{ old('aadhar_no') }}" @endif placeholder="Enter Aadhar Number">
                                                 </div>
                                                 <div class="alert-danger">@error('aadhar_no'){{ $message }}@enderror</div>
                                             </div>
@@ -203,7 +207,7 @@ active
                                         <div class="row">
                                             <div class="col-sm-4">
                                                 <label>Present Address</label>
-                                                <input class="form-control @error('present_pin') is-invalid @enderror" type="text" id="present_address" name="present_address" @if($personal_info->present_address) value="{{ $personal_info->present_address }}" @else value="{{ old('present_address') }}" @endif value="{{ old('present_address')}}" placeholder="Enter present address" />
+                                                <input class="form-control @error('present_address') is-invalid @enderror" type="text" id="present_address" name="present_address" @if($personal_info->present_address) value="{{ $personal_info->present_address }}" @else value="{{ old('present_address') }}" @endif value="{{ old('present_address')}}" placeholder="Enter present address" />
                                             </div>
                                         </div>
                                         <br />
@@ -423,34 +427,7 @@ active
                                     <!-- end experience detail tab pane -->
                                     <div class="tab-pane" id="family-information">
                                         <h4 class="mb-3 mt-0"><u>Family Information</u></h4>
-                                        <!-- <div class="row">
-                                            <div class="col-sm-4">
-                                                <label>Relation</label>
-                                                <input class="form-control" type="text" id="" name="fam_relation" placeholder="Enter relation">
-                                                <div class="alert-danger">@error('fam_relation'){{ $message }}@enderror</div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label>Full Name</label>
-                                                <input class="form-control" type="text" id="" name="full_name" placeholder="Enter Full Name">
-                                                <div class="alert-danger">@error('full_name'){{ $message }}@enderror</div>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <label>Age</label>
-                                                <input class="form-control" type="text" id="" name="fam_age" placeholder="Enter your Age">
-                                                <div class="alert-danger">@error('fam_age'){{ $message }}@enderror</div>
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="row">     
-                                            <div class="col-sm-4">
-                                                <span>
-                                                    <button type="button" class="btn btn-success add_item_btn " onclick="add()">Add More</button>
-                                                </span>
-                                                <span>
-                                                    <button type="button" class="btn btn-success add_item_btn " onclick="remove()">Remove</button> 
-                                                </span> 
-                                            </div>                                        
-                                        </div> -->
+
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="table-responsive">
@@ -563,36 +540,6 @@ active
 <!-- You need add bootstrap  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
-<!-- <script>
-    function add() {
-        $("#family-information").append('<br><div class="row add_more">'+
-            '<div class="col-sm-4">'+
-            '<label>Relation</label>'+
-            '<input class="form-control" type="text" id="" name="am_relation[]" placeholder="Enter relation">'+
-            ' </div>'+
-            '<div class="col-sm-4">'+
-                '<label>Full Name</label>'+
-                '<input class="form-control" type="text" id="" name="full_name[]" placeholder="Enter Full Name">'+
-            '</div>'+
-            '<div class="col-sm-4">'+
-                '<label>Age</label>'+
-                '<input class="form-control" type="text" id="" name="fam_age[]" placeholder="Enter your Age">'+
-            '</div>'+
-            '<div>'
-        );
-    }
-    function remove(){
-      $(document).ready(function(){
-        $("button").click(function(){
-            $("div").remove(".add_more");
-        });
-      });
-
-     
-    }
-
-</script> -->
-
 <script>
     $(function() {
         $(document).on("click", '.btn-add-row', function() {
@@ -640,14 +587,17 @@ active
 </script>
 
 <!--Import vanilla wizard here-->
-<script src="https://cdn.jsdelivr.net/npm/vanilla-wizard@0.0.5">
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/vanilla-wizard@0.0.5"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!--Initializing a wizard with no configuration -->
 <script>
     new Wizard("#basicwizard", {
         progress: true
     });
 </script>
+
+@section('script')
+<script src="/custom_js/add_user_validation.js"></script>
+@endsection
 
 @endsection

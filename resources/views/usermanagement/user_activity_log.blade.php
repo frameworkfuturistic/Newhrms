@@ -67,4 +67,5 @@ active
     </div>
     <!-- /Page Content -->
 </div>
+
 @endsection
