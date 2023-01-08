@@ -163,3 +163,53 @@ $("#ra_designation").change(function () {
         },
     });
 });
+
+// Filteration Using Role datatable
+$("#roleFilter").change(function (e) {
+    var table = $("#datatable").DataTable();
+    $("#datatable_filter.dataTables_filter").append($("#roleFilter"));
+
+    var roleIndex = 0;
+
+    $("#datatable th").each(function (i) {
+        if ($($(this)).html() == "Role") {
+            roleIndex = i;
+            return false;
+        }
+    });
+
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        var selectedItem = $("#roleFilter").val();
+        var role = data[roleIndex];
+        if (selectedItem === "" || role.includes(selectedItem)) {
+            return true;
+        }
+        return false;
+    });
+    table.draw();
+});
+
+// Filteration Using Organisation
+$("#organisationFilter").change(function (e) {
+    var table = $("#datatable").DataTable();
+    $("#datatable_filter.dataTables_filter").append($("#organisationFilter"));
+
+    var organisationIndox = 0;
+
+    $("#datatable th").each(function (i) {
+        if ($($(this)).html() == "OrganisationLevel") {
+            organisationIndox = i;
+            return false;
+        }
+    });
+
+    $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+        var selectedItem = $("#organisationFilter").val();
+        var organisation = data[organisationIndox];
+        if (selectedItem === "" || organisation.includes(selectedItem)) {
+            return true;
+        }
+        return false;
+    });
+    table.draw();
+});

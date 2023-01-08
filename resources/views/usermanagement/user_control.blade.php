@@ -29,6 +29,21 @@ active
                 <div class="col-auto float-right ml-auto">
                     <a href="#" class="btn add-btn" data-toggle="modal" data-target="#add_user"><i class="fa fa-plus"></i> Add Employee</a>
                 </div>
+                <!-- Role Filteration -->
+                <div class="role-filter">
+                    <select id="roleFilter" class="form-control">
+                        <option value="">Filter Role</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Employee">Employee</option>
+                    </select>
+
+                    <select id="organisationFilter" class="form-control">
+                        <option value="">Filter Organisation</option>
+                        @foreach ($organisation['data'] as $org )
+                        <option value="{{ $org->org_level }}">{{ $org->org_level }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
 
@@ -37,36 +52,16 @@ active
         {!! Toastr::message() !!}
         <div class="row">
             <div class="col-md-12">
-                <!-- <div class=" row ">
-                    <div class="col-md-12">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            View Levelwise
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <form action="/change-levelwise-data" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item" name="level_type" value="1">All Level</button>
-                                <button type="submit" class="dropdown-item" name="level_type" value="2">SPRC</button>
-                                <button type="submit" class="dropdown-item" name="level_type" value="3">DPRC</button>
-                                <button type="submit" class="dropdown-item" name="level_type" value="4">Block Level</button>
-                            </form>
-                        </div>
-                    </div>
-
-                </div>
-                <br> -->
                 <div class="table-responsive">
                     <table class="table table-striped custom-table" id="datatable">
                         <thead>
                             <tr>
                                 <th class="text-right">Action</th>
+                                <th>Role</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>OrganisationLevel</th>
                                 <th>Post</th>
-                                <th>CUG</th>
-                                <th>Join Date</th>
-                                <th>Organisation level </th>
-                                <th>Role</th>
                                 <th>Status</th>
 
                             </tr>
@@ -78,37 +73,28 @@ active
                                     <div class="dropdown dropdown-action">
                                         <a href="#" class="action-icon dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="material-icons">more_vert</i></a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <!-- <a class="dropdown-item userUpdate" data-toggle="modal" data-id="'.$user->id.'" data-target="#edit_user"><i class="fa fa-pencil m-r-5"></i> Edit</a> -->
                                             <a class="dropdown-item userUpdate" href="edit-user/{{$user->id}}" target="_blank"><i class="fa fa-pencil m-r-5"></i> Edit</a>
                                             <a class="dropdown-item userDelete" href="#" data-toggle="modal" ata-id="'.$user->id.'" data-target="#delete_user"><i class="fa fa-trash-o m-r-5"></i> Delete</a>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
-                                    <!-- <span hidden class="image">{{ $user->avatar}}</span> -->
-                                    <h2 class="table-avatar">
-                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/employee_image/'. $user->avatar) }}" alt="images/default.png"></a>
-                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="name">{{ $user->name }}</span></a>
-                                    </h2>
-                                </td>
-                                <!-- <td hidden class="ids">{{ $user->id }}</td>
-                                <td hidden class="dobs">{{ $user->dob }}</td>
-                                <td hidden class="join_date">{{ $user->join_date }}</td>
-                                <td hidden class="d_email">{{ $user->department_email }}</td>
-                                <td hidden class="id">{{ $user->rec_id }}</td> -->
-                                <td class="email">{{ $user->email }}</td>
-                                <td class="position">
-                                    {{ $user->post_title }}
-                                </td>
-                                <td class="CUG">{{ $user->cug_no }}</td>
-                                <td>{{ $user->join_date }}</td>
-                                <td>{{$user->org_id}}</td>
-                                <td>
                                     @if ($user->role_name=='Admin')
                                     <span class="badge bg-inverse-danger role_name">{{ $user->role_name }}</span>
                                     @elseif ($user->role_name=='Employee')
                                     <span class="badge bg-inverse-dark role_name">{{ $user->role_name }}</span>
                                     @endif
+                                </td>
+                                <td>
+                                    <h2 class="table-avatar">
+                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/employee_image/'. $user->avatar) }}" alt="images/default.png"></a>
+                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="name">{{ $user->name }}</span></a>
+                                    </h2>
+                                </td>
+                                <td class="email">{{ $user->email }}</td>
+                                <td>{{$user->org_level}}</td>
+                                <td class="position">
+                                    {{ $user->post_title }}
                                 </td>
                                 <td class="text-center">
                                     <div class="dropdown action-label">
@@ -735,8 +721,8 @@ active
     });
 
     $(document).ready(function() {
-        $('#datatable').DataTable({
-            searchable: 'false',
+        var table = $('#datatable').DataTable({
+            searching: true,
             dom: 'Bftrip',
             buttons: {
                 buttons: [{
@@ -786,6 +772,7 @@ active
             }
         });
         $('.js-example-basic-single').select2();
+
     });
 </script>
 <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>

@@ -41,13 +41,14 @@ class UserManagementController extends Controller
             $masterOrganisation = new Master_organisation();
             $mEmployeeTypes = new MasterEmployeeType();
             $result      = DB::table('users as u')
-                ->select('u.*', 'mp.post_title')
-                ->leftJoin(
-                    'master_posts as mp',
-                    'mp.post_id',
-                    '=',
-                    'u.position'
-                )->get();
+                ->select(
+                    'u.*',
+                    'mp.post_title',
+                    'o.org_level'
+                )
+                ->leftJoin('master_posts as mp', 'mp.post_id', '=', 'u.position')
+                ->leftJoin('master_organisations as o', 'o.org_id', '=', 'u.org_id')
+                ->get();
 
             $role_name   = DB::table('role_type_users')->get();
             $position    = DB::table('position_types')->get();
@@ -71,10 +72,61 @@ class UserManagementController extends Controller
                 )
                 ->get();
 
-            return view('usermanagement.user_control', compact('result', 'role_name', 'position', 'department', 'status_user', 'organisation', 'employee_types', 'designation', 'post', 'attendance_type'));
+            return view('usermanagement.user_control', compact(
+                'result',
+                'role_name',
+                'position',
+                'department',
+                'status_user',
+                'organisation',
+                'employee_types',
+                'designation',
+                'post',
+                'attendance_type'
+            ));
         } else {
             return redirect()->route('home');
         }
+    }
+
+    /**
+     * | Get Office Lists
+     */
+    public function getOfficeLists($org_idd = 0)
+    {
+        // Fetch office name by organisation level
+        $officeListData['data'] = MasterOfficeList::orderby("office_id", "asc")
+            ->select('office_id', 'office_name')
+            ->where('org_id', $org_idd)
+            ->get();
+
+        return response()->json($officeListData);
+    }
+
+    // Fetch post list through Ajax
+    public function getPost($org_idd = 0)
+    {
+
+        // Fetch post title by organisation level
+        $postData['pd'] = MasterPost::orderby("post_id", "asc")
+            ->select('post_id', 'post_title')
+            ->where('org_id', $org_idd)
+            ->get();
+
+        return response()->json($postData);
+    }
+
+    // Fetch designation code through Ajax
+    public function getDesignation($po_id = 0)
+    {
+
+        // Fetch post title by organisation level
+        $postData['de'] = MasterDesignation::orderby("designation_id", "asc")
+            ->select('designation_id', 'designation_code')
+            ->where('post_id', $po_id)
+            ->get();
+
+        return response()->json($postData);
     }
 
     //add user
@@ -478,6 +530,8 @@ class UserManagementController extends Controller
             return redirect()->back();
         }
     }
+
+
 
     // Fetch office name by organisation level
     public function searchOfficeName($org_idd = 0)
