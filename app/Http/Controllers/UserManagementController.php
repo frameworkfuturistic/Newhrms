@@ -89,7 +89,6 @@ class UserManagementController extends Controller
 
     public function saveProfileData(SaveProfile $request)
     {
-        // dd($request->all());
         DB::beginTransaction();
         try {
             $personalInfo = new PersonalInformation();
@@ -101,7 +100,7 @@ class UserManagementController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             Toastr::error('Add Profile Information fail :)', 'Error');
-            // return redirect()->back();
+            return redirect()->back();
         }
     }
 
