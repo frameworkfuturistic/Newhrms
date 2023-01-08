@@ -460,9 +460,9 @@ active
                                             <br />
                                         </div>
 
-                                        <div class="submit-section">
+                                        <!-- <div class="submit-section">
                                             <button type="submit" class="btn btn-primary submit-btn">Submit</button>
-                                        </div>
+                                        </div> -->
                                         <!-- end row -->
                                     </div>
 
@@ -500,69 +500,128 @@ active
                                             </div>
                                         </div>
 
-                                        <div class="col-sm-6">
-                                            <label>Voter ID Card</label>
-                                            <input class="form-control" type="file" id="" name="voter_id">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Voter ID Card</label>
+                                                <input class="form-control" type="file" id="" name="voter_card">
+                                            </div>
+                                            <div class="alert-danger">@error('voter_card'){{ $message }}@enderror</div>
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->voter_card}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label>UAN Document</label>
-                                            <input class="form-control" type="file" id="" name="uan_no">
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>UAN Document</label>
+                                                <input class="form-control" type="file" id="" name="uan_no">
+                                            </div>
+                                            <div class="alert-danger">@error('uan_no'){{ $message }}@enderror</div>
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->uan_no}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
+                                                </a>
+                                            </div>
                                         </div>
+
                                         <h4 class="mb-3 mt-0"><u>Experience & Qualifications</u></h4>
-                                        <div class="col-sm-6">
-                                            <label>Qualification Certificate Upload</label>
-                                            <input class="form-control" type="file" id="" name="edu_qua_certi_upload" placeholder="Enter Percentage/ GPA">
+                                        <br>
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Qualification Certificate Upload</label>
+                                                <input class="form-control" type="file" id="" name="edu_qua_certi_upload" placeholder="Enter Percentage/ GPA">
+                                                <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
+                                            </div>
                                             <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->edu_qua_certi_upload}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label>Industry Certification</label>
-                                            <input class="form-control" type="file" id="" name="pro_qua_ind_certi" />
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Industry Certification</label>
+                                                <input class="form-control" type="file" id="" name="pro_qua_ind_certi" />
+                                                <div class="alert-danger">@error('pro_qua_ind_certi'){{ $message }}@enderror</div>
+                                            </div>
                                             <div class="alert-danger">@error('pro_qua_ind_certi'){{ $message }}@enderror</div>
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->pro_qua_ind_certi}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label>Job Profile</label>
-                                            <input class="form-control" type="file" id="" name="job_profile" />
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Job Profile</label>
+                                                <input class="form-control" type="file" id="" name="job_profile" />
+                                                <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
+                                            </div>
                                             <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->job_profile}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <label>Supporting Document Upload</label>
-                                            <input class="form-control" type="file" id="" name="supp_doc_upload" />
+
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label>Support Document upload </label>
+                                                <input class="form-control" type="file" id="" name="supp_doc_upload" />
+                                                <div class="alert-danger">@error('supp_doc_upload'){{ $message }}@enderror</div>
+                                            </div>
                                             <div class="alert-danger">@error('supp_doc_upload'){{ $message }}@enderror</div>
-                                        </div>
-                                    </div>
-
-                                    <!-- END: Define your tab pans here -->
-
-                                    <!-- START: Define your controller buttons here-->
-                                    <div class="d-flex wizard justify-content-between mt-3">
-                                        <div class="first">
-                                            <a href="javascript:void(0);" class="btn btn-primary mt-3 mt-md-0">
-                                                First
-                                            </a>
-                                        </div>&nbsp;
-                                        <div class="d-flex">
-                                            <span class="previous me-2">
-                                                <a href="javascript:void(0);" class="btn icon-btn btn-primary mt-3 mt-md-0">
-                                                    <i class="bx bx-left-arrow-alt me-2"></i>Back To Previous
+                                            <div class="col-sm-4">
+                                                <a href="{{$personal_info->supp_doc_upload}}" class="view-pdf" target="_blank">
+                                                    <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
-                                            </span>
-                                            &nbsp;&nbsp;
-                                            <span class="next">
-                                                <a href="javascript:void(0);" class="btn icon-btn btn-primary mt-3 mt-md-0">
-                                                    Next Step<i class="bx bx-right-arrow-alt ms-2"></i>
-                                                </a>
-                                            </span>
-                                        </div>&nbsp;
-                                        <div class="last">
-                                            <a href="javascript:void(0);" class="btn btn-primary mt-3 mt-md-0">
-                                                Finish
-                                            </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <!-- END: Define your controller buttons here-->
 
-                                </div>
-                                <!-- end tab content-->
+
+
+                                        <!-- END: Define your tab pans here -->
+
+                                        <!-- START: Define your controller buttons here-->
+                                        <div class="d-flex wizard justify-content-between mt-3">
+                                            <div class="first">
+                                                <a href="javascript:void(0);" class="btn btn-primary mt-3 mt-md-0">
+                                                    First
+                                                </a>
+                                            </div>&nbsp;
+                                            <div class="d-flex">
+                                                <span class="previous me-2">
+                                                    <a href="javascript:void(0);" class="btn icon-btn btn-primary mt-3 mt-md-0">
+                                                        <i class="bx bx-left-arrow-alt me-2"></i>Back To Previous
+                                                    </a>
+                                                </span>
+                                                &nbsp;&nbsp;
+                                                <span class="next">
+                                                    <a href="javascript:void(0);" class="btn icon-btn btn-primary mt-3 mt-md-0">
+                                                        Next Step<i class="bx bx-right-arrow-alt ms-2"></i>
+                                                    </a>
+                                                </span>
+                                            </div>&nbsp;
+                                            <div class="last">
+                                                <a href="javascript:void(0);" class="btn btn-primary mt-3 mt-md-0">
+                                                    Finish
+                                                </a>
+                                            </div>&nbsp;
+                                            <div class="submit-section">
+                                                <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+                                            </div>
+                                        </div>
+                                        <!-- END: Define your controller buttons here-->
+
+                                    </div>
+                                    <!-- end tab content-->
                             </form>
                         </div>
                         <!-- end basicwizard -->

@@ -142,6 +142,42 @@ class PersonalInformation extends Model
             $a = array_merge($metaReqs, ['pan_card' => $fileName]);
         }
 
+        if ($req->voter_card) {
+            $fileName = '/uploads/' . time() . '.' . $req->voter_card->extension();
+            $req->voter_card->move(public_path('uploads'), $fileName);
+            $a = array_merge($metaReqs, ['voter_card' => $fileName]);
+        }
+
+        if ($req->uan_no) {
+            $fileName = '/uploads/' . time() . '.' . $req->uan_no->extension();
+            $req->uan_no->move(public_path('uploads'), $fileName);
+            $a = array_merge($metaReqs, ['uan_no' => $fileName]);
+        }
+
+        if ($req->edu_qua_certi_upload) {
+            $fileName = '/uploads/' . time() . '.' . $req->edu_qua_certi_upload->extension();
+            $req->edu_qua_certi_upload->move(public_path('uploads'), $fileName);
+            $a = array_merge($metaReqs, ['edu_qua_certi_upload' => $fileName]);
+        }
+
+        if ($req->pro_qua_ind_certi) {
+            $fileName = '/uploads/' . time() . '.' . $req->pro_qua_ind_certi->extension();
+            $req->pro_qua_ind_certi->move(public_path('uploads'), $fileName);
+            $a = array_merge($metaReqs, ['pro_qua_ind_certi' => $fileName]);
+        }
+
+        if ($req->job_profile) {
+            $fileName = '/uploads/' . time() . '.' . $req->job_profile->extension();
+            $req->job_profile->move(public_path('uploads'), $fileName);
+            $a = array_merge($metaReqs, ['job_profile' => $fileName]);
+        }
+
+        if ($req->supp_doc_upload) {
+            $fileName = '/uploads/' . time() . '.' . $req->supp_doc_upload->extension();
+            $req->supp_doc_upload->move(public_path('uploads'), $fileName);
+            $a = array_merge($metaReqs, ['supp_doc_upload' => $fileName]);
+        }
+
         return $a;
     }
 }
