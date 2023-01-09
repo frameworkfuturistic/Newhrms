@@ -48,54 +48,56 @@ noti-dot
                                     <div class="row">
                                         <div class="col-md-5">
                                             <div class="profile-info-left">
-                                                <h3 class="user-name m-t-0 mb-0">{{ Auth::user()->name }}</h3>
-                                                <div class="staff-id">Employee ID : {{ Auth::user()->emp_id }}</div><br />
-                                                <div class="small doj text-muted">Date of Join : {{ Auth::user()->join_date }}</div>
-                                                <small class="text-muted">Gender : {{ Auth::user()->gender }}</small><br />
+                                                <h3 class="user-name m-t-0 mb-0">{{ $information->name }}</h3>
+                                                <div class="staff-id">Employee ID : {{ $information->emp_id }}</div>
+                                                <div class="staff-id">Role : {{ $information->role_name }}</div><br />
+                                                <div class="small doj text-muted">Date of Join : {{date('d F, Y',strtotime($information->join_date)) }}</div>
+                                                <small class="text-muted">Gender : {{ $information->gender }}</small><br />
                                                 <small class="text-muted">Reporting Authority : {{ $reporting_auth_name[0]->name }}({{ $reporting_auth_name[0]->emp_id }})</small>
-
+                                                <small class="text-muted">Category : {{ $information->category }}</small><br />
+                                                <small class="text-muted">Designation : {{ $information->designation }}</small>
+                                                <br>
+                                                <small class="text-muted">Pay Slab : {{ $information->pay_slab }}</small>
+                                                <br>
+                                                <small class="text-muted">Attendance Type : {{ $information->attendance_type ?? 'N/A' }}</small>
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <ul class="personal-info">
                                                 <li>
-                                                    @if(!empty($information->email))
                                                     <div class="title">Email:</div>
-                                                    <div class="text"><a href="">{{ Auth::user()->email }}</a></div>
-                                                    @else
-                                                    <div class="title">Email:</div>
-                                                    <div class="text">N/A</div>
-                                                    @endif
+                                                    <div class="text"><a href="">{{ $information->email ?? 'N/A' }}</a></div>
                                                 </li>
 
                                                 <li>
-                                                    @if(!empty($information->department_email))
                                                     <div class="title">Dept. Email:</div>
-                                                    <div class="text">{{ $information->department_email }}</div>
-                                                    @else
-                                                    <div class="title">Dept. Email:</div>
-                                                    <div class="text">N/A</div>
-                                                    @endif
+                                                    <div class="text">{{ $information->department_email ?? 'N/A' }}</div>
                                                 </li>
 
                                                 <li>
-                                                    @if(!empty($information->dob))
                                                     <div class="title">Birthday:</div>
-                                                    <div class="text">{{date('d F, Y',strtotime($information->dob)) }}</div>
-                                                    @else
-                                                    <div class="title">Birthday:</div>
-                                                    <div class="text">N/A</div>
-                                                    @endif
+                                                    <div class="text">{{date('d F, Y',strtotime($information->dob)) ?? 'N/A' }}</div>
                                                 </li>
 
                                                 <li>
-                                                    @if(!empty($information->cug_no))
                                                     <div class="title">CUG No:</div>
-                                                    <div class="text">{{ $information->cug_no }}</div>
-                                                    @else
-                                                    <div class="title">CUG No:</div>
-                                                    <div class="text">N/A</div>
-                                                    @endif
+                                                    <div class="text">{{ $information->cug_no ?? 'N/A' }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Org Level:</div>
+                                                    <div class="text">{{ $information->org_level ?? 'N/A' }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Office Name:</div>
+                                                    <div class="text">{{ $information->office_name ?? 'N/A' }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Employee Name:</div>
+                                                    <div class="text">{{ $information->emp_type ?? 'N/A' }}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Post Title:</div>
+                                                    <div class="text">{{ $information->post_title ?? 'N/A' }}</div>
                                                 </li>
                                             </ul>
                                         </div>
@@ -107,7 +109,6 @@ noti-dot
                     </div>
                 </div>
             </div>
-
 
             <div class="tab-content">
                 <!-- Profile Info Tab -->
@@ -121,92 +122,56 @@ noti-dot
                                         <a href="#" class="edit-icon" data-toggle="modal" data-target="#personal_info_modal"><i class="fa fa-pencil"></i></a>
                                     </h3>
                                     <ul class="personal-info">
-                                        @if(!empty($information))
-                                        <li>
-                                            @if(!empty($information->personal_contact))
-                                            <div class="title">Personal Contact</div>
-                                            <div class="text">{{ $information->personal_contact }}</div>
-                                            @else
-                                            <div class="title">Personal Contact</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->personal_contact))
-                                            <div class="title">Alternative Contact</div>
-                                            <div class="text">{{ $information->alternative_contact }}</div>
-                                            @else
-                                            <div class="title">Alternative Contact</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->aadhar_no))
-                                            <div class="title">Aadhar Number</div>
-                                            <div class="text">{{ $information->aadhar_no }}</div>
-                                            @else
-                                            <div class="title">Aadhar Number</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->pan_no))
-                                            <div class="title">Pan Number</div>
-                                            <div class="text">{{ $information->pan_no }}</div>
-                                            @else
-                                            <div class="title">Pan Number</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->uan_no_of_emp))
-                                            <div class="title">UAN Number</div>
-                                            <div class="text">{{ $information->uan_no_of_emp }}</div>
-                                            @else
-                                            <div class="title">UAN Number</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->blood_group))
-                                            <div class="title">Blood Group</div>
-                                            <div class="text">{{ $information->blood_group }}</div>
-                                            @else
-                                            <div class="title">Blood Group</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        @else
                                         <li>
                                             <div class="title">Personal Contact</div>
-                                            <div class="text">N/A</div>
+                                            <div class="text">{{$personalInfo->personal_contact ?? 'N/A'}}</div>
                                         </li>
                                         <li>
                                             <div class="title">Alternative Contact</div>
-                                            <div class="text">N/A</div>
+                                            <div class="text">{{$personalInfo->alternative_contact ?? 'N/A'}}</div>
                                         </li>
+
                                         <li>
                                             <div class="title">Aadhar Number</div>
-                                            <div class="text">N/A</div>
+                                            <div class="text">{{$personalInfo->aadhar_no ?? 'N/A'}}</div>
                                         </li>
+
                                         <li>
                                             <div class="title">Pan Number</div>
-                                            <div class="text">N/A</div>
+                                            <div class="text">{{$personalInfo->pan_no ?? 'N/A'}}</div>
                                         </li>
+
                                         <li>
                                             <div class="title">UAN Number</div>
-                                            <div class="text">N/A</div>
+                                            <div class="text">{{$personalInfo->uan_no_of_emp ?? 'N/A'}}</div>
                                         </li>
+
                                         <li>
                                             <div class="title">Blood Group</div>
-                                            <div class="text">N/A</div>
+                                            <div class="text">{{$personalInfo->blood_group ?? 'N/A'}}</div>
                                         </li>
-                                        @endif
+                                    </ul>
+                                    <hr>
+                                    <h4 class="card-title">Emergency Contact Details : </h4>
+
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Name</div>
+                                            <div class="text">{{$personalInfo->emerg_con_per_name ?? 'N/A'}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Relationship</div>
+                                            <div class="text">{{$personalInfo->emerg_con_per_rel ?? 'N/A'}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Address </div>
+                                            <div class="text">{{$personalInfo->emerg_con_per_add ?? 'N/A'}}</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">contact </div>
+                                            <div class="text">{{$personalInfo->emergency_contact ?? 'N/A'}}</div>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -215,243 +180,144 @@ noti-dot
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
                                     <h3 class="card-title">Contact Details :
-                                        <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#emergency_contact_modal"><i class="fa fa-pencil"></i></a> -->
                                     </h3>
                                     <ul class="personal-info">
                                         <li>
-                                            @if(!empty($information->present_state))
-                                            <div class="title">present State</div>
-                                            <div class="text">{{ $information->present_state }}</div>
-                                            @else
                                             <div class="title">Present State</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="text">{{$personalInfo->m_present_state ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->present_city))
-                                            <div class="title">present City</div>
-                                            <div class="text">{{ $information->present_city }}</div>
-                                            @else
-                                            <div class="title">Present CIty</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="title">Present City</div>
+                                            <div class="text">{{$personalInfo->present_city ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->present_address))
                                             <div class="title">Present Address</div>
-                                            <div class="text">{{ $information->present_address }}</div>
-                                            @else
-                                            <div class="title">Present Address</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="text">{{$personalInfo->present_address ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->present_pin))
                                             <div class="title">Present Pin</div>
-                                            <div class="text">{{ $information->present_pin }}</div>
-                                            @else
-                                            <div class="title">Present Pin</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="text">{{$personalInfo->present_pin ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->permanent_state))
-                                            <div class="title">permanent States</div>
-                                            <div class="text">{{ $information->permanent_state }}</div>
-                                            @else
-                                            <div class="title">permanent State</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="title">Permanent States</div>
+                                            <div class="text">{{$personalInfo->m_permanent_state ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->permanent_city))
                                             <div class="title">Permanent City</div>
-                                            <div class="text">{{ $information->permanent_city }}</div>
-                                            @else
-                                            <div class="title">Permanent City</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="text">{{$personalInfo->permanent_city ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->permanent_address))
                                             <div class="title">Permanent Address</div>
-                                            <div class="text">{{ $information->present_address }}</div>
-                                            @else
-                                            <div class="title">Permanent Address</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="text">{{$personalInfo->permanent_address ?? 'N/A'}}</div>
                                         </li>
 
 
                                         <li>
-                                            @if(!empty($information->permanent_pin))
                                             <div class="title">Permanent Pin</div>
-                                            <div class="text">{{ $information->permanent_pin }}</div>
-                                            @else
-                                            <div class="title">Permanent Pin</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="text">{{$personalInfo->permanent_pin ?? 'N/A'}}</div>
                                         </li>
                                         <hr>
                                     </ul>
-                                    <h4 class="card-title">Emergency Contact Details : </h4>
-
+                                    <hr>
+                                    <h3 class="card-title">Bank information :</h3>
                                     <ul class="personal-info">
-                                        @if(!empty($information))
                                         <li>
-                                            @if(!empty($information->emerg_con_per_name))
-                                            <div class="title">Name</div>
-                                            <div class="text">{{ $information->emerg_con_per_name }}</div>
-                                            @else
-                                            <div class="title">Name</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if(!empty($information->emerg_con_per_rel))
-                                            <div class="title">Relationship</div>
-                                            <div class="text">{{ $information->emerg_con_per_rel }}</div>
-                                            @else
-                                            <div class="title">Relationship</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if(!empty($information->emerg_con_per_add))
-                                            <div class="title">Address </div>
-                                            <div class="text">{{ $information->emerg_con_per_add }}</div>
-                                            @else
-                                            <div class="title">Address</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="title">Bank name</div>
+                                            <div class="text">{{$personalInfo->name_of_bank ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->emergency_contact))
-                                            <div class="title">contact </div>
-                                            <div class="text">{{ $information->emergency_contact }}</div>
-                                            @else
-                                            <div class="title">Contact</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        @else
-                                        <li>
-                                            <div class="title">Name</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Relationship</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Address </div>
-                                            <div class="text">N/A</div>
+                                            <div class="title">Bank Holder Name</div>
+                                            <div class="text">{{$personalInfo->account_holder_name ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            <div class="title">Contact </div>
-                                            <div class="text">N/A</div>
+                                            <div class="title">IFSC Code</div>
+                                            <div class="text">{{$personalInfo->bank_ifsc ?? 'N/A'}}</div>
                                         </li>
 
-                                        <li>
-                                            <div class="title">Present State </div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Present City </div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Present Pin</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Present Address</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Permanent State</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Permanent city</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Permanent Address</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        <li>
-                                            <div class="title">Permanent Pin</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-
-                                        @endif
                                     </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Education Information -->
                     <div class="row">
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
-                                    <h3 class="card-title">Bank information :</h3>
+                                    <h3 class="card-title">Education Information :
+                                    </h3>
                                     <ul class="personal-info">
                                         <li>
-                                            @if(!empty($information->name_of_bank))
-                                            <div class="title">Bank name</div>
-                                            <div class="text">{{ $information->name_of_bank }}</div>
-                                            @else
-                                            <div class="title">Bank name</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="title">Course Name</div>
+                                            <div class="text">{{$personalInfo->edu_qua_course_name ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->account_holder_name))
-                                            <div class="title">Bank Holder Name</div>
-                                            <div class="text">{{ $information->account_holder_name }}</div>
-                                            @else
-                                            <div class="title">Bank Holder Name</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="title">Stream</div>
+                                            <div class="text">{{$personalInfo->edu_qua_stream ?? 'N/A'}}</div>
                                         </li>
 
                                         <li>
-                                            @if(!empty($information->bank_ifsc))
-                                            <div class="title">IFSC Code</div>
-                                            <div class="text">{{ $information->bank_ifsc }}</div>
-                                            @else
-                                            <div class="title">IFSC Code</div>
-                                            <div class="text">N/A</div>
-                                            @endif
+                                            <div class="title">Board</div>
+                                            <div class="text">{{$personalInfo->edu_qua_board ?? 'N/A'}}</div>
                                         </li>
 
+                                        <li>
+                                            <div class="title">Passing Year</div>
+                                            <div class="text">{{$personalInfo->edu_qua_passing_year ?? 'N/A'}}</div>
+                                        </li>
+
+                                        <li>
+                                            <div class="title">Percentage/ GPA</div>
+                                            <div class="text">{{$personalInfo->edu_qua_percentage ?? 'N/A'}}</div>
+                                        </li>
                                     </ul>
+
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 d-flex">
                             <div class="card profile-box flex-fill">
                                 <div class="card-body">
+                                    <h4 class="card-title">Professional Qualification Details : </h4>
+
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Technical Skill</div>
+                                            <div class="text">{{$personalInfo->tech_skill ?? 'N/A'}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Duration</div>
+                                            <div class="text">{{$personalInfo->skill_duration ?? 'N/A'}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Organisation Name</div>
+                                            <div class="text">{{$personalInfo->organ_name ?? 'N/A'}}</div>
+                                        </li>
+                                        <li>
+                                            <div class="title">Job Profile</div>
+                                            <div class="text">{{$personalInfo->job_profile ?? 'N/A'}}</div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Family Informations -->
+                    <div class="row">
+                        <div class="col-md-12 d-flex">
+                            <div class="card profile-box flex-fill">
+                                <div class="card-body">
                                     <h3 class="card-title">Family Informations :
-                                        <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#family_info_modal"><i class="fa fa-pencil"></i></a> -->
                                     </h3>
                                     <div class="table-responsive">
                                         <table class="table table-nowrap">
@@ -463,248 +329,22 @@ noti-dot
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @foreach($familyInfos as $familyInfo)
                                                 <tr>
                                                     <td>
-                                                        @if(!empty($information->full_name))
-                                                        {{ $information->full_name }}
-                                                        @else
-                                                        N/A
-                                                        @endif
+                                                        {{$familyInfo->name}}
                                                     </td>
                                                     <td>
-                                                        @if(!empty($information->fam_relation))
-                                                        {{ $information->fam_relation }}
-                                                        @else
-                                                        N/A
-                                                        @endif
+                                                        {{$familyInfo->relation}}
                                                     </td>
                                                     <td>
-                                                        @if(!empty($information->fam_age))
-                                                        {{ $information->fam_age }}
-                                                        @else
-                                                        N/A
-                                                        @endif
+                                                        {{$familyInfo->age}}
                                                     </td>
                                                 </tr>
+                                                @endforeach
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Education Information :
-                                        <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#education_info"><i class="fa fa-pencil"></i></a> -->
-                                    </h3>
-                                    <ul class="personal-info">
-                                        @if(!empty($information))
-                                        <li>
-                                            @if(!empty($information->edu_qua_course_name))
-                                            <div class="title">Course Name</div>
-                                            <div class="text">{{ $information->edu_qua_course_name }}</div>
-                                            @else
-                                            <div class="title">Course Name</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->edu_qua_stream))
-                                            <div class="title">Stream</div>
-                                            <div class="text">{{ $information->edu_qua_stream }}</div>
-                                            @else
-                                            <div class="title">Stream</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->edu_qua_board))
-                                            <div class="title">Board</div>
-                                            <div class="text">{{ $information->edu_qua_board }}</div>
-                                            @else
-                                            <div class="title">Board</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->edu_qua_passing_year))
-                                            <div class="title">Passing Year</div>
-                                            <div class="text">{{ $information->edu_qua_passing_year }}</div>
-                                            @else
-                                            <div class="title">Passing Year</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        <li>
-                                            @if(!empty($information->edu_qua_percentage))
-                                            <div class="title">Percentage/ GPA</div>
-                                            <div class="text">{{ $information->edu_qua_percentage }}</div>
-                                            @else
-                                            <div class="title">Percentage/ GPA</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-
-                                        @else
-                                        <li>
-                                            <div class="title">Course Name</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Stream</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Board</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Passing Year</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Percentage/ GPA
-                                            </div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        @endif
-                                    </ul>
-                                    <h4 class="card-title">Professional Qualification Details : </h4>
-
-                                    <ul class="personal-info">
-                                        @if(!empty($information))
-                                        <li>
-                                            @if(!empty($information->pro_qua_university_name))
-                                            <div class="title">Institution/ University Name</div>
-                                            <div class="text">{{ $information->pro_qua_university_name }}</div>
-                                            @else
-                                            <div class="title">Institution/ University Name</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if(!empty($information->pro_qua_degree))
-                                            <div class="title">Degree/ Diploma</div>
-                                            <div class="text">{{ $information->pro_qua_degree }}</div>
-                                            @else
-                                            <div class="title">Degree/ Diploma</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if(!empty($information->pro_qua_subject))
-                                            <div class="title">Subject/ Courses</div>
-                                            <div class="text">{{ $information->pro_qua_subject }}</div>
-                                            @else
-                                            <div class="title">Subject/ Courses</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        @else
-                                        <li>
-                                            <div class="title">Institution/ University Name</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Degree/ Diploma</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6 d-flex">
-                            <div class="card profile-box flex-fill">
-                                <div class="card-body">
-                                    <h3 class="card-title">Experience :
-                                        <!-- <a href="#" class="edit-icon" data-toggle="modal" data-target="#experience_info"><i class="fa fa-pencil"></i></a> -->
-                                    </h3>
-                                    <ul class="personal-info">
-                                        @if(!empty($information))
-                                        <li>
-                                            @if(!empty($information->organ_name))
-                                            <div class="title">Organisation Name</div>
-                                            <div class="text">{{ $information->organ_name }}</div>
-                                            @else
-                                            <div class="title">Organisation Name</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if(!empty($information->job_profile))
-                                            <div class="title">Job Profile</div>
-                                            <div class="text">{{ $information->job_profile }}</div>
-                                            @else
-                                            <div class="title">Job profile</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if(!empty($information->organ_type))
-                                            <div class="title">Organisation Type</div>
-                                            <div class="text">{{ $information->organ_type }}</div>
-                                            @else
-                                            <div class="title">Organisation Type</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        @else
-                                        <li>
-                                            <div class="title">Organisation Name</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">job profile</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Organisation Type</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        @endif
-                                    </ul>
-                                    <h4 class="card-title">Technical Skills :</h4>
-                                    <ul class="personal-info">
-                                        @if(!empty($information))
-                                        <li>
-                                            @if(!empty($information->pro_qua_university_name))
-                                            <div class="title">Institution/ University Name</div>
-                                            <div class="text">{{ $information->pro_qua_university_name }}</div>
-                                            @else
-                                            <div class="title">Institution/ University Name</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        <li>
-                                            @if(!empty($information->pro_qua_duration))
-                                            <div class="title">Duration</div>
-                                            <div class="text">{{ $information->pro_qua_duration }}</div>
-                                            @else
-                                            <div class="title">Duration</div>
-                                            <div class="text">N/A</div>
-                                            @endif
-                                        </li>
-                                        @else
-                                        <li>
-                                            <div class="title">Course Name</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        <li>
-                                            <div class="title">Duration</div>
-                                            <div class="text">N/A</div>
-                                        </li>
-                                        @endif
-                                    </ul>
                                 </div>
                             </div>
                         </div>

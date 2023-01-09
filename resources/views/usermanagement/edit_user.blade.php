@@ -83,13 +83,6 @@ active
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Profile Photo</label>
-                            <input class="form-control" type="file" id="image" name="image" />
-                            <div class="alert-danger">@error('image'){{ $message }}@enderror</div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
                             <label>Personal E-mail</label>
                             <input class="form-control" type="email" id="" name="email" placeholder="Enter Your Personal Email" value="{{ $user->email}}" />
                             <div class="alert-danger">@error('email'){{ $message }}@enderror</div>
@@ -108,14 +101,15 @@ active
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Date Of Joining</label>
-                            <input class="form-control" type="date" id="" name="join_date" placeholder="Enter Date Of Joining" value="{{$user->join_date}}" />
+                            <input class="form-control" type="date" id="" name="join_date" placeholder="Enter Date Of Joining" value="{{date('Y-m-d',strtotime($user->join_date))}}" />
                             <div class="alert-danger">@error('join_date'){{ $message }}@enderror</div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class=" col-sm-4">
                         <div class="form-group">
                             <label>Organization Level</label>
                             <select class="select form-control" name="organ_level" id="org_level">
+                                <option value="">Select</option>
                                 @foreach($organLevels as $key=>$organLevel)
                                 <option value="{{$organLevel->org_id}}" @if($organLevel->org_id==$user->org_id) selected @endif>{{$organLevel->org_level}}</option>
                                 @endforeach
@@ -129,7 +123,8 @@ active
                         <div class="form-group">
                             <label>Office Name</label>
                             <select class="select form-control" name="office_name" id="office_name">
-                                <option selected disabled> --Select --</option>
+                                <option selected value="{{$user->office_id}}">{{$user->office_name}}</option>
+                                <option disabled> --Select --</option>
                             </select>
                             <div class="alert-danger">@error('office_name'){{ $message }}@enderror</div>
                         </div>
@@ -150,7 +145,8 @@ active
                         <div class="form-group">
                             <label>Post</label>
                             <select class="select form-control" name="position" id="positions">
-                                <option selected disabled> --Select --</option>
+                                <option selected value="{{$user->position}}">{{$user->post_title}}</option>
+                                <option disabled> --Select --</option>
                             </select>
                             <div class="alert-danger">@error('position'){{ $message }}@enderror</div>
                         </div>
@@ -161,7 +157,8 @@ active
                         <div class="form-group">
                             <label>Designation</label>
                             <select class="select form-control" name="designation" id="designation">
-                                <option selected disabled> --Select --</option>
+                                <option selected value="{{$user->designation}}">{{$user->designation}}</option>
+                                <option disabled> --Select --</option>
                             </select>
                             <div class="alert-danger">@error('designation'){{ $message }}@enderror</div>
                         </div>
@@ -170,7 +167,8 @@ active
                         <div class="form-group">
                             <label>Pay Slab</label>
                             <select class="select form-control" name="pay_slab" id="">
-                                <option selected disabled> --Select --</option>
+                                <option selected value="{{$user->pay_slab}}">{{$user->pay_slab}}</option>
+                                <option disabled> --Select --</option>
                                 <option value="Slab 1">Slab 1</option>
                                 <option value="Slab 2">Slab 2</option>
                                 <option value="Slab 3">Slab 3</option>
@@ -182,7 +180,10 @@ active
                         <div class="form-group">
                             <label>Attendance Type</label>
                             <select class="select form-control" name="attend_type" id="">
-                                <option selected disabled> --Select --</option>
+                                <option disabled> --Select --</option>
+                                @foreach($attendanceTypes as $attendanceType)
+                                <option @if($user->attendance_type==$attendanceType->attendance_type_id) selected @endif value="{{$attendanceType->attendance_type_id}}">{{$attendanceType->attendance_type}}</option>
+                                @endforeach
                             </select>
                             <div class="alert-danger">@error('attend_type'){{ $message }}@enderror</div>
                         </div>
@@ -194,15 +195,11 @@ active
                             <label>Reporting Authority</label>
                             <select class="select form-control js-example-basic-single" name="report_auth" id="report_auth">
                                 <option selected disabled> --Select --</option>
+                                @foreach($repoAuthorities as $repoAuthority)
+                                <option @if($user->reporting_authority==$repoAuthority->id) selected @endif value="{{$repoAuthority->id}}">{{$repoAuthority->name}}</option>
+                                @endforeach
                             </select>
                             <div class="alert-danger">@error('report_auth'){{ $message }}@enderror</div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Reporting Authority's Level</label>
-                            <select class="select form-control" id="ra_designation">
-                            </select>
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -220,9 +217,134 @@ active
         </div>
     </div>
 </div>
+@endsection
+
+@section('script')
 <script>
-    // $(document).on('click','.first_name',function(){var _this = $(this).parents('tr');})
-    // $('#first_name').val(_this.find('.first_name'))
-    // 
+    // Organization Change
+    $('#org_level').change(function() {
+        // Organization Level
+        var org_idd = $(this).val();
+
+        // Empty the dropdown
+        $('#office_name').find('option').not(':first').remove();
+
+        // AJAX request 
+        $.ajax({
+            type: 'GET',
+            url: '/getOfficeLists/' + org_idd,
+            cache: false,
+            contentType: "application/json;",
+            datatype: 'json',
+            success: function(response) {
+                var len = 0;
+                if (response['data'] != null) {
+                    len = response['data'].length;
+                }
+
+                if (len > 0) {
+                    // Read data and create <option >
+                    for (var i = 0; i < len; i++) {
+
+                        var office_id = response['data'][i].office_id;
+                        var office_name = response['data'][i].office_name;
+
+                        var option = "<option class='select' value='" + office_id + "'>" + office_name + "</option>";
+
+                        $("#office_name").append(option);
+                    }
+                }
+
+            },
+            error: function(error) {
+                alert(error);
+            },
+        });
+    });
+
+    //  This function is for Selecting organisation level according to organisation level show all office name  
+
+
+    // Organization Change
+    $('#org_level').change(function() {
+
+        // Organization Level
+        var org_idd = $(this).val();
+
+        // Empty the dropdown
+        $('#positions').find('option').not(':first').remove();
+
+        // AJAX request 
+        $.ajax({
+            url: '/getPosts/' + org_idd,
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+
+                var len = 0;
+                if (response['pd'] != null) {
+                    len = response['pd'].length;
+                }
+
+                if (len > 0) {
+                    // Read data and create <option >
+                    for (var i = 0; i < len; i++) {
+
+                        var post_id = response['pd'][i].post_id;
+                        var post_title = response['pd'][i].post_title;
+
+                        var option = "<option class='select' value='" + post_id + "'>" + post_title + "</option>";
+
+                        $("#positions").append(option);
+                    }
+                }
+
+            }
+        });
+    });
+    //  This function is for Selecting designation according to post id show all designation name  
+
+
+
+    // Post Change
+    $('#positions').change(function() {
+
+        // Post Level
+        var po_id = $(this).val();
+
+        // Empty the dropdown
+        $('#designation').find('option').not(':first').remove();
+
+        // AJAX request 
+        $.ajax({
+            url: '/getDesignations/' + po_id,
+            type: 'get',
+            dataType: 'json',
+            success: function(response) {
+
+                var len = 0;
+                if (response['de'] != null) {
+                    len = response['de'].length;
+                }
+
+                if (len > 0) {
+                    // Read data and create <option >
+                    for (var i = 0; i < len; i++) {
+
+                        var designation_id = response['de'][i].designation_id;
+                        var designation_code = response['de'][i].designation_code;
+
+                        var option = "<option class='select' value='" + designation_id + "'>" + designation_code + "</option>";
+
+                        $("#designation").append(option);
+                    }
+                }
+
+            },
+            error: function(error) {
+                alert(error);
+            },
+        });
+    });
 </script>
 @endsection

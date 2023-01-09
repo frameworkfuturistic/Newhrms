@@ -121,7 +121,8 @@ class PersonalInformation extends Model
 
         $info = PersonalInformation::where('user_id', $request->user_id)
             ->first();
-        $metaReqs = $this->documentUpload($request, $metaReqs);
+        if ($request->aadhar_card || $request->pan_card || $request->voter_card || $request->uan_no || $request->edu_qua_certi_upload ||  $request->pro_qua_ind_certi || $request->job_profile || $request->supp_doc_upload)
+            $metaReqs = $this->documentUpload($request, $metaReqs);
         $info->update($metaReqs);
     }
 

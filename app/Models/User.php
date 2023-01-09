@@ -44,8 +44,27 @@ class User extends Authenticatable
     public function getDetailsById($id)
     {
         return DB::table('users')
+            ->select(
+                'users.*',
+                'ol.office_name',
+                'p.post_title'
+            )
+            ->leftJoin('master_office_lists as ol', 'ol.office_id', '=', 'users.office_id')
+            ->leftJoin('master_posts as p', 'p.post_id', '=', 'users.position')
             ->where('id', $id)
-            ->select('users.*')
             ->first();
+    }
+
+    /**
+     * | Get Reporting Authorities
+     */
+    public function reportingAuthorities()
+    {
+        return User::select(
+            'id',
+            'name',
+            'emp_id'
+        )
+            ->get();
     }
 }

@@ -87,8 +87,9 @@ active
                                 </td>
                                 <td>
                                     <h2 class="table-avatar">
-                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="avatar"><img src="{{ URL::to('/assets/employee_image/'. $user->avatar) }}" alt="images/default.png"></a>
-                                        <a href="{{ url('employee/profile/'.$user->rec_id) }}" class="name">{{ $user->name }}</span></a>
+                                        <a href="profile_user/{{$user->id}}" class="avatar">
+                                            <img src="{{ URL::to('/assets/employee_image/'. $user->avatar) }}" alt="images/default.png"></a>
+                                        <a href="profile_user/{{$user->id}}" class="name">{{ $user->name }}</span></a>
                                     </h2>
                                 </td>
                                 <td class="email">{{ $user->email }}</td>
@@ -730,24 +731,24 @@ active
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 6]
                         },
-                        text: '<i class="icon-android-print"></i> Export PDF',
-                        className: 'pdfButton btn-padding'
+                        text: '<i class="fa fa-file"></i> Export PDF',
+                        className: 'btn btn-primary btn-sm'
                     },
                     {
                         extend: 'copy',
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 6]
                         },
-                        text: '<i class="icon-android-print"></i> copy',
-                        className: 'cpyButton btn-padding'
+                        text: '<i class="fa fa-copy"></i> Copy',
+                        className: 'btn btn-success btn-sm'
                     },
                     {
                         extend: 'csv',
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 6]
                         },
-                        text: '<i class ="icon-android-print"></i> CSV',
-                        className: 'csvButton btn-padding'
+                        text: '<i class ="fa fa-file"></i> CSV',
+                        className: 'btn btn-warning btn-sm'
 
 
                     },
@@ -756,16 +757,16 @@ active
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 6]
                         },
-                        text: '<i class="icon-document-text"></i> Excel',
-                        className: 'excelButton btn-padding'
+                        text: '<i class="fa fa-file"></i> Excel',
+                        className: 'btn btn-success btn-sm'
                     },
                     {
                         extend: 'print',
                         exportOptions: {
                             columns: [0, 1, 2, 3, 4, 6]
                         },
-                        text: '<i class="icon-android-print"></i> Print',
-                        className: 'printButton btn-padding'
+                        text: '<i class="fa fa-print"></i> Print',
+                        className: 'btn btn-warning btn-sm'
                     }
 
                 ]

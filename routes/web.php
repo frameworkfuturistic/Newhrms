@@ -94,6 +94,7 @@ Route::controller(UserManagementController::class)->group(function () {
 
     // ----------------------------- user profile ------------------------------//
     Route::get('profile_user', 'profile')->middleware('auth')->name('profile_user');
+    Route::get('profile_user/{id}', 'profileById');
     Route::post('profile/change-pic', 'changeProfilePic');
     Route::post('profile/information/save', 'profileInformation')->name('profile/information/save');
 

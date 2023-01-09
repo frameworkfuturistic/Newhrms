@@ -479,7 +479,7 @@ active
                                                 <div class="alert-danger">@error('aadhar_card'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <a href="{{$personal_info->aadhar_card}}" class="view-pdf" target="_blank">
+                                                <a href="{{$personal_info->aadhar_card ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'}}" class="view-pdf" target="_blank">
                                                     <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
                                             </div>
@@ -494,7 +494,7 @@ active
                                                 <div class="alert-danger">@error('pan_card'){{ $message }}@enderror</div>
                                             </div>
                                             <div class="col-sm-4">
-                                                <a href="{{$personal_info->pan_card}}" class="view-pdf" target="_blank">
+                                                <a href="{{$personal_info->pan_card ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'}}" class="view-pdf" target="_blank">
                                                     <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
                                             </div>
@@ -507,7 +507,7 @@ active
                                             </div>
                                             <div class="alert-danger">@error('voter_card'){{ $message }}@enderror</div>
                                             <div class="col-sm-4">
-                                                <a href="{{$personal_info->voter_card}}" class="view-pdf" target="_blank">
+                                                <a href="{{$personal_info->voter_card ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'}}" class="view-pdf" target="_blank">
                                                     <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
                                             </div>
@@ -520,7 +520,7 @@ active
                                             </div>
                                             <div class="alert-danger">@error('uan_no'){{ $message }}@enderror</div>
                                             <div class="col-sm-4">
-                                                <a href="{{$personal_info->uan_no}}" class="view-pdf" target="_blank">
+                                                <a href="{{$personal_info->uan_no ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'}}" class="view-pdf" target="_blank">
                                                     <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
                                             </div>
@@ -537,7 +537,7 @@ active
                                             </div>
                                             <div class="alert-danger">@error('edu_qua_certi_upload'){{ $message }}@enderror</div>
                                             <div class="col-sm-4">
-                                                <a href="{{$personal_info->edu_qua_certi_upload}}" class="view-pdf" target="_blank">
+                                                <a href="{{$personal_info->edu_qua_certi_upload ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'}}" class="view-pdf" target="_blank">
                                                     <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
                                             </div>
@@ -551,21 +551,7 @@ active
                                             </div>
                                             <div class="alert-danger">@error('pro_qua_ind_certi'){{ $message }}@enderror</div>
                                             <div class="col-sm-4">
-                                                <a href="{{$personal_info->pro_qua_ind_certi}}" class="view-pdf" target="_blank">
-                                                    <i class="fa fa-lg mt-25 fa-image"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <label>Job Profile</label>
-                                                <input class="form-control" type="file" id="" name="job_profile" />
-                                                <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
-                                            </div>
-                                            <div class="alert-danger">@error('job_profile'){{ $message }}@enderror</div>
-                                            <div class="col-sm-4">
-                                                <a href="{{$personal_info->job_profile}}" class="view-pdf" target="_blank">
+                                                <a href="{{$personal_info->pro_qua_ind_certi ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'}}" class="view-pdf" target="_blank">
                                                     <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
                                             </div>
@@ -579,7 +565,7 @@ active
                                             </div>
                                             <div class="alert-danger">@error('supp_doc_upload'){{ $message }}@enderror</div>
                                             <div class="col-sm-4">
-                                                <a href="{{$personal_info->supp_doc_upload}}" class="view-pdf" target="_blank">
+                                                <a href="{{$personal_info->supp_doc_upload ?? 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Image_not_available.png/640px-Image_not_available.png'}}" class="view-pdf" target="_blank">
                                                     <i class="fa fa-lg mt-25 fa-image"></i>
                                                 </a>
                                             </div>

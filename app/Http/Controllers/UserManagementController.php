@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MailService;
 use App\Models\Master_organisation;
+use App\Models\MasterAttendanceType;
 use App\Models\MasterDesignation;
 use App\Models\MasterEmployeeType;
 use App\Models\MasterOfficeList;
@@ -184,20 +185,104 @@ class UserManagementController extends Controller
 
     public function profile()
     {
-        // return 'Hii';
-        $profile = Auth::User()->id;
-        $reporting_auth = Auth::user()->reporting_authority;
-        $reporting_auth_name = User::select('name', 'emp_id')->where('id', $reporting_auth)->get();
-
-
+        $userId = Auth::User()->id;
         $information = DB::table('users')
+            ->select(
+                'users.*',
+                'o.org_level',
+                'ol.office_name',
+                'et.emp_type',
+                'at.attendance_type',
+                'p.post_title'
+            )
             ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
             ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
-            ->where('users.id', $profile)->first();
+            ->leftJoin('master_organisations as o', 'o.org_id', '=', 'users.org_id')
+            ->leftJoin('master_office_lists as ol', 'ol.office_id', '=', 'users.office_id')
+            ->leftJoin('master_employee_types as et', 'et.emp_type_id', '=', 'users.emp_type_id')
+            ->leftJoin('master_attendance_types as at', 'at.attendance_type_id', '=', 'users.attendance_type')
+            ->leftJoin('master_posts as p', 'p.post_id', '=', 'users.position')
+            ->where('users.id', $userId)
+            ->first();
+        $reporting_auth_name = User::select(
+            'name',
+            'emp_id'
+        )->where('id', $information->reporting_authority)->get();
 
+        $personalInfo = DB::table('personal_information')
+            ->select(
+                'personal_information.*',
+                'ps.state_name as m_present_state',
+                'ps2.state_name as m_permanent_state'
+            )
+            ->leftJoin('master_states as ps', 'ps.state_id', '=', 'personal_information.present_state')
+            ->leftJoin('master_states as ps2', 'ps2.state_id', '=', 'personal_information.permanent_state')
+            ->where('user_id', $userId)
+            ->first();
+
+        $familyInfos = DB::table('family_infos')
+            ->where('user_id', $userId)
+            ->get();
         // return $reporting_auth_name;
 
-        return view('usermanagement.profile_user', compact('information', 'reporting_auth_name'));
+        return view('usermanagement.profile_user', compact(
+            'information',
+            'reporting_auth_name',
+            'personalInfo',
+            'familyInfos'
+        ));
+    }
+
+    // Get Profile By ID
+    public function profileById($userId)
+    {
+        $reporting_auth = Auth::user()->reporting_authority;
+        $reporting_auth_name = User::select(
+            'name',
+            'emp_id'
+        )->where('id', $reporting_auth)->get();
+
+        $information = DB::table('users')
+            ->select(
+                'users.*',
+                'o.org_level',
+                'ol.office_name',
+                'et.emp_type',
+                'at.attendance_type',
+                'p.post_title'
+            )
+            ->leftJoin('personal_information', 'personal_information.user_id', '=', 'users.id')
+            ->leftJoin('master_employee_types as e', 'e.emp_type_id', '=', 'users.emp_type_id')
+            ->leftJoin('master_organisations as o', 'o.org_id', '=', 'users.org_id')
+            ->leftJoin('master_office_lists as ol', 'ol.office_id', '=', 'users.office_id')
+            ->leftJoin('master_employee_types as et', 'et.emp_type_id', '=', 'users.emp_type_id')
+            ->leftJoin('master_attendance_types as at', 'at.attendance_type_id', '=', 'users.attendance_type')
+            ->leftJoin('master_posts as p', 'p.post_id', '=', 'users.position')
+            ->where('users.id', $userId)
+            ->first();
+
+        $personalInfo = DB::table('personal_information')
+            ->select(
+                'personal_information.*',
+                'ps.state_name as m_present_state',
+                'ps2.state_name as m_permanent_state'
+            )
+            ->leftJoin('master_states as ps', 'ps.state_id', '=', 'personal_information.present_state')
+            ->leftJoin('master_states as ps2', 'ps2.state_id', '=', 'personal_information.permanent_state')
+            ->where('user_id', $userId)
+            ->first();
+
+        $familyInfos = DB::table('family_infos')
+            ->where('user_id', $userId)
+            ->get();
+        // return $reporting_auth_name;
+
+        return view('usermanagement.profile_user', compact(
+            'information',
+            'reporting_auth_name',
+            'personalInfo',
+            'familyInfos'
+        ));
     }
 
     // save profile information
@@ -551,31 +636,47 @@ class UserManagementController extends Controller
         $user = new User();
         $masterOrganisation = new Master_organisation();
         $mEmployeeTypes = new MasterEmployeeType();
+        $mAttendanceTypes = new MasterAttendanceType();
         $details = $user->getDetailsById($id);
         $organisationLevel = $masterOrganisation->show();
         $employeeTypes = $mEmployeeTypes->getAllEmployeeTypes();
+        $attendanceTypes = $mAttendanceTypes->getAttendanceTypes();
+        $reportingAuthorities = $user->reportingAuthorities();
 
         return view('usermanagement.edit_user', [
             'user' => $details,
             'organLevels' => $organisationLevel,
-            'employeeTypes' => $employeeTypes
+            'employeeTypes' => $employeeTypes,
+            'attendanceTypes' => $attendanceTypes,
+            'repoAuthorities' => $reportingAuthorities
         ]);
     }
+
     public function updateUser(Request $req, $id)
     {
         $user = User::find($id);
-        $user->update([
+        $metaReqs = [
             'first_name' => $req->first_name,
             'middle_name' => $req->middle_name,
-            'last_name'  => $req->last_name,
-            'gender'  => $req->gender,
-            'category'  => $req->category,
-            'dob'  => $req->dob,
-            'email'  => $req->email,
-            'cug_no' => $req->cug_no,
-
-            'join_date' => $req->join_date
-        ]);
+            'last_name' => $req->last_name,
+            'emp_id' => $req->emp_id,
+            'gender' => $req->gender,
+            'category' => $req->category,
+            'dob' => $req->dob,
+            'email' => $req->email,
+            'department_email' => $req->department_email,
+            'org_id'    => $req->organ_level,
+            'office_id'    => $req->office_name,
+            'emp_type_id'    => $req->emp_type,
+            'pay_slab'    => $req->pay_slab,
+            'attendance_type' => $req->attend_type,
+            'join_date'    => $req->join_date,
+            'reporting_authority' => $req->report_auth,
+            'position'     => $req->position,
+            'designation'       => $req->designation,
+            'cug_no'       => $req->cug_no
+        ];
+        $user->update($metaReqs);
         return back();
     }
 }

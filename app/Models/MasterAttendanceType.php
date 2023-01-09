@@ -9,4 +9,12 @@ class MasterAttendanceType extends Model
 {
     protected $primaryKey = 'attendance_type_id';
     use HasFactory;
+
+    /**
+     * | Get Attendance Types
+     */
+    public function getAttendanceTypes()
+    {
+        return MasterAttendanceType::all();
+    }
 }
